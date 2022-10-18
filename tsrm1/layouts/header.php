@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/k_favicon_32x.png">
+    <link rel="shortcut icon" type="image/png" href="assets/img/fav.jpg">
     <title>SFP Türkiye - SFP Çözüm Merkeziniz</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
@@ -69,9 +69,9 @@
                                 <div class="col-lg-3 col-md-4 col-6 tc tl_lg">
                                     <div class="branding ts__05 lh__1">
                                         <a class="dib" href="index.html">
-                                            <img class="w__95 logo_normal dn db_lg" src="assets/img/sfplogo.png" alt="">
-                                            <img class="w__100 logo_sticky dn" src="assets/img/sfplogo.png" alt="">
-                                            <img class="w__100 logo_mobile dn_lg" src="assets/img/sfplogo.png" alt="">
+                                            <img class="max-width__265px logo_normal dn db_lg" src="assets/img/sfplogo.png" alt="">
+                                            <img class="max-width__200px logo_sticky dn" src="assets/img/sfplogo.png" alt="">
+                                            <img class="max-width__150px logo_mobile dn_lg" src="assets/img/sfplogo.png" alt="">
                                         </a>
                                     </div>
                                 </div>
@@ -133,177 +133,174 @@
                                                     <div class="row mb__10 pb__10">
                                                         <div class="col widget_img_pr">
                                                             <a class="db pr oh" href="#">
-                                                                <img src="data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%20640%20640%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3C%2Fsvg%3E" data-src="assets/images/home-electronic-vertical/pr-01-80x.jpg" class="w__100 lazyload lz_op_ef" alt="" />
+                                                                <img src="assets/img/u.jpg" data-src="assets/img/u.jpg" class="w__100 lazyload lz_op_ef" alt="" />
                                                             </a>
                                                         </div>
                                                         <div class="col widget_if_pr">
-                                                            <a class="product-title db" href="">Ysamsung Camera</a>
-                                                            <ins>$25.00</ins>
+                                                            <a class="product-title db" href="">
+                                                                3COM Uyumlu Gigabit RJ45 SFP Modül - 1000Base 10/100/1000 RJ45 100Mt (UTP-5) Transceiver
+                                                            </a>
+                                                            <ins>$40.00</ins>
                                                         </div>
-                                                    </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3 col-md-4 col-3 tr">
-                                        <div class="nt_action in_flex al_center cart_des_1">
-                                            <a class="icon_search push_side cb chp" data-id="#nt_search_canvas" href="#"><i class="las la-search"></i></a>
-                                            <div class="my-account ts__05 pr dn db_md">
-                                                <a class="cb chp db push_side" href="#" data-id="#nt_login_canvas"><i class="las la-user"></i></a>
-                                            </div>
-                                            <div class="icon_cart pr">
-                                                <a class="push_side pr cb chp db" href="#" data-id="#nt_cart_canvas">
-                                                    <i class="las la-shopping-cart pr"><span class="op__0 ts_op pa tcount bgb br__50 cw tc">3</span></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="header__bot border_false dn db_lg">
-                            <div class="container">
-                                <div class="row no-gutters al_center">
-                                    <div class="col-auto ha8_cat">
-                                        <h5 class="mg__0 fs__14 flex al_center">
-                                            <i class="las la-bars mr__5 fs__18"></i><span class="dib truncate">MARKALAR</span>
-                                        </h5>
-                                        <div class="h_cat_nav pa op__0 mh_js_cat">
-                                            <ul class="lazy_menu lazy_h_cat lazyload">
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        ADTRAN
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        BROADCOM
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        CISCO
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        D-LINK
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        EXTREME NETWORKS
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        FORTINET
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        HP
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        LR-LINK
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        NETGEAR
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        QNAP
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        TP-LINK
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        UBIQUITI - UBNT - UNIFI
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        ZTE
-                                                    </a>
-                                                </li>
-                                                <li class="cat_menu-0">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        ZYXEL
-                                                    </a>
-                                                </li>
-                                            </ul>
+                                <div class="col-lg-3 col-md-4 col-3 tr">
+                                    <div class="nt_action in_flex al_center cart_des_1">
+                                        <a class="icon_search push_side cb chp" data-id="#nt_search_canvas" href="#"><i class="las la-search"></i></a>
+                                        <div class="my-account ts__05 pr dn db_md">
+                                            <a class="cb chp db push_side" href="#" data-id="#nt_login_canvas"><i class="las la-user"></i></a>
                                         </div>
-                                    </div>
-                                    <div class="col ha8_nav">
-                                        <nav class="nt_navigation tl hover_side_up nav_arrow_false">
-                                            <ul id="nt_menu_id" class="nt_menu in_flex wrap al_center">
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="">
-                                                        Blog
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        1.25G SFP
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        10G SFP+
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        RJ45 Bakır SFP
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        BIDI SFP
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        10G XFP
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        40G QSFP+
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        DAC Kablo
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        Fiber Ethernet Kartı
-                                                    </a>
-                                                </li>
-                                                <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
-                                                    <a class="lh__1 flex al_center pr" href="#">
-                                                        KAMPANYALI ÜRÜNLER
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
+                                        <div class="icon_cart pr">
+                                            <a class="push_side pr cb chp db" href="#" data-id="#nt_cart_canvas">
+                                                <i class="las la-shopping-cart pr"><span class="op__0 ts_op pa tcount bgb br__50 cw tc">3</span></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="header__bot border_false dn db_lg">
+                        <div class="container">
+                            <div class="row no-gutters al_center">
+                                <div class="col-auto ha8_cat">
+                                    <h5 class="mg__0 fs__14 flex al_center">
+                                        <i class="las la-bars mr__5 fs__18"></i><span class="dib truncate">MARKALAR</span>
+                                    </h5>
+                                    <div class="h_cat_nav pa op__0 mh_js_cat">
+                                        <ul class="lazy_menu lazy_h_cat lazyload">
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    ADTRAN
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    BROADCOM
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    CISCO
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    D-LINK
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    EXTREME NETWORKS
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    FORTINET
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    HP
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    LR-LINK
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    NETGEAR
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    QNAP
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    TP-LINK
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    UBIQUITI - UBNT - UNIFI
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    ZTE
+                                                </a>
+                                            </li>
+                                            <li class="cat_menu-0">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    ZYXEL
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col ha8_nav">
+                                    <nav class="nt_navigation tl hover_side_up nav_arrow_false">
+                                        <ul id="nt_menu_id" class="nt_menu in_flex wrap al_center">
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    1.25G SFP
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    10G SFP+
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    RJ45 Bakır SFP
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    BIDI SFP
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    10G XFP
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    40G QSFP+
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    DAC Kablo
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    Fiber Ethernet Kartı
+                                                </a>
+                                            </li>
+                                            <li class="type_dropdown menu-item has-children menu_has_offsets menu_right pos_right">
+                                                <a class="lh__1 flex al_center pr" href="#">
+                                                    Kampanyalı Ürünler
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </header>
-            <!-- end header -->
+            </div>
+        </header>
+        <!-- end header -->

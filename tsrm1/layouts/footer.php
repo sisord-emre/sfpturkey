@@ -7,14 +7,14 @@
                     <div class="col-lg-4 col-md-6 col-12 mb__50 order-lg-1 order-1">
                         <div class="widget widget_text widget_logo">
                             <h3 class="widget-title fwsb flex al_center fl_between fs__16 mg__0 mb__30 dn_md">
-                                <span class="txt_title">Get in touch</span>
+                                <span class="txt_title">KURUMSAL</span>
                                 <span class="nav_link_icon ml__5"></span>
                             </h3>
                             <div class="widget_footer">
                                 <div class="footer-contact">
                                     <p>
                                         <a class="d-block" href="index.html">
-                                            <img class="w__100 mb__15 lazyload max-width__95px" src="assets/img/sfplogo.png" alt="" data-src="assets/img/sfplogo.png">
+                                            <img class="w__100 mb__15 lazyload max-width__300px" src="assets/img/sfplogo.png" alt="" data-src="assets/img/sfplogo.png">
                                         </a>
                                     </p>
                                     <p>
@@ -118,6 +118,16 @@
                                     </li>
                                     <li class="menu-item">
                                         <a href="">
+                                            Kurumsal
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="">
+                                            Blog
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="">
                                             Ürün İadesi
                                         </a>
                                     </li>
@@ -166,7 +176,7 @@
             <div class="container pr tc">
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-12 col_1">Copyright © 2022
-                        <span class="cp">SFP Turkiye</span> all rights reserved. Powered by<a href="#"> Sisord Technology</a>
+                        <span class="cp">SFP Turkiye</span> tüm hakları saklıdır.
                     </div>
 
                 </div>
@@ -176,6 +186,128 @@
 </footer>
 <!-- end footer -->
 </div>
+
+<!-- mobile menu -->
+<div id="nt_menu_canvas" class="nt_fk_canvas nt_sleft dn lazyload">
+    <i class="close_pp pegk pe-7s-close ts__03 cd"></i>
+    <div class="mb_nav_tabs flex al_center mb_cat_true">
+        <div class="mb_nav_title pr mb_nav_ul flex al_center fl_center active" data-id="#kalles-section-mb_nav_js">
+            <span class="d-block truncate">Menu</span>
+        </div>
+        <div class="mb_nav_title pr flex al_center fl_center" data-id="#kalles-section-mb_cat_js">
+            <span class="d-block truncate">Kategoriler</span>
+        </div>
+    </div>
+    <div id="kalles-section-mb_nav_js" class="mb_nav_tab active">
+        <div id="kalles-section-mb_nav" class="kalles-section">
+            <ul id="menu_mb_ul" class="nt_mb_menu">
+                <li class="menu-item">
+                    <a href="">
+                        1.25G SFP
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        10G SFP+
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        RJ45 Bakır SFP
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        BIDI SFP
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        10G XFP
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        40G QSFP+
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        DAC Kablo
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        Fiber Ethernet Kartı
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="">
+                        Kampanyalı Ürünler
+                    </a>
+                </li>
+                <li class="menu-item menu-item-infos">
+                    <p class="menu_infos_title">Yardıma mı ihtiyacınız var?</p>
+                    <div class="menu_infos_text">
+                        <i class="pegk pe-7s-call fwb mr__10"></i>+90 505 077 57 32 <br>
+                        <i class="pegk pe-7s-mail fwb mr__10"></i>
+                        <a class="cg" href="mailto:info@sfpturkiye.com">info@sfpturkiye.com</a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div id="kalles-section-mb_cat_js" class="mb_nav_tab">
+        <div id="kalles-section-mb_cat" class="kalles-section">
+            <ul id="menu_mb_cat" class="nt_mb_menu">
+                <li class="menu-item">
+                    <a href="">ADTRAN</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">BROADCOM</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">CISCO</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">D-LINK</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">EXTREME NETWORKS</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">FORTINET</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">HP</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">LR-LINK</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">NETGEAR</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">QNAP</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">TP-LINK</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">UBIQUITI - UBNT - UNIFI</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">ZTE</a>
+                </li>
+                <li class="menu-item">
+                    <a href="">ZYXEL</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- end mobile menu -->
 
 
 <script src="assets/js/jquery-3.5.1.min.js"></script>

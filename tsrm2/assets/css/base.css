@@ -1,6 +1,6 @@
 :root {
-    --main-color: #56cfe1;
-    --hover-main-color: #007e91;
+    --main-color: #f15523;
+    --hover-main-color: #f15523;
     --text: #222222;
     --tooltip-boder-color: #383838;
 }
@@ -2426,39 +2426,39 @@ a.br_rd_false {
 
 .nt-social svg.at-icon-facebook:hover,
 .nt-social svg.at-icon-messenger:hover {
-    fill: #3b5998 !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-twitter:hover {
-    fill: #00aced !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-linkedin:hover {
-    fill: #007bb6 !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-youtube:hover {
-    fill: #bb0000 !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-instagram:hover {
-    fill: #517fa4 !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-pinterest_share:hover {
-    fill: #cb2027 !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-flickr:hover {
-    fill: #ff0084 !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-tumblr:hover {
-    fill: #32506d !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-behance:hover {
-    fill: #176aff !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-soundcloud:hover {
@@ -2466,15 +2466,15 @@ a.br_rd_false {
 }
 
 .nt-social svg.at-icon-dribbble:hover {
-    fill: #ea4c89 !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-skype:hover {
-    fill: #0078ca !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-telegram:hover {
-    fill: #0088cc !important;
+    fill: #f1734c !important;
 }
 
 .nt-social svg.at-icon-addthis:hover {
@@ -2490,35 +2490,35 @@ a.br_rd_false {
 }
 
 .nt-social .facebook:hover {
-    color: #3b5998 !important;
+    color: #f1734c !important;
 }
 
 .nt-social .twitter:hover {
-    color: #00aced !important;
+    color: #f1734c !important;
 }
 
 .nt-social .linkedin:hover {
-    color: #007bb6 !important;
+    color: #f1734c !important;
 }
 
 .nt-social .youtube:hover {
-    color: #bb0000 !important;
+    color: #f1734c !important;
 }
 
 .nt-social .instagram:hover {
-    color: #517fa4 !important;
+    color: #f1734c !important;
 }
 
 .nt-social .pinterest:hover {
-    color: #cb2027 !important;
+    color: #f1734c !important;
 }
 
 .nt-social .tumblr:hover {
-    color: #32506d !important;
+    color: #f1734c !important;
 }
 
 .nt-social .behance:hover {
-    color: #176aff !important;
+    color: #f1734c !important;
 }
 
 .nt-social .soundcloud:hover {
@@ -2526,11 +2526,11 @@ a.br_rd_false {
 }
 
 .nt-social .dribbble:hover {
-    color: #ea4c89 !important;
+    color: #f1734c !important;
 }
 
 .nt-social .telegram:hover {
-    color: #0088cc !important;
+    color: #f1734c !important;
 }
 
 .nt-social .email:hover {

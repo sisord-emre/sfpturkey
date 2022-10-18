@@ -104,7 +104,7 @@ a:active,
 .quantity .tc button:hover,
 .type_feature_columns a.button.btn--style-3:hover,
 .dark-mode .on_list_view_true .pr_list_item .product-info__btns > a.nt_add_qv {
-    color: #0063d1;
+    color: #f1734c;
 }
 
 .nt_menu > li > a:hover,
@@ -115,7 +115,7 @@ a:active,
 .nt_action > a:focus,
 .nt_action > div > a:focus,
 .nt_action .ssw-topauth .push_side:focus {
-    color: #0063d1 !important;
+    color: #f1734c !important;
 }
 
 input[type="submit"]:hover,
@@ -177,7 +177,7 @@ input.button.btn_back,
 .dark-mode .address-edit-toggle:focus,
 .dark-mode .shipping_calculator input.get_rates,
 .dark-mode input.button.btn_back {
-    background-color: #0063d1;
+    background-color: #f15523;
 }
 
 input[type="submit"]:hover,
@@ -218,7 +218,7 @@ input.button.btn_back,
 .dark-mode .button.button_primary,
 .tab_cat_title.des_tab_11 > li > a.tt_active,
 .tab_cat_title.des_tab_11 > li > a:hover {
-    border-color: #0063d1;
+    border-color: #f15523;
 }
 
 .wrap_sortby a:hover,
@@ -1207,7 +1207,7 @@ body.rtl .page-numbers li {
 * footer
 ***********************************************/
 .footer__top a:hover {
-    color: #56cfe1;
+    color: #f15523;
 }
 
 .footer__top .signup-newsletter-form,

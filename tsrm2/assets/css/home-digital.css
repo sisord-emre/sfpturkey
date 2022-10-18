@@ -104,7 +104,7 @@ a:active,
 .quantity .tc button:hover,
 .type_feature_columns a.button.btn--style-3:hover,
 .dark-mode .on_list_view_true .pr_list_item .product-info__btns > a.nt_add_qv {
-    color: #0063d1;
+    color: #f1734c;
 }
 
 .nt_menu > li > a:hover,
@@ -251,7 +251,7 @@ input.button.btn_back,
 .nt_label,
 .nt_label.on,
 .qs_label.onsale {
-    background-color: #0063d1;
+    background-color: #f1734c;
 }
 
 .nt_label.out-of-stock {
@@ -480,7 +480,7 @@ body.rtl .tooltip_left:before {
 
 .nt_action .tcount,
 .toolbar_count {
-    background-color: #000000;
+    background-color: #f1734c;
     color: #ffffff;
 }
 

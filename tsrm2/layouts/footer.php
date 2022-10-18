@@ -7,14 +7,14 @@
                     <div class="col-lg-4 col-md-6 col-12 mb__50 order-lg-1 order-1">
                         <div class="widget widget_text widget_logo">
                             <h3 class="widget-title fwsb flex al_center fl_between fs__16 mg__0 mb__30 dn_md">
-                                <span class="txt_title">Get in touch</span>
+                                <span class="txt_title">KURUMSAL</span>
                                 <span class="nav_link_icon ml__5"></span>
                             </h3>
                             <div class="widget_footer">
                                 <div class="footer-contact">
                                     <p>
                                         <a class="d-block" href="index.html">
-                                            <img class="w__100 mb__15 lazyload max-width__95px" src="assets/img/sfplogo.png" alt="" data-src="assets/img/sfplogo.png">
+                                            <img class="w__100 mb__15 lazyload max-width__300px" src="assets/img/sfplogo.png" alt="" data-src="assets/img/sfplogo.png">
                                         </a>
                                     </p>
                                     <p>
@@ -166,7 +166,7 @@
             <div class="container pr tc">
                 <div class="row">
                     <div class="col-lg-6 col-md-12 col-12 col_1">Copyright © 2022
-                        <span class="cp">SFP Turkiye</span> all rights reserved. Powered by<a href="#"> Sisord Technology</a>
+                        <span class="cp">SFP Turkiye</span> tüm hakları saklıdır.
                     </div>
 
                 </div>
@@ -186,17 +186,12 @@
             <span class="d-block truncate">Menu</span>
         </div>
         <div class="mb_nav_title pr flex al_center fl_center" data-id="#kalles-section-mb_cat_js">
-            <span class="d-block truncate">Categories</span>
+            <span class="d-block truncate">Kategoriler</span>
         </div>
     </div>
     <div id="kalles-section-mb_nav_js" class="mb_nav_tab active">
         <div id="kalles-section-mb_nav" class="kalles-section">
             <ul id="menu_mb_ul" class="nt_mb_menu">
-                <li class="menu-item">
-                    <a href="">
-                        Blog
-                    </a>
-                </li>
                 <li class="menu-item">
                     <a href="">
                         1.25G SFP
@@ -239,18 +234,18 @@
                 </li>
                 <li class="menu-item">
                     <a href="">
-                        KAMPANYALI ÜRÜNLER
+                        Kampanyalı Ürünler
                     </a>
                 </li>
                 <li class="menu-item menu-item-infos">
-                    <p class="menu_infos_title">Need help?</p>
+                    <p class="menu_infos_title">Yardıma mı ihtiyacınız var?</p>
                     <div class="menu_infos_text">
                         <i class="pegk pe-7s-call fwb mr__10"></i>+90 505 077 57 32 <br>
                         <i class="pegk pe-7s-mail fwb mr__10"></i>
                         <a class="cg" href="mailto:info@sfpturkiye.com">info@sfpturkiye.com</a>
                     </div>
                 </li>
-                
+
             </ul>
         </div>
     </div>

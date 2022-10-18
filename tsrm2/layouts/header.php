@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/png" href="assets/images/k_favicon_32x.png">
+    <link rel="shortcut icon" type="image/png" href="assets/img/fav.jpg">
     <title>SFP Türkiye - SFP Çözüm Merkeziniz</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
@@ -58,9 +58,9 @@
                             <div class="col-lg-6 col-md-6 col-6 tc">
                                 <div class="branding ts__05 lh__1">
                                     <a class="dib" href="index.html">
-                                        <img class="w__100 logo_normal dn db_lg" src="assets/img/sfplogo.png" alt="">
-                                        <img class="w__100 logo_sticky dn" src="assets/img/sfplogo.png" alt="">
-                                        <img class="w__100 logo_mobile dn_lg" src="assets/img/sfplogo.png" alt="">
+                                        <img class="max-width__300px logo_normal dn db_lg" src="assets/img/sfplogo.png" alt="">
+                                        <img class="max-width__200px logo_sticky dn" src="assets/img/sfplogo.png" alt="">
+                                        <img class="max-width__200px logo_mobile dn_lg" src="assets/img/sfplogo.png" alt="">
                                     </a>
                                 </div>
                             </div>
