@@ -25,7 +25,7 @@
         <header id="ntheader" class="ntheader header_8 h_icon_la">
             <div class="ntheader_wrapper pr z_200">
                 <div id="kalles-section-header_top" class="kalles-section">
-                    <div class="h__top bgbl pt__10 pb__10 fs__12 flex fl_center al_center">
+                    <div class="h__top bgbl pt__10 pb__10 fs__12 flex fl_center al_center" style="background: #f6f6f8;">
                         <div class="container">
                             <div class="row al_center">
                                 <div class="col-lg-3 col-12 tc tl_lg col-md-12 dn_false_1024">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="kalles-section-header_8" class="kalles-section sp_header_mid">
+                <div id="kalles-section-header_8" class="kalles-section">
                     <div class="header__mid">
                         <div class="container">
                             <div class="row al_center css_h_se">

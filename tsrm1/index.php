@@ -777,9 +777,9 @@
     <!--end tab section-->
 
     <!--blog post-->
-    <div class="kalles-section kalles-section_type_featured_blog nt_section type_featured_blog type_carousel">
+    <div class="kalles-section kalles-section_type_featured_blog nt_section type_featured_blog type_carousel mb__50" style="background: #f6f6f8;">
         <div class="container">
-            <div class="wrap_title mb__30 des_title_2">
+            <div class="wrap_title mb__30 pt__30 des_title_2">
                 <h3 class="section-title tc pr flex fl_center al_center fs__24 title_2">
                     <span class="mr__10 ml__10">BLOG</span>
                 </h3>

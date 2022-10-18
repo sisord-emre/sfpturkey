@@ -126,7 +126,7 @@
                         <div class="cat_grid_item cat_space_item cat_grid_item_2 col-12">
                             <div class="cat_grid_item__content pr oh">
                                 <a href="" class="d-block cat_grid_item__link">
-                                    <div class="cat_grid_item__overlay item__position nt_bg_lz lazyload center" data-bgset="assets/img/banner/b6.png"></div>
+                                    <div class="cat_grid_item__overlay item__position nt_bg_lz lazyload center" data-bgset="assets/img/banner/b10.png"></div>
                                 </a>
                                 <div class="cat_grid_item__wrapper pe_none">
                                     <div class="cat_grid_item__title">FORTINET</div>
@@ -136,7 +136,7 @@
                         <div class="cat_grid_item cat_space_item cat_grid_item_3 col-12">
                             <div class="cat_grid_item__content pr oh">
                                 <a href="" class="d-block cat_grid_item__link">
-                                    <div class="cat_grid_item__overlay item__position nt_bg_lz lazyload center" data-bgset="assets/img/banner/b7.png"></div>
+                                    <div class="cat_grid_item__overlay item__position nt_bg_lz lazyload center" data-bgset="assets/img/banner/b9.png"></div>
                                 </a>
                                 <div class="cat_grid_item__wrapper pe_none">
                                     <div class="cat_grid_item__title">HP</div>
@@ -163,9 +163,9 @@
     <!-- end top category banner -->
 
     <!--blog post-->
-    <div class="kalles-section kalles-section_type_featured_blog nt_section type_featured_blog type_carousel">
+    <div class="kalles-section kalles-section_type_featured_blog nt_section type_featured_blog type_carousel mb__50" style="background: #f6f6f8;">
         <div class="container">
-            <div class="wrap_title mb__30 des_title_2">
+            <div class="wrap_title mb__30 pt__30 des_title_2">
                 <h3 class="section-title tc pr flex fl_center al_center fs__24 title_2">
                     <span class="mr__10 ml__10">BLOG</span>
                 </h3>
