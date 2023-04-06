@@ -1,0 +1,92 @@
+.alias {cursor: alias;}
+.all-scroll {cursor: all-scroll;}
+.auto {cursor: auto;}
+.cell {cursor: cell;}
+.context-menu {cursor: context-menu;}
+.col-resize {cursor: col-resize;}
+.copy {cursor: copy;}
+.crosshair {cursor: crosshair;}
+.default {cursor: default;}
+.e-resize {cursor: e-resize;}
+.ew-resize {cursor: ew-resize;}
+.grab {cursor: -webkit-grab; cursor: grab;}
+.grabbing {cursor: -webkit-grabbing; cursor: grabbing;}
+.help {cursor: help;}
+.move {cursor: move;}
+.n-resize {cursor: n-resize;}
+.ne-resize {cursor: ne-resize;}
+.nesw-resize {cursor: nesw-resize;}
+.ns-resize {cursor: ns-resize;}
+.nw-resize {cursor: nw-resize;}
+.nwse-resize {cursor: nwse-resize;}
+.no-drop {cursor: no-drop;}
+.none {cursor: none;}
+.not-allowed {cursor: not-allowed;}
+.pointer {cursor: pointer;}
+.progress {cursor: progress;}
+.row-resize {cursor: row-resize;}
+.s-resize {cursor: s-resize;}
+.se-resize {cursor: se-resize;}
+.sw-resize {cursor: sw-resize;}
+.text {cursor: text;}
+.url {cursor: url(myBall.cur),auto;}
+.w-resize {cursor: w-resize;}
+.wait {cursor: wait;}
+.zoom-in {cursor: zoom-in;}
+.zoom-out {cursor: zoom-out;}
+.heading-elements .list-inline{
+	display:block;
+}
+.table th, .table td {
+	padding: 0.5rem 1rem;
+}
+.card-header {
+	padding: 1.1rem 1.5rem;
+}
+.card-body {
+	padding-top: 1rem;
+}
+html body .la{
+	font-size: 1rem;
+}
+#listTable_wrapper > .btn-group > .btn, .btn-group-vertical > .btn > [aria-controls="listTable"]{
+	padding: 0.5rem 0.5rem;
+}
+table.dataTable {
+	margin-top: 1px!important;
+}
+.table th, .table td {
+	vertical-align: middle;
+}
+html body .content .content-wrapper{
+	padding: 1.2rem;
+}
+.card-header .heading-elements .btn{
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+#listTable{
+	width: 100%!important;
+}
+@media only screen and (max-width: 600px) {
+	.recaptchaMobil{
+		margin-left: -40px;
+	}
+}
+.form .form-group{
+	margin-bottom: 0.75rem;
+}
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col, .col-auto, .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm, .col-sm-auto, .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12, .col-md, .col-md-auto, .col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg, .col-lg-auto, .col-xl-1, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl, .col-xl-auto{
+	padding-right: 10px;
+	padding-left: 10px;
+}
+.row {
+	margin-right: -10px;
+	margin-left: -10px;
+}
+.editSatir{
+	background-color: lavender!important;
+	-webkit-transition: background-color 300ms linear;
+	-ms-transition: background-color 300ms linear;
+	transition: background-color 300ms linear;
+}
