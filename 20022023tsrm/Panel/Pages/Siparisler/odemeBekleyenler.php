@@ -287,6 +287,7 @@ else{//Listeleme Yetkisi Var
 												<th><?=$fonk->getPDil("Uye Mail")?></th>
 												<th><?=$fonk->getPDil("İçerik")?></th>
 												<th><?=$fonk->getPDil("Ödeme Tipi")?></th>
+												<th><?=$fonk->getPDil("İskonto")?> ($)</th>
 												<th><?=$fonk->getPDil("Ödenen Tutar")?></th>
 												<th><?=$fonk->getPDil("Durumu")?></th>
 												<th><?=$fonk->getPDil("Dil")?></th>
@@ -335,6 +336,7 @@ else{//Listeleme Yetkisi Var
 												$icerik="";
 												$icerikSayac=0;
 												$toplamTutar=0;
+												$siparisIskontoUcreti=0;
 												foreach($siparisIcerikleri as $siparisIcerik){
 													$icerikSayac++;
 													if ($icerikSayac<=2) {
@@ -350,6 +352,10 @@ else{//Listeleme Yetkisi Var
 												if($list['siparisKargoUcreti']!=0){
 													$toplamTutar+=$list['siparisKargoUcreti'];
 												}
+												if($list["siparisIskontoUcreti"] > 0){
+													$siparisIskontoUcreti=$fonk->paraCevir($list["siparisIskontoUcreti"],"USD","TRY");
+													$toplamTutar-=$siparisIskontoUcreti;
+												}
 												?>
 												<tr id="trSatir-<?=$list[$tabloPrimarySutun];?>" class="<?=$satirRenk?>">
 													<td><?=$list[$tabloPrimarySutun];?></td>
@@ -361,7 +367,12 @@ else{//Listeleme Yetkisi Var
 													<td><?=$list['uyeMail'];?></td>
 													<td><?=$icerik;?></td>
 													<td><?=$list['odemeTipAdi'];?></td>
-													<th><?=$list["paraBirimSembol"].round($toplamTutar,2);?></th>
+													
+													<th><input type="text" name="siparisIskontoUcreti" id="durum-<?=$list[$tabloPrimarySutun];?>" value="<?=$list['siparisIskontoUcreti']?>" onchange="FiyatDegistir(<?=$list[$tabloPrimarySutun];?>)"></th>
+													<!-- <th><?="$".round($list["siparisIskontoUcreti"],2);?> ( <?=$list["paraBirimSembol"].round($siparisIskontoUcreti,2);?> )</th> -->
+													<th id="tutar-<?=$list[$tabloPrimarySutun];?>">
+														<?=$list["paraBirimSembol"].round($toplamTutar,2);?>
+													</th>
 													<td data-sort="<?=$siparisDurum['siparisDurumId'];?>"><?=$siparisDurum['siparisDurumDilBilgiBaslik'];?></td>
 													<td><?=$list['dilAdi'];?></td>
 													<td data-sort="<?=$fonk->sqlToDateTimeTiresiz($list['siparisKayitTarihi']);?>"><?=$fonk->sqlToDateTime($list['siparisKayitTarihi']);?></td>
@@ -396,6 +407,46 @@ else{//Listeleme Yetkisi Var
 
 	<?php } include("../../Scripts/listelemeJs.php");?>
 	<script type="text/javascript">
+
+	Number.prototype.formatMoney = function (c, d, t) {
+		var n = this,
+			c = isNaN((c = Math.abs(c))) ? 2 : c,
+			d = d == undefined ? "." : d,
+			t = t == undefined ? "," : t,
+			s = n < 0 ? "-" : "",
+			i = parseInt((n = Math.abs(+n || 0).toFixed(c))) + "",
+			j = (j = i.length) > 3 ? j % 3 : 0;
+		return (
+			s +
+			(j ? i.substr(0, j) + t : "") +
+			i.substr(j).replace(/(d{3})(?=d)/g, "$1" + t) +
+			(c
+				? d +
+				Math.abs(n - i)
+					.toFixed(c)
+					.slice(2)
+				: "")
+		);
+	};
+
+	function FiyatDegistir(Id){
+		var e = document.getElementById("durum-"+Id);
+		var durum = e.value;
+		$.ajax({
+			type: "POST",
+			url: "Pages/Siparisler/fiyatDegistir.php",
+			data:{'Id':Id,'durum':durum},
+			success: function(res){
+				if(res.status == "success"){
+					toastr.success('<?=$fonk->getPDil("Güncelleme Sağlandı.")?>');
+					document.getElementById("tutar-"+Id).innerHTML = <?=$list["paraBirimSembol"]?> parseFloat(res.result.tutar).formatMoney(2, ",", ".");
+				}else{
+					alert(res);
+				}
+			}
+		});
+	}
+	
 	function TumunuTemizle(){
 		if(confirm('<?=$fonk->getPDil("Tüm Ödeme Bekleyenleri Silmek İstediğinize Emin misiniz ?")?>')) {
 			document.getElementById("tumunuSilButton").disabled = true;

@@ -49,6 +49,7 @@ $sutunlar=[
 	"urunVaryantDefaultSecim",
 	"urunVaryantDilBilgiDurum",
 	"urunDurum",
+	"paraBirimKodu",
 ];
 
 
@@ -68,6 +69,7 @@ $totalRecord = $db->select("Urunler", [
 	"[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
 	"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
 	"[>]UrunVaryantDilBilgiler" => ["Urunler.urunId" => "urunVaryantDilBilgiUrunId"],
+	"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
 ], $sutunlar, $sartlar);
 
 $totalRecord = count($totalRecord);
@@ -96,6 +98,7 @@ $urunler = $db->select("Urunler", [
 	"[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
 	"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
 	"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
+	"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
 ], $sutunlar, $sartlar);
 ///----- Saylafama Sorgu
 
@@ -136,10 +139,11 @@ foreach ($urunler as $value) {
 						<?= $value["urunVaryantDilBilgiAdi"]; ?>
 					</a>
 				</h3>
+				
 				<?php if($uyeVar == 1){ ?>
 				<span class="price dib mb__5">
 					<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                    <?= $_SESSION["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+                    <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($hesapla["birimFiyat"],$value["paraBirimKodu"],"TRY");?>
 				</span>
 				<?php } ?> 
 

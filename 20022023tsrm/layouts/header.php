@@ -21,6 +21,7 @@ if (strstr($_SERVER['PHP_SELF'], "product.php"))
         "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
         "[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
         "[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+        "[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
     ],"*",[
         "urunVaryantKodu" => $seo,
         "urunVaryantDilBilgiDilId" => $_SESSION["dilId"],

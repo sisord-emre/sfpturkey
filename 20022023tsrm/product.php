@@ -106,7 +106,7 @@
                                                             <div class="flex wrap fl_between al_center price-review">
                                                                 <p class="price_range" id="price_ppr">
                                                                     <?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                                                    <?= $_SESSION["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+                                                                    <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($hesapla["birimFiyat"],$urun["paraBirimKodu"],"TRY");?>
                                                                 </p>
                                                             </div>
                                                             <?php } ?>

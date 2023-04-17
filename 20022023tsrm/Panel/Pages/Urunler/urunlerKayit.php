@@ -491,7 +491,9 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 												<label for="urunParaBirimId"><?= $fonk->getPDil("Para Birimi") ?><small style="color:red;margin-left:1rem">*</small></label>
 												<select class="select2 form-control block" name="urunParaBirimId" id="urunParaBirimId" required>
 													<?php
-													$sorguList = $db->select("ParaBirimleri", "*");
+													$sorguList = $db->select("ParaBirimleri", "*",[
+														'paraBirimId' => 2
+													]);
 													foreach ($sorguList as $sorgu) {
 													?>
 														<option value="<?= $sorgu['paraBirimId'] ?>" <?php if ($sorgu['paraBirimId'] == $Listeleme['urunParaBirimId']) {echo " selected";} ?>>

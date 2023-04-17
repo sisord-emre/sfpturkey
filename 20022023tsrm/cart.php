@@ -6,11 +6,10 @@ if(!$uyeVar)
     echo '<script> window.location.href="'.$sabitB['sabitBilgiSiteUrl'].'account";</script>';
     exit;
 }
+//unset($_SESSION['SiparisKodu']);
 ?>
 
 <div id="nt_content">
-
-    <!--shop banner-->
     <div class="kalles-section page_section_heading">
         <div class="page-head pr oh cat_bg_img page_head_">
             <div class="parallax-inner nt_parallax_false lazyload nt_bg_lz pa t__0 l__0 r__0 b__0" data-bgset="assets/img/banner.jpg"></div>
@@ -19,12 +18,10 @@ if(!$uyeVar)
             </div>
         </div>
     </div>
-    <!--end shop banner-->
 
-    <!--cart section-->
     <div class="kalles-section cart_page_section container mt__60">
 
-        <form action="#" method="post" class="frm_cart_ajax_true frm_cart_page nt_js_cart pr oh ">
+        <form action="checkout" method="post" class="frm_cart_ajax_true frm_cart_page nt_js_cart pr oh ">
             <div class="row">
                 <div class="col-12 col-md-9">
                     <div class="cart_header">
@@ -58,6 +55,7 @@ if(!$uyeVar)
                             "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
                             "[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
                             "[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+                            "[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
                         ],"*",[
                             "urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
                             "urunVaryantDilBilgiVaryantId" => $sepet[$i]["urunId"],
@@ -98,20 +96,18 @@ if(!$uyeVar)
                                 <div class="col-12 col-md-4 col-lg-2 tc__ tc_lg">
                                     <div class="cart_meta_prices price">
                                         <div class="cart_price fs__22">
-                                            <?=$_SESSION["paraBirimSembol"].number_format($hesapla["birimFiyat"],2,",",".");?>
+                                            <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir(number_format($hesapla["birimFiyat"],2,",","."),$urun["paraBirimKodu"],"TRY");?>
                                         </div>
                                     </div>
                                 </div>
-                                
                                 <div class="col-12 col-md-4 col-lg-2 tc mini_cart_actions">
                                     <div class="quantity pr mr__10 qty__true">
-                                        <input type="number" class="input-text qty text tc qty_cart_js" onchange="SepetAdet(<?=$i?>,<?=$hesapla['birimFiyat']?>,'<?=$_SESSION['paraBirimSembol']?>',<?=$uye['uyeIndirimOrani']?>)" id="adet-<?=$i?>" name="adet-<?=$i?>" value="<?=$sepet[$i]["adet"]?>" min="1">
-                                        
+                                        <input type="number" class="input-text qty text tc qty_cart_js" onchange="SepetAdet(<?=$i?>,<?=$hesapla['birimFiyat']?>,'<?=$_SESSION['paraBirimSembol']?>',<?=$uye['uyeIndirimOrani']?>)" id="adet-<?=$i?>" name="adet-<?=$i?>" value="<?=$sepet[$i]["adet"]?>" min="1">                               
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-2 tc__ tc_lg">
                                     <span class="cart-item-price fwm cd js_tt_price_it fs__22" id="araToplam-<?=$i?>">
-                                        <?=$_SESSION["paraBirimSembol"].number_format($hesapla["birimFiyat"]*$sepet[$i]["adet"],2,",",".");?>
+                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir(number_format($hesapla["birimFiyat"]*$sepet[$i]["adet"],2,",","."),$urun["paraBirimKodu"],"TRY");?>
                                     </span>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-1 tc__ tr_lg">
@@ -128,26 +124,24 @@ if(!$uyeVar)
                                 </div>
                             </div>
                         </div>
-
                         <?php } ?>
                     </div>
                     <div class="col-12 col-md-12 cart_actions tl_md tc order-md-2 order-2 mb__50">
                         <label for="CartSpecialInstructions_2" class="cart-note__label dib cd mb__10">
                             <span class="txt_add_note ">Sipariş Notu Ekle</span>
                         </label>
-                        <textarea name="note" id="CartSpecialInstructions_2" class="cart-note__input" placeholder="Nasıl yardım edebiliriz?"></textarea>
+                        <textarea name="note" id="note" class="cart-note__input" placeholder="Nasıl yardım edebiliriz?"></textarea>
                     </div>
                 </div>
                 <div class="col-12 col-md-3">
                     <div8 class="cart__footer mt__60">
                         <div class="row">
-
                             <div class="col-12 tr_md tc order-md-4 order-4 col-md-12">
                                 <div class="total row in_flex fl_between al_center cd fs__18 tu">
                                     <div class="col-auto"><strong>Aratutar:</strong></div>
                                     <div class="col-auto tr js_cat_ttprice fs__20 fwm">
                                         <div class="cart_tot_price" id="araTutar">
-                                            <?=$_SESSION["paraBirimSembol"].number_format($araTutar,2,",",".")?>
+                                            <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($araTutar,$urun["paraBirimKodu"],"TRY");?>
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +150,7 @@ if(!$uyeVar)
                                     <div class="col-auto"><strong>KDV:</strong></div>
                                     <div class="col-auto tr js_cat_ttprice fs__20 fwm">
                                         <div class="cart_tot_price" id="kdvTutar">
-                                            <?=$_SESSION["paraBirimSembol"].number_format($kdvTutar,2,",",".")?>
+                                            <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($kdvTutar,$urun["paraBirimKodu"],"TRY");?>
                                         </div>
                                     </div>
                                 </div>
@@ -165,37 +159,27 @@ if(!$uyeVar)
                                     <div class="col-auto"><strong>Toplam:</strong></div>
                                     <div class="col-auto tr js_cat_ttprice fs__20 fwm">
                                         <div class="cart_tot_price" id="toplamTutar">
-                                            <?=$_SESSION["paraBirimSembol"].number_format($toplamTutar,2,",",".")?>
+                                            <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($toplamTutar,$urun["paraBirimKodu"],"TRY");?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
                                 <p class="db txt_tax_ship mb__5">Ödeme sırasında hesaplanan vergiler, nakliye ve indirim kodları</p>
                                 <p class="pr dib mb__5">
-                                    <input type="checkbox" id="cart_agree_2" class="js_agree_ck mr__5" name="ck_lumise">
-                                    <label for="cart_agree_2">Şartlar ve koşulları kabul ediyorum.</label>
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                                        <path d="M9 20l-7-7 3-3 4 4L19 4l3 3z"></path>
-                                    </svg>
+                                    <input type="checkbox" name="sart" id="sart" required>
+                                    <label for="sart">Şartlar ve koşulları kabul ediyorum.</label>
                                 </p>
                                 <div class="clearfix"></div>
-                                <a href="checkout.php" type="submit" data-confirm="ck_lumise" name="checkout" class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld text-center">Ödemeye Geç</a>
+                                <button type="submit" name="checkout" id="submitButton" onclick="ButtonDisabled('submitButton')" class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld w__100">Ödemeye Geç</button>
                                 <a href="index.php" type="button" data-confirm="ck_lumise" name="checkout" style="background-color: black; border-color: black;" class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld text-center">Alışverİşe Devam Et</a>
                                 <div class="clearfix"></div>
-
                             </div>
                         </div>
                     </div8>
                 </div>
             </div>
-
-
-
-
         </form>
-
     </div>
-    <!--end cart section-->
 </div>
 
 <?php include('layouts/footer.php') ?>

@@ -8,6 +8,7 @@ $urun = $db->get("Urunler", [
     "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
     "[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
     "[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+    "[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
 ], "*", [
     "urunVaryantKodu" => $urunVaryantKodu,
     "urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
@@ -131,7 +132,7 @@ if ($_SESSION['uyeKodu'] != "")
                                                         <div class="flex wrap fl_between al_center price-review">
                                                             <p class="price_range" id="price_ppr">
                                                                 <?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                                                <?= $_SESSION["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+                                                                <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($hesapla["birimFiyat"],$urun["paraBirimKodu"],"TRY");?>
                                                             </p>
                                                         </div>
                                                         <?php } ?>

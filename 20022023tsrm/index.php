@@ -70,6 +70,7 @@ include('layouts/header.php');
                      "urunVaryantDefaultSecim",
                      "urunVaryantDilBilgiDurum",
                      "urunDurum",
+                     "paraBirimKodu",
                  ];
              
                  $sartlar = array_merge($sartlar, [
@@ -89,6 +90,7 @@ include('layouts/header.php');
                      "[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
                      "[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
                      "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
+                     "[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
                  ], $sutunlar, $sartlar);
 
                 foreach ($urunler as $value) {
@@ -99,7 +101,7 @@ include('layouts/header.php');
                 <div class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
                     <div class="product-inner pr">
                         <div class="product-image pr oh lazyload">
-                            <a class="d-block" href="product-detail-layout-01.html">
+                            <a class="d-block" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
                                 <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </a>
                             <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
@@ -115,7 +117,7 @@ include('layouts/header.php');
                             <?php if($uyeVar == 1){ ?>
                             <span class="price dib mb__5">
                                 <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                <?= $_SESSION["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+                                <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($hesapla["birimFiyat"],$value["paraBirimKodu"],"TRY");?>
                             </span>
                             <?php } ?> 
                             <button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 order-4 d-inline-block animated">
@@ -158,6 +160,7 @@ include('layouts/header.php');
                      "urunVaryantDefaultSecim",
                      "urunVaryantDilBilgiDurum",
                      "urunDurum",
+                     "paraBirimKodu",
                  ];
              
                  $sartlar = array_merge($sartlar, [
@@ -177,6 +180,7 @@ include('layouts/header.php');
                      "[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
                      "[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
                      "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
+                     "[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
                  ], $sutunlar, $sartlar);
 
                 foreach ($urunler as $value) {
@@ -187,7 +191,7 @@ include('layouts/header.php');
                 <div class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
                     <div class="product-inner pr">
                         <div class="product-image pr oh lazyload">
-                            <a class="d-block" href="product-detail-layout-01.html">
+                            <a class="d-block" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
                                 <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </a>
                             <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
@@ -203,7 +207,7 @@ include('layouts/header.php');
                             <?php if($uyeVar == 1){ ?>
                             <span class="price dib mb__5">
                                 <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                <?= $_SESSION["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+                                <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($hesapla["birimFiyat"],$value["paraBirimKodu"],"TRY");?>
                             </span>
                             <?php } ?> 
                             <button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 order-4 d-inline-block animated">

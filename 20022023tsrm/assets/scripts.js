@@ -133,9 +133,33 @@ function SepetKayit(urunId, varyantId, adet) {
     });
 }
 
+function SepetUrunAdet(sira,birimFiyat,paraIcon){
+    var adet = document.getElementById("adet-" + sira).value;
+    var data = new FormData();
+    data.append("sira", sira);
+    data.append("adet", adet);
+    data.append("birimFiyat", birimFiyat);
+    $.ajax({
+        type: "POST",
+        url: "ajax/sepetUrunAdet.php",
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            if (res.status == "success") {
+                document.getElementById("araToplam-" + sira).innerHTML = paraIcon + parseFloat(res.result.araToplam).formatMoney(2, ",", ".");
+            } else {
+                alert(res);
+            }
+        },
+        error: function (jqXHR, status, errorThrown) {
+            alert("Result: " + status + " Status: " + jqXHR.status);
+        },
+    });
+}
+
 function SepetAdet(sira, birimFiyat, paraIcon,uyeIndirimOrani) {
     var adet = document.getElementById("adet-" + sira).value;
-    document.getElementById("araToplam-" + sira).innerHTML = paraIcon + parseFloat(birimFiyat * adet).formatMoney(2, ",", ".");
     var data = new FormData();
     data.append("sira", sira);
     data.append("adet", adet);
@@ -148,9 +172,11 @@ function SepetAdet(sira, birimFiyat, paraIcon,uyeIndirimOrani) {
         processData: false,
         success: function (res) {
             if (res.status == "success") {
+                SepetUrunAdet(sira,birimFiyat,paraIcon)
                 document.getElementById("toplamTutar").innerHTML =paraIcon + parseFloat(res.result.toplamTutar).formatMoney(2, ",", ".");
                 document.getElementById("araTutar").innerHTML =paraIcon + parseFloat(res.result.araTutar).formatMoney(2, ",", ".");
                 document.getElementById("kdvTutar").innerHTML =paraIcon + parseFloat(res.result.kdvTutar).formatMoney(2, ",", ".");
+                console.log(parseFloat(res.result.kdvTutar).formatMoney(2, ",", "."));
             } else {
                 alert(res);
             }

@@ -41,6 +41,7 @@ if ($odemeTipi == "stripe") {
 } else if ($odemeTipi == "cash") {
 	$siparisOdemeTipiId = 2;
 }
+$siparisIskontoUcreti = 0;
 $siparisKargoUcreti = 0;
 $siparisIndirimYuzdesi = 0;
 $toplamTutar = 0;
@@ -83,6 +84,7 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 			"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
 			"[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
 			"[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+			"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
 		], "*", [
 			"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
 			"urunVaryantDilBilgiVaryantId" => $sepet[$i]["urunId"],
@@ -101,22 +103,24 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 			'siparisIcerikSiparisId' => $siparisId,
 			'siparisIcerikUrunId' => $urun["urunId"],
 			'siparisIcerikVaryantId' => intval($sepet[$i]["varyantId"]),
-			'siparisIcerikUrunVaryantDilBilgiId' => $sepet[$i]["urunId"],
+			'siparisIcerikUrunVaryantDilBilgiId' => intval($sepet[$i]["urunId"]),
 			'siparisIcerikAdet' => $sepet[$i]["adet"],
 			'siparisIcerikNot' => $sepet[$i]["siparisIcerikNot"],
 			'siparisIcerikUrunAdi' => $urun["urunDilBilgiAdi"],
 			'siparisIcerikUrunVaryantDilBilgiAdi' => $urun["urunVaryantDilBilgiAdi"],
 			'siparisIcerikTeslimatDurumu' => 1,
-			'siparisIcerikFiyat' => $hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),
-			'siparisIcerikIndirimliFiyat' => $hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),
+			'siparisIcerikFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
+			'siparisIcerikIndirimliFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
 			'siparisIcerikGorsel' => $urun["urunGorsel"]
 		]);
 	}
-} else //eğer sipariş kaydı var ise
+} 
+else //eğer sipariş kaydı var ise
 {
 	$siparisKontrol = $db->get("Siparisler", "*", [
 		"siparisKodu" => $_SESSION['SiparisKodu']
 	]);
+	$siparisIskontoUcreti = $siparisKontrol["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
 	if ($siparisKontrol) {
 		$siparis = $db->update('Siparisler', [
 			'siparisUyeId' => $uye['uyeId'],
@@ -134,6 +138,10 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 			"siparisId" => $siparisKontrol["siparisId"]
 		]);
 
+		$silIcerik = $db->delete("SiparisIcerikleri", [
+			"siparisIcerikSiparisId" => $siparisKontrol["siparisId"]
+		]);
+
 		for ($i = 0; $i < count($sepet); $i++) {
 			$urun = $db->get("Urunler", [
 				"[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
@@ -141,6 +149,7 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 				"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
 				"[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
 				"[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+				"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
 			], "*", [
 				"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
 				"urunVaryantDilBilgiVaryantId" => $sepet[$i]["urunId"],
@@ -155,22 +164,18 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 			$araTutar += ($hesapla["birimFiyat"]) * $sepet[$i]["adet"];
 			$kdvTutar += ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]) * $sepet[$i]["adet"];
 
-			$silIcerik = $db->delete("SiparisIcerikleri", [
-				"siparisIcerikSiparisId" => $siparisKontrol["siparisId"]
-			]);
-
-
 			$siparisIcerik = $db->insert('SiparisIcerikleri', [
 				'siparisIcerikSiparisId' => $siparisId,
-				'siparisIcerikUrunId' => $sepet[$i]["urunId"],
+				'siparisIcerikUrunId' => $urun["urunId"],
 				'siparisIcerikVaryantId' => intval($sepet[$i]["varyantId"]),
+				'siparisIcerikUrunVaryantDilBilgiId' => intval($sepet[$i]["urunId"]),
 				'siparisIcerikAdet' => $sepet[$i]["adet"],
 				'siparisIcerikNot' => $sepet[$i]["siparisIcerikNot"],
 				'siparisIcerikUrunAdi' => $urun["urunDilBilgiAdi"],
 				'siparisIcerikUrunVaryantDilBilgiAdi' => $urun["urunVaryantDilBilgiAdi"],
 				'siparisIcerikTeslimatDurumu' => 1,
-				'siparisIcerikFiyat' => $hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),
-				'siparisIcerikIndirimliFiyat' => $hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),
+				'siparisIcerikFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
+				'siparisIcerikIndirimliFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
 				'siparisIcerikGorsel' => $urun["urunGorsel"]
 			]);
 		}

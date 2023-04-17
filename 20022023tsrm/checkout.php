@@ -1,11 +1,14 @@
 <?php
 include 'layouts/header.php';
+extract($_POST);
 if (!$_SESSION['uyeKodu']) {
     echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . '?link=checkout"; </script>';
     exit;
 } 
 else {
-    $uye = $db->get("Uyeler", "*", [
+    $uye = $db->get("Uyeler",[
+        "[<]UyeAdresler" => ["Uyeler.uyeId" => "uyeAdresUyeId"],
+    ], "*", [
         "uyeDurum" => 1,
         "uyeKodu" => $_SESSION['uyeKodu']
     ]);
@@ -18,12 +21,158 @@ if (count($sepet) <= 0) {
     echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . '"; </script>';
     exit;
 }
-$_SESSION['SiparisKodu'] = "";
+//$_SESSION['SiparisKodu'] = "";
+
+$siparisIskontoUcreti = 0;
+$siparisKargoUcreti = 0;
+$siparisIndirimYuzdesi = 0;
+$toplamTutar = 0;
+
+if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
+{
+	$siparisKodu = strval(mt_rand(100000000, 999999999));
+	$_SESSION['SiparisKodu'] = $siparisKodu;
+	$siparis = $db->insert('Siparisler', [
+		'siparisKodu' => $siparisKodu,
+		'siparisUyeId' => $uye['uyeId'],
+		'siparisNot' => $note,
+		'siparisTeslimatUyeAdresId' => $uye['uyeAdresId'],
+		'siparisFaturaUyeAdresId' => $uye['uyeAdresId'],
+		//'siparisOdemeTipiId' => $siparisOdemeTipiId,
+		'siparisIndirimKodu' => "",
+		//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
+		//'siparisKargoUcreti' => $siparisKargoUcreti,
+		'siparisDilId' => $_SESSION["dilId"],
+		'siparisParaBirimId' => $_SESSION["paraBirimId"],
+		'siparisOdemeBilgileri' => "",
+		'siparisTeslimatTarihi' => $siparisTeslimatTarihi,
+		'siparisKayitTarihi' => date("Y-m-d H:i:s")
+	]);
+	$siparisId = $db->id();
+
+	$siparisDurum = $db->insert('SiparisSiparisDurumlari', [
+		'siparisSiparisDurumSiparisId' => $siparisId,
+		'siparisSiparisDurumSiparisDurumId' => 1,
+		'siparisSiparisDurumKargoFirmaId' => 0,
+		'siparisSiparisDurumKargoTakipKodu' => "",
+		'siparisSiparisDurumKargoTakipLink' => "",
+		'siparisSiparisDurumKayitTarihi' => date("Y-m-d H:i:s")
+	]);
+
+	for ($i = 0; $i < count($sepet); $i++) {
+		$urun = $db->get("Urunler", [
+			"[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+			"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
+			"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
+			"[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
+			"[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+			"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
+		], "*", [
+			"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
+			"urunVaryantDilBilgiVaryantId" => $sepet[$i]["urunId"],
+			"urunVaryantDilBilgiDurum" => 1,
+			"ORDER" => [
+				"urunId" => "ASC"
+			]
+		]);
+
+		$hesapla = $fonk->Hesapla($sepet[$i]["urunId"], $sepet[$i]["varyantId"], $uye['uyeIndirimOrani']);
+		$toplamTutar += ($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"])) * $sepet[$i]["adet"];
+		$araTutar += ($hesapla["birimFiyat"]) * $sepet[$i]["adet"];
+		$kdvTutar += ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]) * $sepet[$i]["adet"];
+
+		$siparisIcerik = $db->insert('SiparisIcerikleri', [
+			'siparisIcerikSiparisId' => $siparisId,
+			'siparisIcerikUrunId' => $urun["urunId"],
+			'siparisIcerikVaryantId' => intval($sepet[$i]["varyantId"]),
+			'siparisIcerikUrunVaryantDilBilgiId' => intval($sepet[$i]["urunId"]),
+			'siparisIcerikAdet' => $sepet[$i]["adet"],
+			'siparisIcerikNot' => $note,
+			'siparisIcerikUrunAdi' => $urun["urunDilBilgiAdi"],
+			'siparisIcerikUrunVaryantDilBilgiAdi' => $urun["urunVaryantDilBilgiAdi"],
+			'siparisIcerikTeslimatDurumu' => 1,
+			'siparisIcerikFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
+			'siparisIcerikIndirimliFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
+			'siparisIcerikGorsel' => $urun["urunGorsel"]
+		]);
+	}
+} 
+else //eğer sipariş kaydı var ise
+{
+	$siparisKontrol = $db->get("Siparisler", "*", [
+		"siparisKodu" => $_SESSION['SiparisKodu']
+	]);
+    $siparisIskontoUcreti = $siparisKontrol["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
+   
+	if ($siparisKontrol) {
+		$siparis = $db->update('Siparisler', [
+			'siparisUyeId' => $uye['uyeId'],
+			'siparisNot' => $note,
+			'siparisTeslimatUyeAdresId' => $uye['uyeAdresId'],
+		    'siparisFaturaUyeAdresId' => $uye['uyeAdresId'],
+			//'siparisOdemeTipiId' => $siparisOdemeTipiId,
+			'siparisIndirimKodu' => "",
+			//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
+			//'siparisKargoUcreti' => $siparisKargoUcreti,
+			'siparisDilId' => $_SESSION["dilId"],
+			'siparisTeslimatTarihi' => $siparisTeslimatTarihi,
+			'siparisKayitTarihi' => date("Y-m-d H:i:s")
+		], [
+			"siparisId" => $siparisKontrol["siparisId"]
+		]);
+
+        $silIcerik = $db->delete("SiparisIcerikleri", [
+            "siparisIcerikSiparisId" => $siparisKontrol["siparisId"]
+        ]);
+
+
+		for ($i = 0; $i < count($sepet); $i++) {
+			$urun = $db->get("Urunler", [
+				"[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+				"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
+				"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
+				"[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
+				"[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+				"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
+			], "*", [
+				"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
+				"urunVaryantDilBilgiVaryantId" => $sepet[$i]["urunId"],
+				"urunVaryantDilBilgiDurum" => 1,
+				"ORDER" => [
+					"urunId" => "ASC"
+				]
+			]);
+
+			$hesapla = $fonk->Hesapla($sepet[$i]["urunId"], $sepet[$i]["varyantId"], $uye['uyeIndirimOrani']);
+			$toplamTutar += ($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"])) * $sepet[$i]["adet"];
+			$araTutar += ($hesapla["birimFiyat"]) * $sepet[$i]["adet"];
+			$kdvTutar += ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]) * $sepet[$i]["adet"];      
+
+			$siparisIcerik = $db->insert('SiparisIcerikleri', [
+				'siparisIcerikSiparisId' => $siparisKontrol["siparisId"],
+				'siparisIcerikUrunId' => $urun["urunId"],
+				'siparisIcerikVaryantId' => intval($sepet[$i]["varyantId"]),
+                'siparisIcerikUrunVaryantDilBilgiId' => intval($sepet[$i]["urunId"]),
+				'siparisIcerikAdet' => $sepet[$i]["adet"],
+				'siparisIcerikNot' => $note,
+				'siparisIcerikUrunAdi' => $urun["urunDilBilgiAdi"],
+				'siparisIcerikUrunVaryantDilBilgiAdi' => $urun["urunVaryantDilBilgiAdi"],
+				'siparisIcerikTeslimatDurumu' => 1,
+				'siparisIcerikFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
+				'siparisIcerikIndirimliFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),$urun["paraBirimKodu"],"TRY"),
+				'siparisIcerikGorsel' => $urun["urunGorsel"]
+			]);
+		}
+	} else {
+		echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . 'cart"; </script>';
+		exit;
+	}
+}
+
 ?>
 
 <div id="nt_content">
 
-    <!--shop banner-->
     <div class="kalles-section page_section_heading">
         <div class="page-head pr oh cat_bg_img page_head_">
             <div class="parallax-inner nt_parallax_false lazyload nt_bg_lz pa t__0 l__0 r__0 b__0" data-bgset="assets/img/banner.jpg"></div>
@@ -32,9 +181,7 @@ $_SESSION['SiparisKodu'] = "";
             </div>
         </div>
     </div>
-    <!--end shop banner-->
 
-    <!--cart section-->
     <form action="odeme" method="post">
         <div class="kalles-section cart_page_section container mt__60">
             <div class="frm_cart_page check-out_calculator">
@@ -145,6 +292,7 @@ $_SESSION['SiparisKodu'] = "";
                                                 "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
                                                 "[>]UrunKategoriler" => ["Urunler.urunId" => "urunKategoriUrunId"],
                                                 "[>]KategoriDilBilgiler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriDilBilgiKategoriId"],
+                                                "[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
                                             ], "*", [
                                                 "urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
                                                 "urunVaryantDilBilgiVaryantId" => $sepet[$i]["urunId"],
@@ -155,6 +303,7 @@ $_SESSION['SiparisKodu'] = "";
                                             ]);
 
                                             $hesapla = $fonk->Hesapla($sepet[$i]["urunId"], $sepet[$i]["varyantId"],$uye['uyeIndirimOrani']);
+                                            
                                             $toplamTutar += ($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"])) * $sepet[$i]["adet"];
                                             $araTutar += ($hesapla["birimFiyat"]) * $sepet[$i]["adet"];
                                             $kdvTutar += ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]) * $sepet[$i]["adet"];
@@ -165,12 +314,12 @@ $_SESSION['SiparisKodu'] = "";
                                                 </td>
                                                 <td class="product-total">
                                                     <span class="cart_price">
-                                                        <?= $_SESSION["paraBirimSembol"] . number_format($hesapla["birimFiyat"], 2, ",", "."); ?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir(number_format($hesapla["birimFiyat"],2,",","."),$urun["paraBirimKodu"],"TRY");?>
                                                     </span>
                                                 </td>
                                                 <td class="product-total">
                                                     <span class="cart_price">
-                                                        <?= $_SESSION["paraBirimSembol"] . number_format($hesapla["birimFiyat"] / 100 * $urun["urunKdv"], 2, ",", "."); ?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir(number_format($hesapla["birimFiyat"] / 100 * $urun["urunKdv"], 2, ",", "."),$urun["paraBirimKodu"],"TRY");?>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -178,40 +327,51 @@ $_SESSION['SiparisKodu'] = "";
                                     </tbody>
                                     <tfoot>
                                         <tr class="order-total cart_item">
-                                            
                                             <td class="product-total">
                                             </td>
                                             <th>Ara toplam</th>
                                             <td colspan="2">
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] . number_format($araTutar, 2, ",", "."); ?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($araTutar,$urun["paraBirimKodu"],"TRY");?>
                                                     </span>
                                                 </strong>
                                             </td>
                                         </tr>
                                         <tr class="order-total cart_item">
-                                        
                                             <td class="product-total">
                                             </td>
                                             <th>Toplam KDV</th>
                                             <td colspan="2">
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] . number_format($kdvTutar, 2, ",", "."); ?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($kdvTutar,$urun["paraBirimKodu"],"TRY");?>
                                                     </span>
                                                 </strong>
                                             </td>
                                         </tr>
+                                        <?php if($siparisIskontoUcreti > 0) {?>
                                         <tr class="order-total cart_item">
-                                        
+                                            <td class="product-total">
+                                            </td>
+                                            <th>İskonto</th>
+                                            <td colspan="2">
+                                                <strong>
+                                                    <span class="cart_price amount">
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?= $fonk->paraCevir($siparisIskontoUcreti,"USD","TRY");?>
+                                                    </span>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <?php } ?>
+                                        <tr class="order-total cart_item">
                                             <td class="product-total">
                                             </td>
                                             <th>Toplam</th>
                                             <td>
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] . number_format($toplamTutar, 2, ",", "."); ?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$urun["paraBirimKodu"],"TRY");?>
                                                     </span>
                                                 </strong>
                                             </td>
@@ -219,8 +379,8 @@ $_SESSION['SiparisKodu'] = "";
                                         <tr class="order-total cart_item">
                                             <th>Not:</th>
                                             <td>
-                                                <?= $note; ?>
-                                                <input type="hidden" name="note" value="<?= $note; ?>" />
+                                                <?= $_POST['note']; ?>
+                                                <input type="hidden" name="note" value="<?= $_POST['note']; ?>" />
                                             </td>
                                         </tr>
                                     </tfoot>
@@ -264,8 +424,6 @@ $_SESSION['SiparisKodu'] = "";
             </div>
         </div>
     </form>
-    
-    <!--end cart section-->
 
 </div>
 
