@@ -1,30 +1,32 @@
-<?php 
-include 'layouts/header.php'; 
+<?php
+include 'layouts/header.php';
 
 $seo = $_GET['seo'];
 
-$siparislerim = $db->get("Siparisler",[
-  "[>]Uyeler" => ["Siparisler.siparisUyeId" => "uyeId"],
-  "[>]UyeAdresler" => ["Siparisler.siparisTeslimatUyeAdresId" => "uyeAdresId"],
-  "[><]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
-  "[><]Iller" => ["UyeAdresler.uyeAdresIlId" => "ilId"],
-  "[><]Ilceler" => ["UyeAdresler.uyeAdresIlceId" => "ilceId"],
-  "[>]OdemeTipleri" => ["Siparisler.siparisOdemeTipiId" => "odemeTipId"],
-  "[>]Diller" => ["Siparisler.siparisDilId" => "dilId"],
-  "[>]ParaBirimleri" => ["Siparisler.siparisParaBirimId" => "paraBirimId"]
-],"*",[
-  "siparisKodu" => $seo,
+$siparislerim = $db->get("Siparisler", [
+    "[>]Uyeler" => ["Siparisler.siparisUyeId" => "uyeId"],
+    "[>]UyeAdresler" => ["Siparisler.siparisTeslimatUyeAdresId" => "uyeAdresId"],
+    "[><]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
+    "[><]Iller" => ["UyeAdresler.uyeAdresIlId" => "ilId"],
+    "[><]Ilceler" => ["UyeAdresler.uyeAdresIlceId" => "ilceId"],
+    "[>]OdemeTipleri" => ["Siparisler.siparisOdemeTipiId" => "odemeTipId"],
+    "[>]Diller" => ["Siparisler.siparisDilId" => "dilId"],
+    "[>]ParaBirimleri" => ["Siparisler.siparisParaBirimId" => "paraBirimId"]
+], "*", [
+    "siparisKodu" => $seo,
 ]);
 
-$siparisIcerikleri = $db->select("SiparisIcerikleri",[
-  "[<]Urunler" => ["SiparisIcerikleri.siparisIcerikUrunId" => "urunId"],
-  "[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
-],"*",[
-  "urunDilBilgiDilId" => $siparislerim["siparisDilId"],
-  "urunDurum" => 1,
-  "urunDilBilgiDurum" => 1,
-  "siparisIcerikSiparisId" => $siparislerim["siparisId"]
+$siparisIcerikleri = $db->select("SiparisIcerikleri", [
+    "[<]Urunler" => ["SiparisIcerikleri.siparisIcerikUrunId" => "urunId"],
+    "[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+], "*", [
+    "urunDilBilgiDilId" => $siparislerim["siparisDilId"],
+    "urunDurum" => 1,
+    "urunDilBilgiDurum" => 1,
+    "siparisIcerikSiparisId" => $siparislerim["siparisId"]
 ]);
+
+$siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskonto ücreti atamasını yaptık
 ?>
 
 <div id="nt_content">
@@ -62,34 +64,31 @@ $siparisIcerikleri = $db->select("SiparisIcerikleri",[
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php
-                            $toplamTutar=0;
-                            $araTutar=0;
-                            foreach ($siparisIcerikleri as $val){
-                                $toplamTutar+=$val['siparisIcerikAdet']*$val['siparisIcerikFiyat'];
-                                $araTutar+=$val['siparisIcerikAdet']*$val['siparisIcerikFiyat'];
+                                <?php
+                                $toplamTutar = 0;
+                                $araTutar = 0;
+                                foreach ($siparisIcerikleri as $val) {
+                                    $toplamTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikFiyat'];
+                                    $araTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikFiyat'];
 
-                                if($val['siparisIndirimKodu']!="" && $val['siparisIndirimYuzdesi']!=0)
-                                {
-                                $indirimMiktar=$toplamTutar/100*$val['siparisIndirimYuzdesi'];
-                                $toplamTutar-=$indirimMiktar;
-                                $indirimMiktar=$val["paraBirimSembol"].round($indirimMiktar,2);
-
-                                }
-                                if($val['siparisKargoUcreti']!=0)
-                                {
-                                $toplamTutar+=$val['siparisKargoUcreti'];
-                                $siparisKargoUcreti=$val["paraBirimSembol"].round($val['siparisKargoUcreti'],2);
-                            }
-                            ?>
-                                <tr class="cart_item">
-                                    <td class="product-name"><?=$seo?></td>
-                                    <td class="product-name"><?=$val["siparisIcerikUrunVaryantDilBilgiAdi"]?></td>
-                                    <td class="product-total text-center"><?=$val["siparisIcerikAdet"]?></td>
-                                    <td class="product-total text-center"><span class="cart_price"><?=$val["paraBirimSembol"].round(($val['siparisIcerikFiyat']),2)?></span></td>
-                                    <td class="product-total text-center"><span class="cart_price"><?=$val["paraBirimSembol"].round(($val['siparisIcerikAdet']*$val['siparisIcerikFiyat']),2)?></span></td>
-                                </tr>
-                            <?php } ?>
+                                    if ($val['siparisIndirimKodu'] != "" && $val['siparisIndirimYuzdesi'] != 0) {
+                                        $indirimMiktar = $toplamTutar / 100 * $val['siparisIndirimYuzdesi'];
+                                        $toplamTutar -= $indirimMiktar;
+                                        $indirimMiktar = $siparislerim["paraBirimSembol"] . round($indirimMiktar, 2);
+                                    }
+                                    if ($val['siparisKargoUcreti'] != 0) {
+                                        $toplamTutar += $val['siparisKargoUcreti'];
+                                        $siparisKargoUcreti = $siparislerim["paraBirimSembol"] . round($val['siparisKargoUcreti'], 2);
+                                    }
+                                ?>
+                                    <tr class="cart_item">
+                                        <td class="product-name"><?= $seo ?></td>
+                                        <td class="product-name"><?= $val["siparisIcerikUrunVaryantDilBilgiAdi"] ?></td>
+                                        <td class="product-total text-center"><?= $val["siparisIcerikAdet"] ?></td>
+                                        <td class="product-total text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($val['siparisIcerikFiyat']), 2) ?></span></td>
+                                        <td class="product-total text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($val['siparisIcerikAdet'] * $val['siparisIcerikFiyat']), 2) ?></span></td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                             <tfoot>
                                 <tr class="cart-subtotal cart_item">
@@ -97,28 +96,37 @@ $siparisIcerikleri = $db->select("SiparisIcerikleri",[
                                     <th></th>
                                     <th></th>
                                     <th class="text-center">Ara toplam</th>
-                                    <td class="text-center"><span class="cart_price"><?=$val["paraBirimSembol"].round(($araTutar),2)?></span></td>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($araTutar), 2) ?></span></td>
                                 </tr>
                                 <tr class="cart_item">
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                     <th class="text-center">İndirim</th>
-                                    <td class="text-center"><span class="cart_price"><?=$val["paraBirimSembol"].round(($indirimMiktar),2)?></span></td>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($indirimMiktar), 2) ?></span></td>
                                 </tr>
+                                <?php if ($siparisOdenenIskontoUcreti > 0) { ?>
+                                    <tr class="cart_item">
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th class="text-center">İskonto</th>
+                                        <td class="text-center"> <span class="cart_price"><?= $siparislerim["paraBirimSembol"] ?><?= $siparisOdenenIskontoUcreti; ?></span></td>
+                                    </tr>
+                                <?php } ?>
                                 <tr class="cart-subtotal cart_item">
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                     <th class="text-center">Gönderim Ücreti</th>
-                                    <td class="text-center"><span class="cart_price"><?=$val["paraBirimSembol"].round(($siparisKargoUcreti),2)?></span></td>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($siparisKargoUcreti), 2) ?></span></td>
                                 </tr>
                                 <tr class="order-total cart_item">
                                     <th></th>
                                     <th></th>
                                     <th></th>
                                     <th class="text-center">Toplam</th>
-                                    <td class="text-center"><strong><span class="cart_price amount"><?=$val["paraBirimSembol"].round(($toplamTutar),2)?></span></strong></td>
+                                    <td class="text-center"><strong><span class="cart_price amount"><?= $siparislerim["paraBirimSembol"] . round(($toplamTutar-$siparisOdenenIskontoUcreti), 2) ?></span></strong></td>
                                 </tr>
                             </tfoot>
                         </table>

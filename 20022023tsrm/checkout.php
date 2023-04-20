@@ -21,7 +21,6 @@ if (count($sepet) <= 0) {
     echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . '"; </script>';
     exit;
 }
-//$_SESSION['SiparisKodu'] = "";
 
 $siparisIskontoUcreti = 0;
 $siparisKargoUcreti = 0;
@@ -103,7 +102,7 @@ else //eğer sipariş kaydı var ise
 		"siparisKodu" => $_SESSION['SiparisKodu']
 	]);
     $siparisIskontoUcreti = $siparisKontrol["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
-   
+    $siparisOdenenIskontoUcreti = $fonk->paraCevir($siparisIskontoUcreti,"USD","TRY");
 	if ($siparisKontrol) {
 		$siparis = $db->update('Siparisler', [
 			'siparisUyeId' => $uye['uyeId'],
@@ -115,6 +114,7 @@ else //eğer sipariş kaydı var ise
 			//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
 			//'siparisKargoUcreti' => $siparisKargoUcreti,
 			'siparisDilId' => $_SESSION["dilId"],
+            'siparisOdenenIskontoUcreti' => $siparisOdenenIskontoUcreti,
 			'siparisTeslimatTarihi' => $siparisTeslimatTarihi,
 			'siparisKayitTarihi' => date("Y-m-d H:i:s")
 		], [
@@ -358,7 +358,7 @@ else //eğer sipariş kaydı var ise
                                             <td colspan="2">
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?= $fonk->paraCevir($siparisIskontoUcreti,"USD","TRY");?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?= $siparisOdenenIskontoUcreti;?>
                                                     </span>
                                                 </strong>
                                             </td>
@@ -389,7 +389,7 @@ else //eğer sipariş kaydı var ise
                                 <div class="checkout-payment">
                                     <ul class="payment_methods">
                                         <li class="payment_method">
-                                            <input id="payment_method_stripe" type="radio" class="input-radio" name="odemeTipi" value="stripe" checked="checked">
+                                            <input id="payment_method_stripe" type="radio" class="input-radio" name="odemeTipi" value="iyzico" checked="checked">
                                             <label for="payment_method_stripe">
                                                 Kredi kartı
                                                 <img src="assets/images/shopping-cart/visa.svg" class="stripe-visa-icon stripe-icon" alt="Visa">

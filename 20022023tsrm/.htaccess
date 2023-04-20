@@ -26,6 +26,7 @@ RewriteRule ^myorders myorders.php [NC]
 RewriteRule ^user-profile user-profile.php [NC]
 RewriteRule ^odeme odeme.php [NC]
 RewriteRule ^havale havale.php [NC]
+RewriteRule ^thanks thanks.php [NC]
 
 #Parametreli url ler#
 RewriteRule ^product/([^/]*)$ product.php?seo=$1 [L,QSA]

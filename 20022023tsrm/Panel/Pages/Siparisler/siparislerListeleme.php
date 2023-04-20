@@ -285,6 +285,7 @@ else{//Listeleme Yetkisi Var
 												<th><?=$fonk->getPDil("Uye Mail")?></th>
 												<th><?=$fonk->getPDil("İçerik")?></th>
 												<th><?=$fonk->getPDil("Ödeme Tipi")?></th>
+												<th><?=$fonk->getPDil("İskonto")?></th>
 												<th><?=$fonk->getPDil("Ödenen Tutar")?></th>
 												<th><?=$fonk->getPDil("Durumu")?></th>
 												<th><?=$fonk->getPDil("Dil")?></th>
@@ -334,6 +335,7 @@ else{//Listeleme Yetkisi Var
 												$icerik="";
 												$icerikSayac=0;
 												$toplamTutar=0;
+												$siparisOdenenIskontoUcreti=0;
 												foreach($siparisIcerikleri as $siparisIcerik){
 													$icerikSayac++;
 													if ($icerikSayac<=2) {
@@ -349,6 +351,10 @@ else{//Listeleme Yetkisi Var
 												if($list['siparisKargoUcreti']!=0){
 													$toplamTutar+=$list['siparisKargoUcreti'];
 												}
+												if($list["siparisOdenenIskontoUcreti"] > 0){
+													$siparisOdenenIskontoUcreti=$list["siparisOdenenIskontoUcreti"];
+													$toplamTutar-=$siparisOdenenIskontoUcreti;
+												}
 												?>
 												<tr id="trSatir-<?=$list[$tabloPrimarySutun];?>" class="<?=$satirRenk?>">
 													<td><?=$list[$tabloPrimarySutun];?></td>
@@ -360,6 +366,7 @@ else{//Listeleme Yetkisi Var
 													<td><?=$list['uyeMail'];?></td>
 													<td><?=$icerik;?></td>
 													<td><?=$list['odemeTipAdi'];?></td>
+												 	<th><?="$".round($list["siparisIskontoUcreti"],2);?> ( <?=$list["paraBirimSembol"].round($siparisOdenenIskontoUcreti,2);?> )</th> 
 													<th><?=$list["paraBirimSembol"].round($toplamTutar,2);?></th>
 													<td data-sort="<?=$siparisDurum['siparisDurumId'];?>"><?=$siparisDurum['siparisDurumDilBilgiBaslik'];?></td>
 													<td><?=$list['dilAdi'];?></td>

@@ -1,7 +1,7 @@
-<?php 
-include 'layouts/header.php'; 
+<?php
+include 'layouts/header.php';
 
-$siparislerim = $db->select("Siparisler",[
+$siparislerim = $db->select("Siparisler", [
     "[>]Uyeler" => ["Siparisler.siparisUyeId" => "uyeId"],
     "[>]UyeAdresler" => ["Siparisler.siparisTeslimatUyeAdresId" => "uyeAdresId"],
     "[><]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
@@ -10,10 +10,10 @@ $siparislerim = $db->select("Siparisler",[
     "[>]OdemeTipleri" => ["Siparisler.siparisOdemeTipiId" => "odemeTipId"],
     "[>]Diller" => ["Siparisler.siparisDilId" => "dilId"],
     "[>]ParaBirimleri" => ["Siparisler.siparisParaBirimId" => "paraBirimId"]
-  ],"*",[
+], "*", [
     "siparisUyeId" => $uye['uyeId'],
     "siparisOdemeBilgileri[!]" => "",
-  ]);
+]);
 ?>
 
 <div id="nt_content">
@@ -50,51 +50,52 @@ $siparislerim = $db->select("Siparisler",[
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($siparislerim as $list){
-                                $siparisDurum = $db->get("SiparisSiparisDurumlari",[
-                                "[<]SiparisDurumlari" => ["SiparisSiparisDurumlari.siparisSiparisDurumSiparisDurumId" => "siparisDurumId"],
-                                "[<]SiparisDurumDilBilgiler" => ["SiparisDurumlari.siparisDurumId" => "siparisDurumDilBilgiSiparisDurumId"],
-                                "[>]KargoFirmalari" => ["SiparisSiparisDurumlari.siparisSiparisDurumKargoFirmaId" => "kargoFirmaId"]
-                                ],"*",[
-                                "siparisSiparisDurumSiparisId" => $list["siparisId"],
-                                "siparisDurumDilBilgiDilId" => $list["siparisDilId"],
-                                "ORDER" => [
-                                    "siparisSiparisDurumId" => "DESC",
-                                ]
-                                ]);
+                                <?php foreach ($siparislerim as $list) {
+                                    $siparisDurum = $db->get("SiparisSiparisDurumlari", [
+                                        "[<]SiparisDurumlari" => ["SiparisSiparisDurumlari.siparisSiparisDurumSiparisDurumId" => "siparisDurumId"],
+                                        "[<]SiparisDurumDilBilgiler" => ["SiparisDurumlari.siparisDurumId" => "siparisDurumDilBilgiSiparisDurumId"],
+                                        "[>]KargoFirmalari" => ["SiparisSiparisDurumlari.siparisSiparisDurumKargoFirmaId" => "kargoFirmaId"]
+                                    ], "*", [
+                                        "siparisSiparisDurumSiparisId" => $list["siparisId"],
+                                        "siparisDurumDilBilgiDilId" => $list["siparisDilId"],
+                                        "ORDER" => [
+                                            "siparisSiparisDurumId" => "DESC",
+                                        ]
+                                    ]);
 
-                                $siparisIcerikleri = $db->select("SiparisIcerikleri",[
-                                "[<]Urunler" => ["SiparisIcerikleri.siparisIcerikUrunId" => "urunId"],
-                                "[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
-                                ],"*",[
-                                "urunDilBilgiDilId" => $list["siparisDilId"],
-                                "urunDurum" => 1,
-                                "urunDilBilgiDurum" => 1,
-                                "siparisIcerikSiparisId" => $list["siparisId"]
-                                ]);
-                                $toplamTutar=0;
-                                foreach($siparisIcerikleri as $siparisIcerik){
-                                $toplamTutar+=$siparisIcerik['siparisIcerikAdet']*$siparisIcerik['siparisIcerikFiyat'];
-                                }
-                                if($list['siparisIndirimKodu']!="" && $list['siparisIndirimYuzdesi']!=0)
-                                {
-                                $toplamTutar-=($toplamTutar/100*$list['siparisIndirimYuzdesi']);
-                                }
-                                if($list['siparisKargoUcreti']!=0)
-                                {
-                                $toplamTutar+=$list['siparisKargoUcreti'];
-                                }
-                            ?>
-                                <tr class="cart_item">
-                                    <td class="product-name"><?=$list['siparisKodu']?></td>
-                                    <td class="product-total"><span class="cart_price"><?=$list["paraBirimSembol"].round($toplamTutar,2);?></span></td>
-                                    <td class="product-name"><?=$fonk->sqlToDateTime($list['siparisKayitTarihi']);?></td>
-                                    <td class="product-total"><?=$siparisDurum['siparisDurumDilBilgiBaslik'];?></td>
-                                    <td class="product-total">
-                                        <a type="button" href="myorder/<?=$list['siparisKodu']?>" class="button button_primary w-100">Detay</a>
-                                    </td>
-                                </tr>
-                            <?php } ?>
+                                    $siparisIcerikleri = $db->select("SiparisIcerikleri", [
+                                        "[<]Urunler" => ["SiparisIcerikleri.siparisIcerikUrunId" => "urunId"],
+                                        "[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+                                    ], "*", [
+                                        "urunDilBilgiDilId" => $list["siparisDilId"],
+                                        "urunDurum" => 1,
+                                        "urunDilBilgiDurum" => 1,
+                                        "siparisIcerikSiparisId" => $list["siparisId"]
+                                    ]);
+                                    $toplamTutar = 0;
+                                    foreach ($siparisIcerikleri as $siparisIcerik) {
+                                        $toplamTutar += $siparisIcerik['siparisIcerikAdet'] * $siparisIcerik['siparisIcerikFiyat'];
+                                    }
+                                    if ($list['siparisIndirimKodu'] != "" && $list['siparisIndirimYuzdesi'] != 0) {
+                                        $toplamTutar -= ($toplamTutar / 100 * $list['siparisIndirimYuzdesi']);
+                                    }
+                                    if ($list['siparisKargoUcreti'] != 0) {
+                                        $toplamTutar += $list['siparisKargoUcreti'];
+                                    }
+                                    if($list["siparisOdenenIskontoUcreti"] > 0){
+                                        $toplamTutar-=$list["siparisOdenenIskontoUcreti"];
+                                    }
+                                ?>
+                                    <tr class="cart_item">
+                                        <td class="product-name"><?= $list['siparisKodu'] ?></td>
+                                        <td class="product-total"><span class="cart_price"><?= $list["paraBirimSembol"] . round($toplamTutar, 2); ?></span></td>
+                                        <td class="product-name"><?= $fonk->sqlToDateTime($list['siparisKayitTarihi']); ?></td>
+                                        <td class="product-total"><?= $siparisDurum['siparisDurumDilBilgiBaslik']; ?></td>
+                                        <td class="product-total">
+                                            <a type="button" href="myorder/<?= $list['siparisKodu'] ?>" class="button button_primary w-100">Detay</a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                     </div>

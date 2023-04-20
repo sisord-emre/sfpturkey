@@ -368,8 +368,10 @@ else{//Listeleme Yetkisi Var
 													<td><?=$icerik;?></td>
 													<td><?=$list['odemeTipAdi'];?></td>
 													
-													<th><input type="text" name="siparisIskontoUcreti" id="durum-<?=$list[$tabloPrimarySutun];?>" value="<?=$list['siparisIskontoUcreti']?>" onchange="FiyatDegistir(<?=$list[$tabloPrimarySutun];?>)"></th>
-													<!-- <th><?="$".round($list["siparisIskontoUcreti"],2);?> ( <?=$list["paraBirimSembol"].round($siparisIskontoUcreti,2);?> )</th> -->
+													<th>
+														<input type="text" onchange="FiyatDegistir('<?=$list[$tabloPrimarySutun];?>');" name="siparisIskontoUcreti" id="durum-<?=$list[$tabloPrimarySutun];?>" value="<?=$list['siparisIskontoUcreti']?>">
+													</th>
+												
 													<th id="tutar-<?=$list[$tabloPrimarySutun];?>">
 														<?=$list["paraBirimSembol"].round($toplamTutar,2);?>
 													</th>
@@ -439,7 +441,7 @@ else{//Listeleme Yetkisi Var
 			success: function(res){
 				if(res.status == "success"){
 					toastr.success('<?=$fonk->getPDil("Güncelleme Sağlandı.")?>');
-					document.getElementById("tutar-"+Id).innerHTML = <?=$list["paraBirimSembol"]?> parseFloat(res.result.tutar).formatMoney(2, ",", ".");
+					document.getElementById("tutar-"+Id).innerHTML = "$"+ parseFloat(res.result.tutar).formatMoney(2, ",", ".");
 				}else{
 					alert(res);
 				}

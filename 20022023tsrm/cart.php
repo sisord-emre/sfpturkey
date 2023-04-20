@@ -6,7 +6,6 @@ if(!$uyeVar)
     echo '<script> window.location.href="'.$sabitB['sabitBilgiSiteUrl'].'account";</script>';
     exit;
 }
-//unset($_SESSION['SiparisKodu']);
 ?>
 
 <div id="nt_content">

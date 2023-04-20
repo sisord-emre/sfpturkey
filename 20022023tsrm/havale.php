@@ -32,6 +32,16 @@ if($siparis['siparisIndirimKodu']!="" && $siparis['siparisIndirimYuzdesi']!=0){
 if($siparis['siparisKargoUcreti']!=0){
     $toplamTutar+=$siparis['siparisKargoUcreti'];
 }
+if($siparis["siparisOdenenIskontoUcreti"] > 0){
+    $toplamTutar-=$siparis["siparisOdenenIskontoUcreti"];
+}
+
+$odemeLoglari = $db->insert('OdemeLoglari', [
+    'odemeLogSiparisKod' => $_GET["s"],
+    'odemeLogHata' => "havale sayfasına yönlendirme başarılı",
+    'odemeLogStatus' => "success",
+    'odemeLogTarih' => date("Y-m-d H:i:s")
+]);
 ?>
 <div id="nt_content">
     <!--hero banner-->

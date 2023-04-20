@@ -12,6 +12,8 @@ $dilList = $db->get("Diller", "*", [
     "dilId" => $_SESSION["dilId"]
 ]);
 
+$_SESSION["dilKodu"] = $dilList['dilKodu'];
+
 if (strstr($_SERVER['PHP_SELF'], "product.php")) 
 {
     $seo = intval(explode('-', $_GET['seo'])[0]);
