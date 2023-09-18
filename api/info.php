@@ -1,0 +1,5 @@
+<?php
+$sifre='&tpwd=BB1FF10E1599913A26CF7C2857E09659&command=postxml_stokhrk&sirketKodu=01&calismaYili=2022&xmlValue=<?xml version="1.0" encoding="UTF-8"?> <WSH> 	<AYAR> 		<TRSVER><![CDATA[ASWSH1.02.03]]></TRSVER> 		<SERVERNAME><![CDATA[195.174.216.24]]></SERVERNAME> 		<DBFILENAME><![CDATA[C:\AKINSOFT\Wolvox8\Database_FB\01\2022\WOLVOX.FDB]]></DBFILENAME> 		<LCTYPE><![CDATA[WIN1254]]></LCTYPE> 		<COLLATE><![CDATA[PXW_TURK_CI_AI]]></COLLATE> 		<PERSUSER><![CDATA[MUHASEBE]]></PERSUSER> 		<SUBE_KODU><![CDATA[ARGESUBE1]]></SUBE_KODU> 	</AYAR> 	<STOKHAREKET> 		<HAREKET> 			<BLSTKODU><![CDATA[2]]></BLSTKODU> 			<DEPO_ADI><![CDATA[MERKEZ]]></DEPO_ADI> 			<KPB_FIYATI><![CDATA[44]]></KPB_FIYATI> 			<MIKTAR_2><![CDATA[1]]></MIKTAR_2> 			<TUTAR_TURU><![CDATA[0]]></TUTAR_TURU> 		</HAREKET> 	</STOKHAREKET> </WSH> &';
+$encodedString = urlencode(base64_encode($sifre));
+echo $encodedString;
+?>

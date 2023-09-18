@@ -1,0 +1,50 @@
+.image-border {
+    border: 1px solid #ccc;
+    box-shadow: 5px 5px 5px #999;
+}
+
+@media (max-width: 1024.98px) { 
+    .mb--3 {
+        margin-bottom: 1rem!important;
+    }
+}
+
+.span-color-red {
+    color: red;
+}
+
+.kisalt {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /*Kaç Stırda sınırlamak istiyorsanız */
+    -webkit-box-orient: vertical; 
+    overflow:hidden;
+}
+
+.favori_added i:before{
+    content: '\e804';
+    color: #e81e63;
+}
+
+.button-liste {
+    background-color: #666666; /* Gray */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 12px;
+}
+
+.button-bayi {
+    background-color: #666666; /* Gray */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 12px;
+}

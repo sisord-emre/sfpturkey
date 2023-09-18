@@ -1,0 +1,41 @@
+RewriteEngine On
+
+
+RewriteCond %{HTTP_HOST} ^board.domain.local$
+RewriteCond %{REQUEST_URI} !^/board
+RewriteRule ^(.*)$ board/$1 [QSA,L]
+
+
+RewriteCond %{HTTP_HOST} ^domain.local$
+RewriteCond %{REQUEST_URI} !^/web
+RewriteRule ^(.*)$ web/$1 [QSA,L]
+
+
+#RewriteCond %{HTTP_HOST} !^www\.
+#RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#RewriteCond %{HTTPS} off
+#RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+#Parametresiz url ler#
+
+RewriteRule ^account account.php [NC]
+RewriteRule ^cart cart.php [NC]
+RewriteRule ^checkout checkout.php [NC]
+RewriteRule ^index index.php [NC]
+RewriteRule ^myorders myorders.php [NC]
+RewriteRule ^user-profile user-profile.php [NC]
+RewriteRule ^odeme odeme.php [NC]
+RewriteRule ^havale havale.php [NC]
+RewriteRule ^thanks thanks.php [NC]
+RewriteRule ^contact contact.php [NC]
+RewriteRule ^favori favori.php [NC]
+RewriteRule ^profile-edit profile-edit.php [NC]
+RewriteRule ^urun-iadesi urun-iadesi.php [NC]
+
+#Parametreli url ler#
+RewriteRule ^product/([^/]*)$ product.php?seo=$1 [L,QSA]
+RewriteRule ^products/([^/]*)$ products.php?seo=$1 [L,QSA]
+RewriteRule ^search/([^/]*)$ search.php?ara=$1 [L,QSA]
+RewriteRule ^page/([^/]*)$ page.php?seo=$1 [L,QSA]
+RewriteRule ^myorder/([^/]*)$ myorder.php?seo=$1 [L,QSA]
+RewriteRule ^brands/([^/]*)$ brands.php?seo=$1 [L,QSA]
