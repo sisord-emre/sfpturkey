@@ -1,6 +1,7 @@
 <?php 
 include('../Panel/System/Config.php');
 if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
+	
     $userLink = $fonk->akinSoftConnection('wlogin','MUHASEBE','6512bd43d9caa6e02c990b0a82652dca','202217518','535AD','60');
     $userLink=base64_encode($userLink);
     $url="http://195.174.216.24:3056/getdata.html?".$userLink;
@@ -19,6 +20,9 @@ if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
     $xml_to_json = json_encode($xml, JSON_PRETTY_PRINT);
     if($sonuc)
     {
+		$db->delete("UrunListBotlari", [
+			"urunListBotTip" => 2
+		]);
         $parametreler = array(
             "urunListBotData" => $sonuc,
             "urunListBotDataJson" => $xml_to_json,

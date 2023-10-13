@@ -15,26 +15,33 @@ if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
         $array_count = count($data["report"]["table"]["row"]);
         for($i=0; $i<$array_count; $i++)
         {
+			if($data["report"]["table"]["row"][$i]["DSF1"]["__cdata"]==""){
+				$fiyat=0;
+			}else{
+				$fiyat=$data["report"]["table"]["row"][$i]["DSF1"]["__cdata"];
+			}
+            $fiyat = str_replace(",", ".", $fiyat);
+            $fiyat = floatval($fiyat);
             $parametreler = array(
-                "urunFiyat" => str_replace(",", ".", $data["report"]["table"]["row"][$i]["DSF1"]["__cdata"]),
+                "urunFiyat" => $fiyat,
                 'urunGuncellemeTarihi' => date("Y-m-d H:i:s")
             );
             $query = $db->update("Urunler", $parametreler, [
-                "urunModel" => $data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"]
+                "urunModel" => trim($data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"])
             ]);
 
             $urunVaryant = $db->get("UrunVaryantlari",[
                 "[>]Urunler" => ["UrunVaryantlari.urunVaryantUrunId" => "urunId"],
             ], "*", [
-                "urunModel" => $data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"],
+                "urunModel" => trim($data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"]),
                 "ORDER" => [
                     "UrunVaryantlari" => "ASC"
                 ]
             ]);
 
             $urunVaryantParametreler = array(
-                "urunVaryantFiyat" => str_replace(",", ".", $data["report"]["table"]["row"][$i]["DSF1"]["__cdata"])
-            );
+                "urunVaryantFiyat" => $fiyat
+            ); 
             $urunVaryantQuery = $db->update("UrunVaryantlari", $urunVaryantParametreler, [
                 "urunVaryantUrunId" => $urunVaryant["urunId"]
             ]);

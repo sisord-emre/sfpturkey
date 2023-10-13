@@ -154,7 +154,7 @@ $favoriDurum = $db->get("UrunFavoriler", [
                                                                         <?= $fonk->getDil("Liste Özel Fiyat"); ?>:
                                                                         <del style="color:white;">
                                                                             <?php $hesapla = $fonk->Hesapla($urun["urunVaryantId"], ""); ?>
-                                                                            <?= $urun["paraBirimSembol"] ?><?= $hesapla["birimFiyat"]; ?>
+                                                                            <?= $urun["paraBirimSembol"] ?><?= number_format($hesapla["birimFiyat"],2,',','.'); ?>
                                                                         </del>
                                                                     </span>
                                                                     <br>
@@ -162,12 +162,12 @@ $favoriDurum = $db->get("UrunFavoriler", [
                                                                         <?= $fonk->getDil("Bayi Özel Fiyat"); ?>:
                                                                         <ins style="color:white;">
                                                                             <?php $hesapla2 = $fonk->Hesapla($urun["urunVaryantId"], "", $uye['uyeIndirimOrani']); ?>
-                                                                            <?= $urun["paraBirimSembol"] ?><?= $hesapla2["birimFiyat"]; ?>
+                                                                            <?= $urun["paraBirimSembol"] ?><?= number_format($hesapla2["birimFiyat"],2,',','.'); ?>
                                                                         </ins>
                                                                     </span>
                                                                 <?php else : ?>
                                                                     <?php $hesapla = $fonk->Hesapla($urun["urunVaryantId"], ""); ?>
-                                                                    <ins> <?= $urun["paraBirimSembol"] ?><?= $hesapla["birimFiyat"]; ?></ins>
+                                                                    <ins> <?= $urun["paraBirimSembol"] ?><?= number_format($hesapla["birimFiyat"],2,',','.'); ?></ins>
                                                                 <?php endif; ?>
                                                             </div>
                                                         <?php } ?>
@@ -178,7 +178,7 @@ $favoriDurum = $db->get("UrunFavoriler", [
                                                             <span class="txt_add "><?= $fonk->getDil("Sepete Ekle"); ?></span>
                                                         </button>
 
-                                                        <button onclick="location.href='<?= $urun['urunDataSheetBaseUrl'] ?><?= $urun['urunDataSheet'] ?>'" target="_blank" class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block animated mr-4">
+                                                        <button onClick="javascript:window.open('<?= $urun['urunDataSheetBaseUrl'] ?><?= $urun['urunDataSheet'] ?>', '_blank');" class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block animated mr-4">
                                                             <span class="txt_add "> <?= $fonk->getDil("DATASHEET"); ?></span>
                                                         </button>
 

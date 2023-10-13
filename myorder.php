@@ -36,7 +36,7 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
         <div class="page-head pr oh cat_bg_img page_head_">
             <div class="parallax-inner nt_parallax_false lazyload nt_bg_lz pa t__0 l__0 r__0 b__0" data-bgset="assets/img/banner.jpg"></div>
             <div class="container pr z_100">
-                <h1 class="mb__5 cw">Sipariş Detayı</h1>
+                <h1 class="mb__5 cw"><?= $fonk->getDil("Sipariş Detayı"); ?></h1>
             </div>
         </div>
     </div>
@@ -56,20 +56,23 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                         <table class="checkout-review-order-table">
                             <thead>
                                 <tr class="text-uppercase">
-                                    <th class="product-total"><b>Sipariş Kodu</b></th>
-                                    <th class="product-name"><b>Ürün</b></th>
-                                    <th class="product-total text-center"><b>Adet Mİktar</b></th>
-                                    <th class="product-name text-center"><b>Sİparİş Fİyatı</b></th>
-                                    <th class="product-total text-center"><b>Sİparİş Toplamı</b></th>
+                                    <th class="product-total"><b><?= $fonk->getDil("Sipariş Kodu"); ?></b></th>
+                                    <th class="product-name"><b><?= $fonk->getDil("Ürün"); ?></b></th>
+                                    <th class="product-total text-center"><b><?= $fonk->getDil("Adet"); ?></b></th>
+                                    <th class="product-name text-center"><b><?= $fonk->getDil("KDV Dahil Birim Fİyatı"); ?></b></th>
+                                    <th class="product-total text-center"><b><?= $fonk->getDil("KDV Dahil Sipariş Toplamı"); ?></b></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 $toplamTutar = 0;
                                 $araTutar = 0;
+                                $kdvTutar = 0;
+                                $siparisKargoUcreti = 0;
                                 foreach ($siparisIcerikleri as $val) {
                                     $toplamTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikFiyat'];
-                                    $araTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikFiyat'];
+                                    $araTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikKdvsizFiyat'];
+                                    $kdvTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikKdv'];
 
                                     if ($val['siparisIndirimKodu'] != "" && $val['siparisIndirimYuzdesi'] != 0) {
                                         $indirimMiktar = $toplamTutar / 100 * $val['siparisIndirimYuzdesi'];
@@ -78,16 +81,15 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                     }
                                 ?>
                                     <tr class="cart_item">
-                                        <td class="product-name"><?= $seo ?></td>
+                                        <td class="product-name" style="width: 15%;"><?= $seo ?></td>
                                         <td class="product-name"><?= $val["siparisIcerikUrunVaryantDilBilgiAdi"] ?></td>
-                                        <td class="product-total text-center"><?= $val["siparisIcerikAdet"] ?></td>
-                                        <td class="product-total text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($val['siparisIcerikFiyat']), 2) ?></span></td>
-                                        <td class="product-total text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($val['siparisIcerikAdet'] * $val['siparisIcerikFiyat']), 2) ?></span></td>
+                                        <td class="product-total text-center" style="width: 10%;"><?= $val["siparisIcerikAdet"] ?></td>
+                                        <td class="product-total text-center" style="width: 20%;"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($val['siparisIcerikFiyat'],2,',','.') ?></span></td>
+                                        <td class="product-total text-center" style="width: 25%;"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format(($val['siparisIcerikAdet'] * $val['siparisIcerikFiyat']),2,',','.') ?></span></td>
                                     </tr>
                                 <?php } ?>
                                 <?php
                                 if ($siparislerim['siparisKargoUcreti'] != 0) {
-                                    $toplamTutar += $siparislerim['siparisKargoUcreti'] + $siparislerim['siparisKargoKdvUcreti'];
                                     $siparisKargoUcreti = round($siparislerim['siparisKargoUcreti'], 2);
                                 }
                                 ?>
@@ -96,39 +98,46 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                 <tr class="cart-subtotal cart_item">
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th class="text-center">Ara toplam</th>
-                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($araTutar), 2) ?></span></td>
+                                    <th colspan="2" style="text-align:right;"><?= $fonk->getDil("KDV Hariç Ara Toplam"); ?></th>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($araTutar,2,',','.'); ?></span></td>
                                 </tr>
-                                <tr class="cart_item">
+                                <tr class="cart-subtotal cart_item">
                                     <th></th>
                                     <th></th>
+                                    <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Toplam KDV"); ?></th>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($kdvTutar,2,',','.'); ?></span></td>
+                                </tr>
+                                <tr class="cart-subtotal cart_item">
                                     <th></th>
-                                    <th class="text-center">İndirim</th>
-                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($indirimMiktar), 2) ?></span></td>
+                                    <th></th>
+                                    <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Kdv Dahil Toplam"); ?></th>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($toplamTutar,2,',','.'); ?></span></td>
                                 </tr>
                                 <?php if ($siparisOdenenIskontoUcreti > 0) { ?>
                                     <tr class="cart_item">
                                         <th></th>
                                         <th></th>
+                                        <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Proje İskonto"); ?></th>
+                                        <td class="text-center"> <span class="cart_price"><?= $siparislerim["paraBirimSembol"] ?><?=number_format($siparisOdenenIskontoUcreti,2,',','.'); ?></span></td>
+                                    </tr>
+                                    <tr class="cart_item">
                                         <th></th>
-                                        <th class="text-center">İskonto</th>
-                                        <td class="text-center"> <span class="cart_price"><?= $siparislerim["paraBirimSembol"] ?><?= $siparisOdenenIskontoUcreti; ?></span></td>
+                                        <th></th>
+                                        <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Kdv Dahil Proje Tutarı"); ?></th>
+                                        <td class="text-center"> <span class="cart_price"><?= $siparislerim["paraBirimSembol"] ?><?=number_format($toplamTutar - $siparisOdenenIskontoUcreti,2,',','.'); ?></span></td>
                                     </tr>
                                 <?php } ?>
                                 <tr class="cart-subtotal cart_item">
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th class="text-center">Gönderim Ücreti</th>
-                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . round(($siparisKargoUcreti), 2) ?></span></td>
+                                    <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Vergiler Dahil Kargo Ucreti"); ?></th>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] .number_format($siparisKargoUcreti,2,',','.'); ?></span></td>
                                 </tr>
                                 <tr class="order-total cart_item">
                                     <th></th>
                                     <th></th>
-                                    <th></th>
-                                    <th class="text-center">Toplam</th>
-                                    <td class="text-center"><strong><span class="cart_price amount"><?= $siparislerim["paraBirimSembol"] . round(($toplamTutar-$siparisOdenenIskontoUcreti), 2) ?></span></strong></td>
+                                    <th colspan="2" style="text-align:right;"><?= $fonk->getDil("TOPLAM"); ?></th>
+                                    <td class="text-center"><strong><span class="cart_price amount"><?= $siparislerim["paraBirimSembol"] ?><?=number_format($toplamTutar - $siparisOdenenIskontoUcreti + $siparisKargoUcreti,2,',','.'); ?></span></strong></td>
                                 </tr>
                             </tfoot>
                         </table>

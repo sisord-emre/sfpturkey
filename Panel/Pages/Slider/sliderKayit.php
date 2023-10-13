@@ -192,7 +192,11 @@ else{//Listeleme Yetkisi Var
 												<label for="sliderDilId"><?=$fonk->getPDil("Diller")?><small style="color:red;margin-left:1rem">*</small></label>
 												<select class="select2 form-control block" name="sliderDilId" id="sliderDilId" required>
 													<?php
-													$sorguList = $db->select("Diller","*");
+													$sorguList = $db->select("Diller","*",[
+														"ORDER" => [
+															"dilId" => "ASC"
+														]
+													]);
 													foreach($sorguList as $sorgu){
 														?>
 														<option value="<?=$sorgu['dilId']?>" <?php if($sorgu['dilId']==$Listeleme['sliderDilId']){echo " selected";}?>><?=$sorgu['dilAdi']?></option>
@@ -274,7 +278,11 @@ else{//Listeleme Yetkisi Var
 						<div class="heading-elements">
 							<select class="select2 form-control block" name="sliderDilIdDuzen" id="sliderDilIdDuzen" onchange="sliderDuzen();" required>
 								<?php
-								$sorguList = $db->select("Diller","*");
+								$sorguList = $db->select("Diller","*",[
+									"ORDER" => [
+										"dilId" => "ASC"
+									]
+								]);
 								foreach($sorguList as $sorgu){
 									?>
 									<option value="<?=$sorgu['dilId']?>" <?php if($sorgu['dilId']==$Listeleme['sliderDilId']){echo " selected";}?>><?=$sorgu['dilAdi']?></option>

@@ -579,10 +579,10 @@
 																		<p>' . $val['siparisIcerikAdet'] . '</p>
 																	</td>
 																	<td valign="top" class="dataTableContent" mc:edit="data_table_content01">
-																		<p>' .$val["paraBirimSembol"].' ' .$val['siparisIcerikPanelFiyatKdvsiz'] . '</p>
+																		<p>' .$val["paraBirimSembol"].' ' .number_format($val['siparisIcerikPanelFiyatKdvsiz'],2,',','.') . '</p>
 																	</td>
 																	<td valign="top" class="dataTableContent" mc:edit="data_table_content02">
-																		<p>' .$val["paraBirimSembol"].' ' .($val['siparisIcerikPanelFiyatKdvsiz'] * $val['siparisIcerikAdet']) . ' </p>
+																		<p>' .$val["paraBirimSembol"].' ' .number_format(($val['siparisIcerikPanelFiyatKdvsiz'] * $val['siparisIcerikAdet']),2,',','.') . ' </p>
 																	</td>
                                                               	</tr>';
 																}
@@ -609,7 +609,7 @@
 																<b>' . $fonk->getPDil("Ara toplam: ") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . $araTutar . '
+																₺ ' . number_format($araTutar,2,',','.') . '
 															</td>
 														</tr>
 														<tr style="text-align:right;">
@@ -617,7 +617,7 @@
 																<b>' . $fonk->getPDil("Kargo: ") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . $siparisKargoUcreti . '
+																₺ ' . number_format($siparisKargoUcreti,2,',','.') . '
 															</td>
 														</tr>
 														<tr style="text-align:right;">
@@ -625,7 +625,7 @@
 																<b>' . $fonk->getPDil("KDV: ") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . ($kdvTutar + $siparisKargoKdvUcreti) . '
+																₺ ' .  number_format(($kdvTutar + $siparisKargoKdvUcreti),2,',','.') . '
 															</td>
 														</tr>
 														<tr style="text-align:right;">
@@ -633,7 +633,7 @@
 																<b>' . $fonk->getPDil("KDV Dahil Toplam: ") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . ($toplamTutar - $siparisOdenenIskontoUcreti + $siparisKargoKdvUcreti) . '
+																₺ ' . number_format(($toplamTutar - $siparisOdenenIskontoUcreti + $siparisKargoKdvUcreti),2,',','.') . '
 															</td>
 														</tr>
 													</tbody>

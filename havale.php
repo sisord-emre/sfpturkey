@@ -30,7 +30,7 @@ if($siparis['siparisIndirimKodu']!="" && $siparis['siparisIndirimYuzdesi']!=0){
     $toplamTutar-=($toplamTutar/100*$siparis['siparisIndirimYuzdesi']);
 }
 if($siparis['siparisKargoUcreti']!=0){
-    $toplamTutar+=$siparis['siparisKargoUcreti']+$siparis['siparisKargoKdvUcreti'];
+    $toplamTutar+=$siparis['siparisKargoUcreti'];
 }
 if($siparis["siparisOdenenIskontoUcreti"] > 0){
     $toplamTutar-=$siparis["siparisOdenenIskontoUcreti"];
@@ -68,7 +68,7 @@ $odemeLoglari = $db->insert('OdemeLoglari', [
                     <p><b><?= $fonk->getDil("Hesap Sahibi") ?></b> : <?=$value['bankaBilgiHesapSahibi'] ?></p>
                     <hr>
                 <?php } ?>
-                <p><b><?= $fonk->getDil("Ödenecek Tutar") ?></b> : <?=$toplamTutar?> <?= $_SESSION["paraBirimSembol"]?></p>
+                <p><b><?= $fonk->getDil("Ödenecek Tutar") ?></b> : <?=number_format($toplamTutar,2,',','.');?> <?= $_SESSION["paraBirimSembol"]?></p>
                 <p>
                     <?= $fonk->getDil("Lütfen hesaba havale/eft yaparken ilgili sipariş kodunu ")?> <b> <?=$_GET["s"] ?> </b> <?= $fonk->getDil("açıklamaya yazmayı unutmayınız")?>
                 </p>

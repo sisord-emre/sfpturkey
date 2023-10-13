@@ -1,4 +1,19 @@
-<?php include('layouts/header.php') ?>
+<?php 
+include('layouts/header.php');
+
+$seo = $_GET['seo'];
+
+$markaBul = $db->get("Varyantlar", [
+    "[>]VaryantDilBilgiler" => ["Varyantlar.varyantId" => "varyantDilBilgiVaryatId"]
+], "*", [
+    "varyantDilBilgiDilId" => $_SESSION["dilId"],
+    "varyantDilBilgiSlug" => $seo,
+    "varyanDurum" => 1,
+    "ORDER" => [
+        "varyantDilBilgiBaslik" => "ASC"
+    ]
+]);
+?>
 <div id="nt_content">
 
     <!--shop banner-->
@@ -89,6 +104,51 @@
                     </label>
                 </div>
 
+                <?php
+                if ($markaBul['varyantOzelFiltre'] == 1) { ?>
+                    <div class="form-check" style="padding: 15px !important;">
+                        <input class="form-check-input" type="checkbox" value="1" name="urun1Metre" id="urun1Metre" <?= ($_GET['urun1Metre'] == '1') ? 'checked="checked"' : '0' ?>>
+                        <label class="form-check-label" for="urun1Metre">
+                            1Mt ve altı
+                        </label>
+                    </div>
+
+                    <div class="form-check" style="padding: 15px !important;">
+                        <input class="form-check-input" type="checkbox" value="1" name="urun2Metre" id="urun2Metre" <?= ($_GET['urun2Metre'] == '1') ? 'checked="checked"' : '0' ?>>
+                        <label class="form-check-label" for="urun2Metre">
+                            2Mt
+                        </label>
+                    </div>
+
+                    <div class="form-check" style="padding: 15px !important;">
+                        <input class="form-check-input" type="checkbox" value="1" name="urun3Metre" id="urun3Metre" <?= ($_GET['urun3Metre'] == '1') ? 'checked="checked"' : '0' ?>>
+                        <label class="form-check-label" for="urun3Metre">
+                            3Mt
+                        </label>
+                    </div>
+
+                    <div class="form-check" style="padding: 15px !important;">
+                        <input class="form-check-input" type="checkbox" value="1" name="urun510Metre" id="urun510Metre" <?= ($_GET['urun510Metre'] == '1') ? 'checked="checked"' : '0' ?>>
+                        <label class="form-check-label" for="urun510Metre">
+                            5-10Mt
+                        </label>
+                    </div>
+
+                    <div class="form-check" style="padding: 15px !important;">
+                        <input class="form-check-input" type="checkbox" value="1" name="urun1020Metre" id="urun1020Metre" <?= ($_GET['urun1020Metre'] == '1') ? 'checked="checked"' : '0' ?>>
+                        <label class="form-check-label" for="urun1020Metre">
+                            10-20Mt
+                        </label>
+                    </div>
+
+                    <div class="form-check" style="padding: 15px !important;">
+                        <input class="form-check-input" type="checkbox" value="1" name="urun2030Metre" id="urun2030Metre" <?= ($_GET['urun2030Metre'] == '1') ? 'checked="checked"' : '0' ?>>
+                        <label class="form-check-label" for="urun2030Metre">
+                            20Mt ve üzeri
+                        </label>
+                    </div>
+                <?php } ?>
+
                 <div class="form-check" style="padding: 15px !important;">
                     <input type="hidden" name="filtre" value="1">
                     <button type="submit" class="btn btn-primary btn-sm"><?= $fonk->getDil("Filtrele") ?></button>
@@ -104,8 +164,7 @@
             <!--left sidebar-->
             <div class="js_sidebar sidebar sidebar_nt col-lg-2 col-12 space_30 hidden_false lazyload">
                 <div id="kalles-section-sidebar_shop" class="kalles-section nt_ajaxFilter section_sidebar_shop type_instagram">
-                    <div class="h3 mg__0 tu bgb cw visible-sm fs__16 pr"><?= $fonk->getDil("Markalar") ?> <i class="close_pp pegk pe-7s-close fs__40 ml__5"></i>
-                    </div>
+                    
                     <div class="cat_shop_wrap">
                         <div class="cat_fixcl-scroll">
                             <div class="cat_fixcl-scroll-content css_ntbar">
@@ -123,7 +182,7 @@
                                                     "varyantDilBilgiDilId" => $_SESSION["dilId"],
                                                     "varyanDurum" => 1,
                                                     "ORDER" => [
-                                                        "varyantId" => "ASC"
+                                                        "varyantDilBilgiBaslik" => "ASC"
                                                     ]
                                                 ]);
                                                 foreach ($markaListesi as $key => $value) {
@@ -152,7 +211,7 @@
             <!--main content-->
             <div class="col-lg-10 col-12">
                 <div class="kalles-section tp_se_cdt">
-                    <label>Showing 1–8 of <span id="toplamKayit"></span> <?= $fonk->getDil("sonuçlar"); ?></label>
+                    <label><span id="toplamKayit"></span> <?= $fonk->getDil("sonuçlar"); ?></label>
                     <!--products list-->
                     <div class="on_list_view_false products nt_products_holder row fl_center row_pr_1 cdt_des_1 round_cd_false nt_cover ratio_nt position_8 space_30 nt_default" id="markalarList">
                         <!-- ürünlerin listelemesi -->
@@ -214,7 +273,13 @@
                 'urunEndustriyelTip': "<?=($_GET['urunEndustriyelTip']=='1') ? '1' : '0' ?>",
                 'urun100MegabitRJ45Port': "<?=($_GET['urun100MegabitRJ45Port']=='1') ? '1' : '0' ?>",
                 'urun1GigabitRJ45Port': "<?=($_GET['urun1GigabitRJ45Port']=='1') ? '1' : '0' ?>",
-                'urun10GigabitRJ45Port': "<?=($_GET['urun10GigabitRJ45Port']=='1') ? '1' : '0' ?>"
+                'urun10GigabitRJ45Port': "<?=($_GET['urun10GigabitRJ45Port']=='1') ? '1' : '0' ?>",
+                'urun1Metre': "<?= ($_GET['urun1Metre'] == '1') ? '1' : '0' ?>",
+                'urun2Metre': "<?= ($_GET['urun2Metre'] == '1') ? '1' : '0' ?>",
+                'urun3Metre': "<?= ($_GET['urun3Metre'] == '1') ? '1' : '0' ?>",
+                'urun510Metre': "<?= ($_GET['urun510Metre'] == '1') ? '1' : '0' ?>",
+                'urun1020Metre': "<?= ($_GET['urun1020Metre'] == '1') ? '1' : '0' ?>",
+                'urun2030Metre': "<?= ($_GET['urun2030Metre'] == '1') ? '1' : '0' ?>"
             },
             success: function(gelenSayfa) {
                 document.getElementById("loadingItem").style.display = "none";

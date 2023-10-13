@@ -60,7 +60,6 @@ else if ($odemeTipi == "cash") {
 
 $siparisIskontoUcreti = 0;
 $siparisKargoUcreti = 0;
-$siparisKargoKdvUcreti = 0;
 $siparisIndirimYuzdesi = 0;
 $toplamTutar = 0;
 
@@ -86,7 +85,6 @@ else //eğer sipariş kaydı var ise
 			'siparisIndirimKodu' => "",
 			'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
 			'siparisKargoUcreti' => $siparisKargoUcreti,
-			'siparisKargoKdvUcreti' => $siparisKargoKdvUcreti,
 			'siparisOdenenIskontoUcreti' => $siparisOdenenIskontoUcreti,
 			'siparisDilId' => $_SESSION["dilId"],
 			'siparisTeslimatTarihi' => "",
@@ -266,10 +264,11 @@ if ($siparisOdemeTipiId == 2) //havale eft ödeme
 			]);
 		}
 		
-		$baslik = "Siparis Bilgisi (".$siparisKodu.")";
+		$baslik = "Siparis No: ".$siparisKodu."";
+		$baslik2 = "SFPTURKEY-Siparis No: ".$siparisKodu."";
 		include("Mailtemplate/odemeEmailTemplate.php");
-		$fonk->mailGonder($siparis["uyeMail"], $baslik, $body);
-		$fonk->mailGonder($sabitB["sabitBilgiBildirimMail"], $baslik, $body); 
+		$fonk->mailGonder($siparis["uyeMail"], $baslik2, $body);
+		$fonk->mailGonder($gondericiMail[3], $baslik, $body); 
 		header("HTTP/1.1 303 See Other");
 		header("Location: " . $sabitB["sabitBilgiSiteUrl"] . "havale?s=" . $_SESSION["SiparisKodu"]);
 	}
@@ -344,7 +343,7 @@ $siparis = $db->get("Siparisler", "*", [
 												<input type="hidden" name="expiry_year" id="kartYil">
 												<input type="hidden" name="cvv" id="kartCvv">
 												<!-- !kart bilgileri script ile aktarıalcak -->
-												<input type="hidden" name="tutar" value="<?=$fonk->paraCevir($toplamTutar,$urun["paraBirimKodu"],"TRY") + $siparis["siparisKargoUcreti"] + $siparis["siparisKargoKdvUcreti"];?>" />
+												<input type="hidden" name="tutar" value="<?=$fonk->paraCevir($toplamTutar,$urun["paraBirimKodu"],"TRY") + $siparis["siparisKargoUcreti"];?>" />
 												<input type="hidden" name="siparisNo" value="<?= $_SESSION['SiparisKodu'] ?>" />
 												<input type="hidden" name="musteriId" value="<?= $uye["uyeId"] ?>" />
 												<input type="hidden" name="musteriAdi" value="<?= $uyeAdi ?>" />

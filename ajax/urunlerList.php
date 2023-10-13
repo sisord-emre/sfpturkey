@@ -137,7 +137,7 @@ $totalRecord=$db->select("Urunler",[
 
 
 $totalRecord = count($totalRecord);
-$pageLimit = 8;
+$pageLimit = 24;
 // sayfa parametresi? Örn: index.php?page=2 [page = $pageParam]
 $pageParam = 'page';
 
@@ -272,6 +272,7 @@ foreach ($urunler as $value) {
 	$urunBaslik = $db->get("UrunVaryantDilBilgiler",[
 		"[<]UrunVaryantlari" => ["UrunVaryantDilBilgiler.urunVaryantDilBilgiVaryantId" => "urunVaryantId"]
 	],"*",[
+		"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
 		"urunVaryantDilBilgiUrunId" => $value["urunId"],
 		"ORDER" => [
 			"urunVaryantDilBilgiId" => "ASC",
@@ -323,7 +324,7 @@ foreach ($urunler as $value) {
 								<?= $fonk->getDil("Liste Özel Fiyat"); ?>:
 								<del style="color:white;"> 
 									<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-									<?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
 								</del>
 							</div>
 							<br>
@@ -331,12 +332,14 @@ foreach ($urunler as $value) {
 								<?= $fonk->getDil("Bayi Özel Fiyat"); ?>: 
 								<ins style="color:white;"> 
 									<?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-									<?= $value["paraBirimSembol"] ?><?=$hesapla2["birimFiyat"];?>
+									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
 								</ins>
 							</div>
 						<?php else: ?>
 							<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-							<ins> <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?></ins>
+							<div class="button-liste w-100">
+								<ins style="color:white;"> <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?></ins>
+							</div>
 						<?php endif; ?>
 					</span>
 				<?php } ?> 

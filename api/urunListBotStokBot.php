@@ -19,6 +19,9 @@ if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
     $xml_to_json = json_encode($xml, JSON_PRETTY_PRINT);
     if($sonuc)
     {
+		$db->delete("UrunListBotlari", [
+			"urunListBotTip" => 1
+		]);
         $parametreler = array(
             "urunListBotData" => $sonuc,
             "urunListBotDataJson" => $xml_to_json,

@@ -143,10 +143,11 @@ if ($_POST['mdStatus'] == 1) {
 			]);
 		}
 
-		$baslik = "Siparis Bilgisi (".$siparisKodu.")";
+		$baslik = "Siparis No: ".$siparisKodu."";
+		$baslik2 = "SFPTURKEY-Siparis No: ".$siparisKodu."";
 		include("Mailtemplate/odemeEmailTemplate.php");
-		$fonk->mailGonder($siparis["uyeMail"], $baslik, $body);
-		$fonk->mailGonder($sabitB["sabitBilgiBildirimMail"], $baslik, $body); 
+		$fonk->mailGonder($siparis["uyeMail"], $baslik2, $body);
+		$fonk->mailGonder($gondericiMail[3], $baslik, $body);
 		header("HTTP/1.1 303 See Other");
 		header("Location: " . $sabitB["sabitBilgiSiteUrl"] . "thanks?s=" . $_POST['conversationId']);
 	}

@@ -5,13 +5,13 @@ $fonk->csrfKontrol();
 
 extract($_POST); //POST parametrelerini değişken olarak çevirir
 
-
+$urunVaryantDefaultSecim =($urunVaryantDefaultSecim == "" ? 0 : $urunVaryantDefaultSecim); 
 //varyant işlemleri
 $varyantTableName = "UrunVaryantlari";
 $itemPar = array(
-	'urunVaryantUrunId' => $urunVaryantUrunId,
-	'urunVaryantVaryantId' => $urunVaryantVaryantId,
-	'urunVaryantFiyat' => $urunVaryantFiyat,
+	'urunVaryantUrunId' => intval($urunVaryantUrunId),
+	'urunVaryantVaryantId' => intval($urunVaryantVaryantId),
+	'urunVaryantFiyat' => floatval($urunVaryantFiyat),
 	'urunVaryantDefaultSecim' => $urunVaryantDefaultSecim
 );
 if ($urunVaryantId != "") {
@@ -42,8 +42,8 @@ foreach ($dilList as $dil) {
 		$_POST["urunVaryantDilBilgiDurum-" . $dil["dilId"]] = 0;
 	}
 	$itemPar = array(
-		'urunVaryantDilBilgiUrunId' => $urunVaryantUrunId,
-		'urunVaryantDilBilgiVaryantId' => $urunVaryantId,
+		'urunVaryantDilBilgiUrunId' => intval($urunVaryantUrunId),
+		'urunVaryantDilBilgiVaryantId' =>  intval($urunVaryantId),
 		'urunVaryantDilBilgiDilId' => $dil["dilId"],
 		'urunVaryantDilBilgiAdi' => $_POST["urunVaryantDilBilgiAdi-" . $dil["dilId"]],
 		'urunVaryantDilBilgiSlug' => $_POST["urunVaryantDilBilgiSlug-" . $dil["dilId"]],

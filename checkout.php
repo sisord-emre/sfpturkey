@@ -23,7 +23,6 @@ if (count($sepet) <= 0) {
 }
 $siparisIskontoUcreti = 0;
 $siparisKargoUcreti =$siparisKargoUcreti;
-$siparisKargoKdvUcreti =$siparisKargoKdvUcreti;
 $siparisIndirimYuzdesi = 0;
 $toplamTutar = 0;
 if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
@@ -40,7 +39,6 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 		'siparisIndirimKodu' => "",
 		//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
 		'siparisKargoUcreti' => $siparisKargoUcreti,
-        'siparisKargoKdvUcreti' => $siparisKargoKdvUcreti,
 		'siparisDilId' => $_SESSION["dilId"],
 		'siparisParaBirimId' => $_SESSION["paraBirimId"],
 		'siparisOdemeBilgileri' => "",
@@ -104,6 +102,7 @@ else //eğer sipariş kaydı var ise
 	]);
     $siparisIskontoUcreti = $siparisKontrol["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
     $siparisOdenenIskontoUcreti = $fonk->paraCevir($siparisIskontoUcreti,"USD","TRY");
+
 	if ($siparisKontrol) {
 		$siparis = $db->update('Siparisler', [
 			'siparisUyeId' => $uye['uyeId'],
@@ -114,7 +113,6 @@ else //eğer sipariş kaydı var ise
 			'siparisIndirimKodu' => "",
 			//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
 			'siparisKargoUcreti' => $siparisKargoUcreti,
-            'siparisKargoKdvUcreti' => $siparisKargoKdvUcreti,
 			'siparisDilId' => $_SESSION["dilId"],
             'siparisOdenenIskontoUcreti' => $siparisOdenenIskontoUcreti,
 			//'siparisTeslimatTarihi' => "",
@@ -179,7 +177,6 @@ else //eğer sipariş kaydı var ise
 }
 
 $siparisKargoUcreti=$siparisKontrol["siparisKargoUcreti"];
-$siparisKargoKdvUcreti=$siparisKontrol["siparisKargoKdvUcreti"];
 ?>
 
 <div id="nt_content">
@@ -321,13 +318,13 @@ $siparisKargoKdvUcreti=$siparisKontrol["siparisKargoKdvUcreti"];
                                                 </td>
                                                 <td class="product-total">
                                                     <span class="cart_price">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($hesapla["birimFiyat"]*$sepet[$i]["adet"],$urun["paraBirimKodu"],"TRY");?>
-                                                       
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($fonk->paraCevir($hesapla["birimFiyat"]*$sepet[$i]["adet"],$urun["paraBirimKodu"],"TRY"),2,',','.');?>
+                                                        
                                                     </span>
                                                 </td>
                                                 <td class="product-total">
                                                     <span class="cart_price">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir(($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]) * $sepet[$i]["adet"],$urun["paraBirimKodu"],"TRY");?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($fonk->paraCevir(($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]) * $sepet[$i]["adet"],$urun["paraBirimKodu"],"TRY"),2,',','.');?>
                                                     </span>
                                                 </td>
                                             </tr>
@@ -339,17 +336,7 @@ $siparisKargoKdvUcreti=$siparisKontrol["siparisKargoKdvUcreti"];
                                             <td colspan="2">
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($araTutar,$urun["paraBirimKodu"],"TRY");?>
-                                                    </span>
-                                                </strong>
-                                            </td>
-                                        </tr>
-                                        <tr class="order-total cart_item">
-                                            <th colspan="2" style="text-align: right;"><?= $fonk->getDil("Kargo Ucreti"); ?> </th>
-                                            <td>
-                                                <strong>
-                                                    <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$siparisKargoUcreti;?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($fonk->paraCevir($araTutar,$urun["paraBirimKodu"],"TRY"),2,',','.');?>
                                                     </span>
                                                 </strong>
                                             </td>
@@ -359,30 +346,65 @@ $siparisKargoKdvUcreti=$siparisKontrol["siparisKargoKdvUcreti"];
                                             <td colspan="2">
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($kdvTutar,$urun["paraBirimKodu"],"TRY") + $siparisKargoKdvUcreti; ?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($fonk->paraCevir($kdvTutar,$urun["paraBirimKodu"],"TRY"),2,',','.'); ?> 
+                                                    </span>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        <tr class="order-total cart_item">
+                                            <th colspan="2" style="text-align: right;"><?= $fonk->getDil("Kdv Dahil Toplam"); ?> </th>
+                                            <td colspan="2">
+                                                <strong>
+                                                    <span class="cart_price amount">
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($fonk->paraCevir($toplamTutar,$urun["paraBirimKodu"],"TRY"),2,',','.'); ?>
                                                     </span>
                                                 </strong>
                                             </td>
                                         </tr>
                                         <?php if($siparisIskontoUcreti > 0) {?>
                                         <tr class="order-total cart_item">
-                                            <th colspan="2" style="text-align: right;"><?= $fonk->getDil("İskonto"); ?> </th>
+                                            <th colspan="2" style="text-align: right;"><?= $fonk->getDil("Proje İskonto"); ?> </th>
                                             <td colspan="2">
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?= $siparisOdenenIskontoUcreti;?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($siparisOdenenIskontoUcreti,2,',','.');?>
+                                                    </span>
+                                                </strong>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="order-total cart_item">
+                                            <th colspan="2" style="text-align: right;"><?= $fonk->getDil("Kdv Dahil Proje Tutarı"); ?> </th>
+                                            <td colspan="2">
+                                                <strong>
+                                                    <span class="cart_price amount">
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$urun["paraBirimKodu"],"TRY"),2,',','.');?>
+                                                        
                                                     </span>
                                                 </strong>
                                             </td>
                                         </tr>
                                         <?php } ?>
+                                        <tr class="order-total cart_item">
+                                            <th colspan="2" style="text-align: right;"><?= $fonk->getDil("Vergiler Dahil Kargo Ucreti"); ?> </th>
+                                            <td>
+                                                <strong>
+                                                    <span class="cart_price amount">
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($siparisKargoUcreti,2,',','.');?>
+                                                        
+                                                    </span>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                        
                                         
                                         <tr class="order-total cart_item">
                                             <th colspan="2" style="text-align: right;"><?= $fonk->getDil("TOPLAM"); ?> </th>
                                             <td>
                                                 <strong>
                                                     <span class="cart_price amount">
-                                                        <?= $_SESSION["paraBirimSembol"] ?><?=$fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$urun["paraBirimKodu"],"TRY")+ $siparisKargoUcreti + $siparisKargoKdvUcreti;?>
+                                                        <?= $_SESSION["paraBirimSembol"] ?><?=number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$urun["paraBirimKodu"],"TRY")+ $siparisKargoUcreti,2,',','.');?>
+                                                        
                                                     </span>
                                                 </strong>
                                             </td>
@@ -424,17 +446,15 @@ $siparisKargoKdvUcreti=$siparisKontrol["siparisKargoKdvUcreti"];
                                         <span>
                                             <a href="#" target="_blank" class="terms-and-conditions-link"> 
                                             <label for="sart" style="display: inline;">
-                                        <a href="page/mesafeli-satis-sozlesmesi" target="_blank">
-                                            <b><?= $fonk->getDil("Mesafeli Satış Sözleşmesini"); ?></b>
-                                        </a>
-                                        <?= $fonk->getDil("ve"); ?>
-                                        <a href="page/garanti-degisim-iptal-ve-iade-politikasi" target="_blank">
-                                            <b><?= $fonk->getDil("iptal, iade ve değişim koşullarını"); ?></b>
-                                        </a>
-                                        <?= $fonk->getDil("okudum kabul ediyorum"); ?>
-                                    </label> &nbsp;<span class="required">*</span>
+                                            <a href="page/mesafeli-satis-sozlesmesi" target="_blank">
+                                                <b><?= $fonk->getDil("Mesafeli Satış Sözleşmesini"); ?></b>
                                             </a>
-                                    </label>
+                                            <?= $fonk->getDil("ve"); ?>
+                                            <a href="page/garanti-degisim-iptal-ve-iade-politikasi" target="_blank">
+                                                <b><?= $fonk->getDil("iptal, iade ve değişim koşullarını"); ?></b>
+                                            </a>
+                                            <?= $fonk->getDil("okudum kabul ediyorum"); ?>
+                                        </label>
                                     <button type="submit" class="btn_checkout button button_primary tu mt__10 mb__10 js_add_ld w__100" id="submitButton" onclick="ButtonDisabled('submitButton')"><?= $fonk->getDil("Siparişi Tamamla"); ?> </button>
                                 </div>
                             </div>

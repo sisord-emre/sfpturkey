@@ -5,7 +5,7 @@ include('layouts/header.php');
 <div id="nt_content">
     <div class="nt_section type_slideshow type_carousel ">
         <div class="slideshow-wrapper nt_full se_height_cus_h nt_first">
-            <div class="fade_flick_1 slideshow row no-gutters equal_nt nt_slider js_carousel prev_next_0 btn_owl_1 dot_owl_2 dot_color_1 btn_vi_2" data-flickity='{ "fade":0,"cellAlign": "center","imagesLoaded": 0,"lazyLoad": 0,"freeScroll": 0,"wrapAround": true,"autoPlay" : true,"pauseAutoPlayOnHover" : true, "rightToLeft": false, "prevNextButtons": false,"pageDots": true, "contain" : 1,"adaptiveHeight" : 1,"dragThreshold" : 5,"percentPosition": 1 }'>
+            <div class="fade_flick_1 slideshow row no-gutters equal_nt nt_slider js_carousel prev_next_0 btn_owl_1 dot_owl_2 dot_color_1 btn_vi_2" data-flickity='{ "fade":0,"cellAlign": "center","imagesLoaded": 0,"lazyLoad": 0,"freeScroll": 0,"wrapAround": true,"autoPlay" : true,"pauseAutoPlayOnHover" : true, "rightToLeft": false, "prevNextButtons": true,"pageDots": false, "contain" : 1,"adaptiveHeight" : 1,"dragThreshold" : 5,"percentPosition": 1 }'>
                 <?php
                 $slider = $db->select("Slider", "*", [
                     "sliderDilId" => $_SESSION["dilId"],
@@ -110,12 +110,11 @@ include('layouts/header.php');
                 <div class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
                     <div class="product-inner pr">
                         <div class="product-image pr oh lazyload">
-                        
                             <a class="d-block" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
-                                <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
+                                <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__70_571" data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </a>
                             <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                                <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
+                                <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__70_571" data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </div>
                             <div class="nt_add_w ts__03 pa <?=($favoriDurum) ? 'favori_added' : ''; ?>">
                                 <a onclick="FavoriEkle(<?= $value['urunVaryantId']; ?>,<?= $uye['uyeId']; ?>);" id="favoriButton_<?= $value["urunVaryantId"]; ?>" class="wishlistadd cb chp ttip_nt tooltip_right">
@@ -126,31 +125,33 @@ include('layouts/header.php');
                         </div>
                         <div class="product-info mt__15">
                             <h3 class="product-title pr fs__14 mg__0 fwm">
-                                <a class="cd chp" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
+                                <a class="cd chp kisalt" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
                                     <?= $value["urunVaryantDilBilgiAdi"]; ?>
                                 </a>
                             </h3>
                             <?php if($uyeVar == 1){ ?>
-                            <span class="price dib mb__5">
+                            <span class="price dib mb__5 w-100">
                                 <?php if($uye['uyeIndirimOrani'] > 0 ): ?>
-                                    <div class="button-liste">
+                                    <div class="button-liste w-100">
                                         <?= $fonk->getDil("Liste Özel Fiyat"); ?>:
                                         <del style="color:white;"> 
                                             <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-                                            <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+                                            <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
                                         </del>
                                     </div>
                                     <br>
-                                    <div class="button-bayi mt-3">
+                                    <div class="button-bayi mt-3 w-100">
                                         <?= $fonk->getDil("Bayi Özel Fiyat"); ?>: 
                                         <ins style="color:white;"> 
                                             <?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                            <?= $value["paraBirimSembol"] ?><?=$hesapla2["birimFiyat"];?>
+                                            <?= $value["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
                                         </ins>
                                     </div>
                                 <?php else: ?>
                                     <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-                                    <ins> <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?></ins>
+                                    <div class="button-liste w-100">
+                                        <ins style="color:white;"> <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?></ins>
+                                    </div>
                                 <?php endif; ?>
                             </span>
                             <?php } ?> 
@@ -238,11 +239,12 @@ include('layouts/header.php');
                     <div class="product-inner pr">
                         <div class="product-image pr oh lazyload">
                             <a class="d-block" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
-                                <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
+                                <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__70_571" data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </a>
                             <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                                <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
+                                <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__70_571" data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </div>
+
                             <div class="nt_add_w ts__03 pa <?=($favoriDurum) ? 'favori_added' : ''; ?>">
                                 <a onclick="FavoriEkle(<?= $value['urunVaryantId']; ?>,<?= $uye['uyeId']; ?>);" id="favoriButton_<?= $value["urunVaryantId"]; ?>" class="wishlistadd cb chp ttip_nt tooltip_right">
                                     <span class="tt_txt"><?= $fonk->getDil("Favori Ekle"); ?></span>
@@ -252,31 +254,33 @@ include('layouts/header.php');
                         </div>
                         <div class="product-info mt__15">
                             <h3 class="product-title pr fs__14 mg__0 fwm">
-                                <a class="cd chp" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
+                                <a class="cd chp kisalt" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
                                     <?= $value["urunVaryantDilBilgiAdi"]; ?>
                                 </a>
                             </h3>
                             <?php if($uyeVar == 1){ ?>
-                            <span class="price dib mb__5">
+                            <span class="price dib mb__5 w-100">
                                 <?php if($uye['uyeIndirimOrani'] > 0 ): ?>
-                                    <div class="button-liste">
+                                    <div class="button-liste w-100">
                                         <?= $fonk->getDil("Liste Özel Fiyat"); ?>:
                                         <del style="color:white;"> 
                                             <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-                                            <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+                                            <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
                                         </del>
                                     </div>
                                     <br>
-                                    <div class="button-bayi mt-3">
+                                    <div class="button-bayi mt-3 w-100">
                                         <?= $fonk->getDil("Bayi Özel Fiyat"); ?>: 
-                                        <ins style="color:black;"> 
+                                        <ins style="color:white;"> 
                                             <?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                            <?= $value["paraBirimSembol"] ?><?=$hesapla2["birimFiyat"];?>
+                                            <?= $value["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
                                         </ins>
                                     </div>
                                 <?php else: ?>
                                     <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-                                    <ins> <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?></ins>
+                                    <div class="button-liste w-100">
+                                        <ins style="color:white;"> <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?></ins>
+                                    </div>
                                 <?php endif; ?>
                             </span>
                             <?php } ?> 
@@ -338,16 +342,37 @@ include('layouts/header.php');
     if ($bloglar) {
     ?>
         <!--blog post-->
-        <div class="kalles-section kalles-section_type_featured_blog nt_section type_featured_blog type_carousel mb__50" style="background: #f6f6f8;">
+        <div class="kalles-section mb__50" style="background: #f6f6f8;">
             <div class="container">
                 <div class="wrap_title mb__30 pt__30 des_title_2">
                     <h3 class="section-title tc pr flex fl_center al_center fs__24 title_2">
                         <span class="mr__10 ml__10"><?= $fonk->getDil("BLOG") ?> </span>
                     </h3>
                 </div>
+                <div class="articles row" >
+                    <?php foreach ($bloglar as $key => $value) { ?>
+                        <article class=" post_1 col-lg-4 col-md-4 col-12  mb__40">
+                            <a class="mb__15 db pr oh" href="">
+                                <a href="<?=$value['blogDisLink'];?>" target="_blank"><div class="lazyload nt_bg_lz pr_lazy_img" style="padding-top: 45% !important;" data-bgset="<?= $value['blogBaseUrl'] . $value['blogGorsel'] ?>"></div></a>
+                            </a>
+                            <div class="post-info mb__10">
+                                <h4 class="mg__0 fs__16 mb__5 ls__0">
+                                    <a class="cd chp open" href="<?=$value['blogDisLink'];?>" target="_blank"><?= $value['blogDilBilgiBaslik'] ?></a>
+                                </h4>
+                            </div>
+                            <div class="post-content">
+                                <a href="<?=$value['blogDisLink'];?>" target="_blank"><?= $value['blogDilBilgiDescription'] ?></a>
+                            </div>
+                        </article>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+        <!--<div class="kalles-section kalles-section_type_featured_blog nt_section type_featured_blog type_carousel mb__50" style="background: #f6f6f8;">
+            <div class="container">
                 <div class="articles art_des1 nt_products_holder row nt_cover ratio4_3 position_8 equal_nt js_carousel nt_slider prev_next_1 btn_owl_1 dot_owl_1 dot_color_1 btn_vi_1" data-flickity='{"imagesLoaded": 0,"adaptiveHeight": 1, "contain": 1, "groupCells": "100%", "dragThreshold" : 5, "cellAlign": "left","wrapAround": false,"prevNextButtons": true,"percentPosition": 1,"pageDots": false, "autoPlay" : 0, "pauseAutoPlayOnHover" : true, "rightToLeft": false }'>
                     <?php foreach ($bloglar as $key => $value) { ?>
-                        <article class="post_nt_loop post_1 col-lg-3 col-md-4 col-12 pr_animated done mb__40">
+                        <article class="post_nt_loop post_1 col-lg-4 col-md-4 col-12 pr_animated done mb__40">
                             <a class="mb__15 db pr oh" href="">
                             <a href="<?=$value['blogDisLink'];?>"><div class="lazyload nt_bg_lz pr_lazy_img" data-bgset="<?= $value['blogBaseUrl'] . $value['blogGorsel'] ?>"></div></a>
                             </a>
@@ -363,7 +388,7 @@ include('layouts/header.php');
                     <?php } ?>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!--end blog post-->
     <?php } ?>
     <i class="fas fa-shipping-fast" style="color: #4778cd;"></i>

@@ -36,7 +36,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeMailHata" class="span-color-red"></span>
                             </label>
-                            <input type="email" class="form-control" name="uyeMail" id="uyeMail" aria-required="true">
+                            <input type="email" class="form-control" name="uyeMail" id="uyeMail" required>
                         </p>
 
                         <p class="form">
@@ -44,7 +44,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeSifreHata" class="span-color-red"></span>
                             </label>
-                            <input type="password" class="form-control" name="uyeSifre" id="uyeSifre" aria-required="true">
+                            <input type="password" class="form-control" name="uyeSifre" id="uyeSifre" required>
                         </p>
 
                         <p class="form-row">
@@ -71,7 +71,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeMailHata" class="span-color-red"></span>
                             </label>
-                            <input type="email" class="form-control" name="uyeMail" id="uyeMail" aria-required="true">
+                            <input type="email" class="form-control" name="uyeMail" id="uyeMail" required>
                         </p>
                         <input type="hidden" name="formdan" value="3" />
                         <input type="submit" value="Şifre Yinele" class="btn btn-sm">
@@ -89,7 +89,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeAdiHata" class="span-color-red"></span>
                             </label>
-                            <input type="text" class="form-control" name="uyeAdi" id="uyeAdi" aria-required="true">
+                            <input type="text" class="form-control" name="uyeAdi" id="uyeAdi" required>
                         </p>
 
                         <p class="form">
@@ -97,7 +97,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeSoyadiHata" class="span-color-red"></span>
                             </label>
-                            <input type="text" class="form-control" name="uyeSoyadi" id="uyeSoyadi" aria-required="true">
+                            <input type="text" class="form-control" name="uyeSoyadi" id="uyeSoyadi" required>
                         </p>
 
                         <p class="form">
@@ -105,7 +105,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeMailHata" class="span-color-red"></span>
                             </label>
-                            <input type="email" class="form-control" name="uyeMail" id="uyeMailKayit" aria-required="true">
+                            <input type="email" class="form-control" name="uyeMail" id="uyeMailKayit" required>
                         </p>
 
                         <p class="form">
@@ -113,7 +113,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeTelHata" class="span-color-red"></span>
                             </label>
-                            <input type="tel" class="form-control" name="uyeTel" id="uyeTel" aria-required="true">
+                            <input type="tel" class="form-control" name="uyeTel" id="uyeTel" required>
                         </p>
 
                         <p class="form">
@@ -121,7 +121,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeFirmaAdiHata" class="span-color-red"></span>
                             </label>
-                            <input type="text" class="form-control" name="uyeFirmaAdi" id="uyeFirmaAdi" aria-required="true">
+                            <input type="text" class="form-control" name="uyeFirmaAdi" id="uyeFirmaAdi" required>
                         </p>
 
                         <p class="form">
@@ -129,7 +129,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeTcVergiNoHata" class="span-color-red"></span>
                             </label>
-                            <input type="text" class="form-control" name="uyeTcVergiNo" id="uyeTcVergiNo" aria-required="true">
+                            <input type="text" class="form-control" name="uyeTcVergiNo" id="uyeTcVergiNo" required>
                         </p>
 
                         <p class="form">
@@ -137,7 +137,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                             <span class="required">*</span>
                             ( <?= $fonk->getDil("Sadece jpeg, png, pdf uzantılı dosyalar yüklenebilir"); ?> )
                         </label><br>
-                            <input type="file" class="form-control" id="uyeVergiLevhasiDosya" name="uyeVergiLevhasiDosya[]" accept=".png, .jpg, .jpeg, .pdf" aria-required="true" multiple>
+                            <input type="file" class="form-control" id="uyeVergiLevhasiDosya" name="uyeVergiLevhasiDosya[]" accept=".png, .jpg, .jpeg, .pdf" required multiple>
                         </p>
 
                         <p class="form">
@@ -145,7 +145,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                             <span class="required">*</span>
                             ( <?= $fonk->getDil("Sadece jpeg, png, pdf uzantılı dosyalar yüklenebilir"); ?> )
                             </label><br>
-                            <input type="file" class="form-control" id="uyeTicaretSicilGazetesi" name="uyeTicaretSicilGazetesi" accept=".png, .jpg, .jpeg, .pdf" aria-required="true">
+                            <input type="file" class="form-control" id="uyeTicaretSicilGazetesi" name="uyeTicaretSicilGazetesi" accept=".png, .jpg, .jpeg, .pdf" required>
                         </p>
 
                         <p class="form">
@@ -153,7 +153,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                             <span class="required">*</span>
                             ( <?= $fonk->getDil("Sadece jpeg, png, pdf uzantılı dosyalar yüklenebilir"); ?> )
                             </label><br>
-                            <input type="file" class="form-control" id="uyeMukerrerImza" name="uyeMukerrerImza" accept=".png, .jpg, .jpeg, .pdf" aria-required="true">
+                            <input type="file" class="form-control" id="uyeMukerrerImza" name="uyeMukerrerImza" accept=".png, .jpg, .jpeg, .pdf" required>
                         </p>
 
                         <p class="form">
@@ -161,7 +161,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeSifreHata" class="span-color-red"></span>
                             </label>
-                            <input type="password" class="form-control" name="uyeSifre" id="uyeSifre" aria-required="true">
+                            <input type="password" class="form-control" name="uyeSifre" id="uyeSifre" required>
                         </p>
 
                         <p class="form">
@@ -169,17 +169,17 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                                 <span class="required">*</span>
                                 <span id="uyeSifreTekrarHata" class="span-color-red"></span>
                             </label>
-                            <input type="password" class="form-control" name="uyeSifreTekrar" id="uyeSifreTekrar" aria-required="true">
+                            <input type="password" class="form-control" name="uyeSifreTekrar" id="uyeSifreTekrar" required>
                         </p>
 
                         <p class="form">
                             <input type="checkbox" id="gizlilikonay" name="gizlilikonay" value="1">
-                            <label for="gizlilikonay">  <a href="page/gizlilik-ve-guvenlik" target="_blank">ÜYELİK SÖZLEŞMESİNİ OKUDUM, KABUL EDİYORUM</a></label>
+                            <label for="gizlilikonay">  <a href="page/uyelik-sozlesmesi" target="_blank">ÜYELİK SÖZLEŞMESİNİ OKUDUM, KABUL EDİYORUM</a></label>
                         </p>
 
                         <p class="form">
                             <input type="checkbox" id="kvkk" name="kvkk" value="1">
-                            <label for="kvkk">  <a href="" target="_blank">KVKK-AÇIK RIZA VE AYDINLATMA METNİNİ OKUDUM, KABUL EDİYORUM</a></label>
+                            <label for="kvkk">  <a href="page/kvkk-metni" target="_blank">KVKK-AÇIK RIZA VE AYDINLATMA METNİNİ OKUDUM, KABUL EDİYORUM</a></label>
                         </p>
 
 
@@ -284,6 +284,15 @@ $("#formpost").submit(function(e)
                 else if (gelenSayfa == "7") {
                     swal("Hata!", "KVKK aydınlatma metnine onay veriniz.", "error");
                 } 
+                else if (gelenSayfa == "8") {
+                    swal("Hata!", "Ticaret Sicil Gazetesini lütfen yükleyiniz.", "error");
+                } 
+                else if (gelenSayfa == "9") {
+                    swal("Hata!", "İmza Sirküsünü lütfen yükleyiniz.", "error");
+                } 
+                else if (gelenSayfa == "10") {
+                    swal("Hata!", "Vergi Levhasını lütfen yükleyiniz.", "error");
+                } 
             },
         });
     }
@@ -326,10 +335,10 @@ $("#loginpost").submit(function(e)
                     swal("Hata!", "Parola yanlış.", "error");
                 } 
                 else if (gelenSayfa == "3") {
-                    swal("Başarılı", "Giriş başarılı", "success")
-                    .then((value) => {
+                    //swal("Başarılı", "Giriş başarılı", "success")
+                    //.then((value) => {
                         window.location.href = "<?= $sabitBilgiler['sabitBilgiSiteUrl']; ?>user-profile";
-                    });
+                    //});
                 } 
                 else if (gelenSayfa == "4") {
                     swal("Hata!", "Üyeliğiniz henüz onaylanmadı.", "error");

@@ -1,5 +1,10 @@
 <?php
 include('layouts/header.php');
+if(!$uyeVar)
+{
+    echo '<script> window.location.href="'.$sabitB['sabitBilgiSiteUrl'].'account";</script>';
+    exit;
+}
 ?>
 
 <div id="nt_content">
@@ -60,47 +65,55 @@ include('layouts/header.php');
                         $value["urunGorsel"] = "img-not-found.png";
                     }
                 ?>
-                <div class="col-lg-2 col-md-2 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
+                <div class="col-lg-3 col-md-3 col-6 pr_animated done mt__30 pr_grid_item product nt_pr desgin__1">
                     <div class="product-inner pr">
                         <div class="product-image pr oh lazyload">
+                           
                             <a class="d-block" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
-                                <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
+                                <div class="pr_lazy_img main-img nt_img_ratio nt_bg_lz lazyload padding-top__70_571" data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </a>
                             <div class="hover_img pa pe_none t__0 l__0 r__0 b__0 op__0">
-                                <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__127_571 " data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
+                                <div class="pr_lazy_img back-img pa nt_bg_lz lazyload padding-top__70_571" data-bgset="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"></div>
                             </div>
                           
                         </div>
                         <div class="product-info mt__15">
                             <h3 class="product-title pr fs__14 mg__0 fwm">
-                                <a class="cd chp" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
+                                <a class="cd chp kisalt" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
                                     <?= $value["urunVaryantDilBilgiAdi"]; ?>
                                 </a>
                             </h3>
                             <?php if($uyeVar == 1){ ?>
-                            <span class="price dib mb__5">
+                            <span class="price dib mb__5 w-100">
                                 <?php if($uye['uyeIndirimOrani'] > 0 ): ?>
-                                    Bayi Özel Fiyat:
-                                    <del> 
-                                        <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-                                        <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
-                                    </del>
+                                    <div class="button-liste w-100">
+                                        <?= $fonk->getDil("Bayi Fiyat"); ?>
+                                        <del style="color:white;"> 
+                                            <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
+                                            <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
+                                        </del>
+                                    </div>
                                     <br>
-                                    Liste Özel Fiyat:
-                                    <ins> 
-                                        <?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                        <?= $value["paraBirimSembol"] ?><?=$hesapla2["birimFiyat"];?>
-                                    </ins>
+
+                                    <div class="button-bayi mt-3 w-100">
+                                        <?= $fonk->getDil("Liste Fiyat"); ?>
+                                        <ins style="color:white;"> 
+                                            <?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
+                                            <?= $value["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
+                                        </ins>
+                                    </div>
                                 <?php else: ?>
                                     <?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-                                    <ins> <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?></ins>
+                                    <div class="button-liste w-100">
+                                        <ins style="color:white;"> <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?></ins>
+                                    </div>
                                 <?php endif; ?>
                             </span>
                             <?php } ?> 
-                            <button type="button" onclick="location.href='product/<?= $value['urunVaryantKodu'] . '-' . $value['urunVaryantDilBilgiSlug']; ?>'" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 order-4 d-inline-block animated mb-3">
+                            <button type="button" onclick="location.href='product/<?= $value['urunVaryantKodu'] . '-' . $value['urunVaryantDilBilgiSlug']; ?>'" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
                                 <span class="txt_add"><?= $fonk->getDil("Ürüne Git"); ?></span>
                             </button>
-                            <button type="button" onclick="FavoriEkle(<?= $value['urunVaryantId']; ?>,<?= $uye['uyeId']; ?>);" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 order-4 d-inline-block animated">
+                            <button type="button" onclick="FavoriEkle(<?= $value['urunVaryantId']; ?>,<?= $uye['uyeId']; ?>);" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
                                 <span class="txt_add"><?= $fonk->getDil("Favoriden Çıkar"); ?></span>
                             </button>
                         </div>

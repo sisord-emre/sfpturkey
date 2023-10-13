@@ -24,21 +24,26 @@ $urunler=$db->select("Urunler",[
 		"urunModel",
 		"paraBirimSembol",
 		"paraBirimKodu",
+		"urunVaryantDilBilgiEtiketler",
 		"urunVaryantKodu" => $db->raw('(SELECT "urunVaryantKodu" FROM "UrunVaryantlari" WHERE "UrunVaryantlari"."urunVaryantUrunId" = "Urunler"."urunId" LIMIT 1)'),
 		"urunVaryantDilBilgiAdi" => $db->raw('(SELECT "urunVaryantDilBilgiAdi" FROM "UrunVaryantlari" LEFT JOIN "UrunVaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantId" = "UrunVaryantDilBilgiler"."urunVaryantDilBilgiVaryantId" WHERE "UrunVaryantlari"."urunVaryantUrunId" = "Urunler"."urunId" LIMIT 1)'),
 	],[
 		"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
 		"urunVaryantDefaultSecim" => 1, //default seçili olanlar listelenecek
 		"urunVaryantDilBilgiDurum" => 1,
-		"urunVaryantDilBilgiAdi[~]" => $seo,
+		"OR" => [
+			"urunVaryantDilBilgiAdi[~]" => $seo,
+			"urunModel[~]" => $seo,
+			"urunVaryantDilBilgiEtiketler[~]" => $seo,
+		],
 		"urunDurum" => 1,
 		"ORDER" => [
 			"urunId" => "ASC"
 		]
 	]);
-echo "<pre>"; 
-print_r($urunler);
-echo "</pre>";
+// echo "<pre>"; 
+// print_r($urunler);
+// echo "</pre>";
 foreach($urunler as $value){
 	if($value["urunGorsel"]==""){
 		$value["urunGorsel"] = "img-not-found.jpg";
@@ -51,6 +56,6 @@ foreach($urunler as $value){
 	data-t="<?=$value['urunVaryantDilBilgiAdi']?>"
 	data-p="<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?><?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>"
 	data-src="<?= $value["urunBaseUrl"] . "" . $value["urunGorsel"]; ?>"
-	data-sku=" ">
+	data-sku="<?=$value['urunVaryantDilBilgiEtiketler']?>">
 </div>
 <?php } ?>

@@ -68,10 +68,12 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 	$width = 360;
 	$height = 460;
 	if ($_POST['formdan'] == "1") {
+
 		$fonk->csrfKontrol();
 		$gorselAdi = $urunKodu . "-" . mt_rand();
 
 		$gorselPath="";
+		array_unshift($kategoriIdList, $parent);
 		foreach ($kategoriIdList as $key => $val) {
 			$gorselPath .= $val."/";
 		}
@@ -276,8 +278,6 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 			]);
 		}
 
-
-
 		//çoklu Görsel işlemleri
 		$files = array();
 		foreach ($_FILES['urunDetayGorsel'] as $k => $l) {
@@ -375,10 +375,11 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 												<input type="number" min="0" class="form-control border-primary" id="urunStok" name="urunStok" value="<?= $Listeleme['urunStok'] ?>" autocomplete="off">
 											</div>
 										</div>
+										<input type="hidden" name="urunId" id="urunId" value="<?=$Listeleme['urunId']?>">
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="kategoriIdList"><?= $fonk->getPDil("Kategoriler") ?><small style="color:red;margin-left:1rem">*</small></label>
-												<select class="select2 form-control block" name="kategoriIdList[]" id="kategoriIdList" multiple required>
+												<label for="parent"><?= $fonk->getPDil("Ana Kategoriler") ?><small style="color:red;margin-left:1rem">*</small></label>
+												<select class="select2 form-control block" name="parent" id="parent" onchange="parentChildCategory('urunId','parent','kategoriIdList')"  required>
 													<?php
 													$sartlar = [];
 													if ($_SESSION["islemDilId"] != "") {
@@ -403,86 +404,52 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 														}
 													?>
 														<option value="<?= $val['kategoriId'] ?>" <?= $check ?>><?= $val['kategoriDilBilgiBaslik'] ?></option>
-														<?php
-														$sartlar = array_merge($sartlar, [
-															"kategoriUstMenuId" => $val["kategoriId"]
-														]);
-														$kategoriAltList = $db->select("Kategoriler", [
-															"[>]KategoriDilBilgiler" => ["Kategoriler.kategoriId" => "kategoriDilBilgiKategoriId"]
-														], "*", $sartlar);
-														foreach ($kategoriAltList as $val) {
-															$check = "";
-															$kontrol = $db->get("UrunKategoriler", "*", [
-																"urunKategoriUrunId" => $Listeleme['urunId'],
-																"urunKategoriKategoriId" => $val["kategoriId"]
-															]);
-															if ($kontrol) {
-																$check = "selected";
-															}
-														?>
-															<option value="<?= $val['kategoriId'] ?>" <?= $check ?>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--> <?= $val['kategoriDilBilgiBaslik'] ?></option>
-															<?php
-															$sartlar = array_merge($sartlar, [
-																"kategoriUstMenuId" => $val["kategoriId"]
-															]);
-															$kategoriAltList2 = $db->select("Kategoriler", [
-																"[>]KategoriDilBilgiler" => ["Kategoriler.kategoriId" => "kategoriDilBilgiKategoriId"]
-															], "*", $sartlar);
-															foreach ($kategoriAltList2 as $val) {
-																$check = "";
-																$kontrol = $db->get("UrunKategoriler", "*", [
-																	"urunKategoriUrunId" => $Listeleme['urunId'],
-																	"urunKategoriKategoriId" => $val["kategoriId"]
-																]);
-																if ($kontrol) {
-																	$check = "selected";
-																}
-															?>
-																<option value="<?= $val['kategoriId'] ?>" <?= $check ?>>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--> <?= $val['kategoriDilBilgiBaslik'] ?></option>
-														<?php } } } ?>
+													<?php } ?>
 												</select>
 											</div>
 										</div>
 
 										<div class="col-md-3">
 											<div class="form-group">
-												<label for="urunModel"><?= $fonk->getPDil("Model") ?></label>
-												<input type="text" class="form-control border-primary" id="urunModel" name="urunModel" value="<?= $Listeleme['urunModel'] ?>" autocomplete="off" required>
+												<label for="kategoriIdList"><?= $fonk->getPDil("Alt Kategoriler") ?><small style="color:red;margin-left:1rem">*</small></label>
+												<select class="select2 form-control block" name="kategoriIdList[]" id="kategoriIdList" multiple required>
+													
+												</select>
 											</div>
 										</div>
 
-										<div class="col-md-3">
-											<div class="form-group">
-												<label for="checkboxlar">Opsiyonel Veriler *</label>
+										<div class="col-md-12">
+											<div class="form-group row">
+												<label class="col-12" for="checkboxlar">Opsiyonel Veriler *</label>
 
-												<fieldset>
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urunSFPPort" id="urunSFPPort" <?php if ($Listeleme['urunSFPPort'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urunSFPPort">
-															SFP Port
+															100Mbit SFP Port
 														</label>
 													</div>
 												</fieldset>
 
-												<fieldset>
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urun1GSFPPort" id="urun1GSFPPort" <?php if ($Listeleme['urun1GSFPPort'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urun1GSFPPort">
-															1G SFP Port
+															1Gigabit SFP Port
 														</label>
 													</div>
 												</fieldset>
 
-												<fieldset>
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urunSFPPortBirlikte" id="urunSFPPortBirlikte" <?php if ($Listeleme['urunSFPPortBirlikte'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urunSFPPortBirlikte">
-															FP+ Port
+															SFP+ Port
 														</label>
 													</div>
 												</fieldset>
 
-												<fieldset>
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urunSFP28Port" id="urunSFP28Port" <?php if ($Listeleme['urunSFP28Port'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urunSFP28Port">
@@ -490,7 +457,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 														</label>
 													</div>
 												</fieldset>
-												<fieldset>
+
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urunQSFPPort" id="urunQSFPPort" <?php if ($Listeleme['urunQSFPPort'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urunQSFPPort">
@@ -498,7 +466,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 														</label>
 													</div>
 												</fieldset>
-												<fieldset>
+
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urunQSFP28Port" id="urunQSFP28Port" <?php if ($Listeleme['urunQSFP28Port'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urunQSFP28Port">
@@ -506,7 +475,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 														</label>
 													</div>
 												</fieldset>
-												<fieldset>
+
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urunEndustriyelTip" id="urunEndustriyelTip" <?php if ($Listeleme['urunEndustriyelTip'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urunEndustriyelTip">
@@ -514,15 +484,17 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 														</label>
 													</div>
 												</fieldset>
-												<fieldset>
+
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urun100MegabitRJ45Port" id="urun100MegabitRJ45Port" <?php if ($Listeleme['urun100MegabitRJ45Port'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urun100MegabitRJ45Port">
-															100 Megabit RJ45 Port
+															100Mbit RJ45 Port
 														</label>
 													</div>
 												</fieldset>
-												<fieldset>
+
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urun1GigabitRJ45Port" id="urun1GigabitRJ45Port" <?php if ($Listeleme['urun1GigabitRJ45Port'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urun1GigabitRJ45Port">
@@ -530,7 +502,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 														</label>
 													</div>
 												</fieldset>
-												<fieldset>
+
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urun10GigabitRJ45Port" id="urun10GigabitRJ45Port" <?php if ($Listeleme['urun10GigabitRJ45Port'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urun10GigabitRJ45Port">
@@ -539,55 +512,67 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 													</div>
 												</fieldset>
 
-												<fieldset>
+												<fieldset class="col-2">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" value="1" name="urun1Metre" id="urun1Metre" <?php if ($Listeleme['urun1Metre'] == 1) {echo "checked";} ?>>
 														<label class="custom-control-label" for="urun1Metre">
-															1 Metre
-														</label>
-													</div>
-												</fieldset>
-												<fieldset>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" value="1" name="urun2Metre" id="urun2Metre" <?php if ($Listeleme['urun2Metre'] == 1) {echo "checked";} ?>>
-														<label class="custom-control-label" for="urun2Metre">
-															2 Metre
-														</label>
-													</div>
-												</fieldset>
-												<fieldset>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" value="1" name="urun3Metre" id="urun3Metre" <?php if ($Listeleme['urun3Metre'] == 1) {echo "checked";} ?>>
-														<label class="custom-control-label" for="urun3Metre">
-															3 Metre
-														</label>
-													</div>
-												</fieldset>
-												<fieldset>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" value="1" name="urun510Metre" id="urun510Metre" <?php if ($Listeleme['urun510Metre'] == 1) {echo "checked";} ?>>
-														<label class="custom-control-label" for="urun510Metre">
-															5-10 Metre
-														</label>
-													</div>
-												</fieldset>
-												<fieldset>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" value="1" name="urun1020Metre" id="urun1020Metre" <?php if ($Listeleme['urun1020Metre'] == 1) {echo "checked";} ?>>
-														<label class="custom-control-label" for="urun1020Metre">
-															10-20 Metre
-														</label>
-													</div>
-												</fieldset>
-												<fieldset>
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" value="1" name="urun2030Metre" id="urun2030Metre" <?php if ($Listeleme['urun2030Metre'] == 1) {echo "checked";} ?>>
-														<label class="custom-control-label" for="urun2030Metre">
-															20-30 Metre
+															1Mt ve altı
 														</label>
 													</div>
 												</fieldset>
 
+												<fieldset class="col-2">
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input" value="1" name="urun2Metre" id="urun2Metre" <?php if ($Listeleme['urun2Metre'] == 1) {echo "checked";} ?>>
+														<label class="custom-control-label" for="urun2Metre">
+															2Mt
+														</label>
+													</div>
+												</fieldset>
+
+												<fieldset class="col-2">
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input" value="1" name="urun3Metre" id="urun3Metre" <?php if ($Listeleme['urun3Metre'] == 1) {echo "checked";} ?>>
+														<label class="custom-control-label" for="urun3Metre">
+															3Mt
+														</label>
+													</div>
+												</fieldset>
+
+												<fieldset class="col-2">
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input" value="1" name="urun510Metre" id="urun510Metre" <?php if ($Listeleme['urun510Metre'] == 1) {echo "checked";} ?>>
+														<label class="custom-control-label" for="urun510Metre">
+															5-10Mt
+														</label>
+													</div>
+												</fieldset>
+
+												<fieldset class="col-2">
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input" value="1" name="urun1020Metre" id="urun1020Metre" <?php if ($Listeleme['urun1020Metre'] == 1) {echo "checked";} ?>>
+														<label class="custom-control-label" for="urun1020Metre">
+															10-20Mt
+														</label>
+													</div>
+												</fieldset>
+
+												<fieldset class="col-2">
+													<div class="custom-control custom-checkbox">
+														<input type="checkbox" class="custom-control-input" value="1" name="urun2030Metre" id="urun2030Metre" <?php if ($Listeleme['urun2030Metre'] == 1) {echo "checked";} ?>>
+														<label class="custom-control-label" for="urun2030Metre">
+															20Mt ve üzeri
+														</label>
+													</div>
+												</fieldset>
+
+											</div>
+										</div>
+
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="urunModel"><?= $fonk->getPDil("Model") ?></label>
+												<input type="text" class="form-control border-primary" id="urunModel" name="urunModel" value="<?= $Listeleme['urunModel'] ?>" autocomplete="off" required>
 											</div>
 										</div>
 									
@@ -1018,6 +1003,9 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 <?php }
 include("../../Scripts/kayitJs.php"); ?>
 <script type="text/javascript">
+	$( document ).ready(function() {
+		parentChildCategory('urunId','parent','kategoriIdList');
+    });
 	function GorselSecimModal(Id, tip, width, height) {
 		$.ajax({
 			type: "POST",

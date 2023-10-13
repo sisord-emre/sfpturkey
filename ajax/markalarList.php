@@ -63,6 +63,24 @@ if ($_GET["filtre"]=="1")
 	if($_GET['urun10GigabitRJ45Port'] == 1){
 		$sartlar=array_merge($sartlar,["urun10GigabitRJ45Port" => ($_GET['urun10GigabitRJ45Port']=='1') ? '1' : '0' ]) ;
 	}
+	if($_GET['urun1Metre'] != ""  && $_GET['urun1Metre'] != 0){
+		$sartlar=array_merge($sartlar,["urun1Metre" => ($_GET['urun1Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun2Metre'] != ""  && $_GET['urun2Metre'] != 0){
+		$sartlar=array_merge($sartlar,["urun2Metre" => ($_GET['urun2Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun3Metre'] != ""  && $_GET['urun3Metre'] != 0){
+		$sartlar=array_merge($sartlar,["urun3Metre" => ($_GET['urun3Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun510Metre'] != ""  && $_GET['urun510Metre'] != 0){
+		$sartlar=array_merge($sartlar,["urun510Metre" => ($_GET['urun510Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun1020Metre'] != ""  && $_GET['urun1020Metre'] != 0){
+		$sartlar=array_merge($sartlar,["urun1020Metre" => ($_GET['urun1020Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun2030Metre'] != ""  && $_GET['urun2030Metre'] != 0){
+		$sartlar=array_merge($sartlar,["urun2030Metre" => ($_GET['urun2030Metre']=='1') ? '1' : '0' ]) ;
+	}
 }
 $sartlar=array_merge($sartlar,[
 	"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
@@ -141,6 +159,24 @@ if ($_GET["filtre"]=="1")
 	if($_GET['urun10GigabitRJ45Port'] == 1){
 		$urunsartlar=array_merge($urunsartlar,["urun10GigabitRJ45Port" => ($_GET['urun10GigabitRJ45Port']=='1') ? '1' : '0' ]) ;
 	}
+	if($_GET['urun1Metre'] != ""  && $_GET['urun1Metre'] != 0){
+		$urunsartlar=array_merge($urunsartlar,["urun1Metre" => ($_GET['urun1Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun2Metre'] != ""  && $_GET['urun2Metre'] != 0){
+		$urunsartlar=array_merge($urunsartlar,["urun2Metre" => ($_GET['urun2Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun3Metre'] != ""  && $_GET['urun3Metre'] != 0){
+		$urunsartlar=array_merge($urunsartlar,["urun3Metre" => ($_GET['urun3Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun510Metre'] != ""  && $_GET['urun510Metre'] != 0){
+		$urunsartlar=array_merge($urunsartlar,["urun510Metre" => ($_GET['urun510Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun1020Metre'] != ""  && $_GET['urun1020Metre'] != 0){
+		$urunsartlar=array_merge($urunsartlar,["urun1020Metre" => ($_GET['urun1020Metre']=='1') ? '1' : '0' ]) ;
+	}
+	if($_GET['urun2030Metre'] != ""  && $_GET['urun2030Metre'] != 0){
+		$urunsartlar=array_merge($urunsartlar,["urun2030Metre" => ($_GET['urun2030Metre']=='1') ? '1' : '0' ]) ;
+	}
 }
 $urunsartlar=array_merge($urunsartlar,[
 	"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
@@ -161,7 +197,7 @@ $urunler=$db->select("Urunler",[
 ],$urunSutunlar,$urunsartlar);
 
 // echo "<pre>";
-// print_r($urunsartlar);
+// print_r($urunler);
 // echo "</pre>";
 
 if ($_SESSION['uyeSessionKey'] != "") 
@@ -211,7 +247,7 @@ foreach ($urunler as $value) {
 			<input type="hidden" class="input-text qty text tc qty_pr_js qty_cart_js" id="adet_<?= $value["urunVaryantId"] ?>" name="quantity" value="1">
 			<div class="product-info mt__15">
 				<h3 class="product-title pr fs__14 mg__0 fwm">
-					<a class="cd chp" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
+					<a class="cd chp kisalt" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
 						<?= $value["urunVaryantDilBilgiAdi"]; ?>
 					</a>
 				</h3>
@@ -219,25 +255,31 @@ foreach ($urunler as $value) {
 				<?php if($uyeVar == 1){ ?>
 					<span class="price dib mb__5 w-100 text-center">
 						<?php if($uye['uyeIndirimOrani'] > 0 ): ?>
-							Bayi Özel Fiyat:
-							<del> 
-								<?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"");?>
-								<?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
-							</del>
+							<div class="button-liste w-100">
+								<?= $fonk->getDil("Bayi Fiyat"); ?>
+								<del style="color:white;"> 
+									<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
+									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
+								</del>
+							</div>
 							<br>
-                            Liste Özel Fiyat:
-							<ins> 
-								<?php $hesapla2=$fonk->Hesapla($urun["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-								<?= $value["paraBirimSembol"] ?><?=$hesapla2["birimFiyat"];?>
-							</ins>
+							<div class="button-bayi mt-3 w-100">
+								<?= $fonk->getDil("Liste Fiyat"); ?>
+								<ins style="color:white;"> 
+									<?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
+									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
+								</ins>
+							</div>
 						<?php else: ?>
-							<?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"");?>
-							<ins> <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?></ins>
+							<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
+							<div class="button-liste w-100">
+								<ins style="color:white;"> <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?></ins>
+							</div>
 						<?php endif; ?>
 					</span>
 				<?php } ?> 
 
-				<button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 order-4 d-inline-block animated">
+				<button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
 					<span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
 				</button>
 

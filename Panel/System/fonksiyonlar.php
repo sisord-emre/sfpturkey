@@ -735,6 +735,7 @@ class Fonksiyonlar
 				"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
 			], [
 				"urunVaryantFiyat",
+				"urunKampanya",
 			], [
 				"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
 				"urunDurum" => 1,
@@ -760,14 +761,19 @@ class Fonksiyonlar
 		}
 
 		$birimFiyat = 0;
-		if ($veri["urunVaryantFiyat"] != "") ///eger varyant varsa onu hesapla
+		if ($veri["urunKampanya"] == 1) // eğer urunde kampanya varsa indirim yapma
+		{
+			$birimFiyat += floatval($veri["urunVaryantFiyat"]);
+		}
+		else if ($veri["urunVaryantFiyat"] != "") ///eger varyant varsa onu hesapla
 		{
 			if ($uyeIndirimOrani != 0) {
 				$birimFiyat += floatval($veri["urunVaryantFiyat"] - ($veri["urunVaryantFiyat"] / 100 * $uyeIndirimOrani));
 			} else {
 				$birimFiyat += floatval($veri["urunVaryantFiyat"]);
 			}
-		} else if ($veri["urunFiyat"] != "") {
+		} 
+		else if ($veri["urunFiyat"] != "") {
 			$birimFiyat += floatval($veri["urunFiyat"]);
 		}
 		$veri = array_merge($veri, array("birimFiyat" => $birimFiyat));

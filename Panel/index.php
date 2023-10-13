@@ -318,7 +318,7 @@ if (isset($_GET["islemDilKodu"])) {
     <script src="Assets/app-assets/vendors/js/tables/buttons.print.min.js"></script>
     <script src="Assets/app-assets/vendors/js/tables/buttons.colVis.min.js"></script>
     <script src="Assets/app-assets/js/scripts/tables/datatables-extensions/datatable-button/datatable-html5.js"></script>
-    <script src="Assets/index.js"></script>
+    <script src="Assets/index.js?v=1.0.2"></script>
 </body>
 <!-- END: Body-->
 <script type="text/javascript">

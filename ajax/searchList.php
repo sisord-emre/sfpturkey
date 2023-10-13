@@ -21,6 +21,8 @@ $sutunlar=[
 	"paraBirimSembol",
 	"urunVaryantDilBilgiAdi",
 	"urunVaryantKodu",
+	"urunVaryantDilBilgiEtiketler",
+	"varyantDilBilgiBaslik"
 ];
 $sartlar=[];
 //toplam veri
@@ -28,9 +30,12 @@ $sartlar=array_merge($sartlar,[
 	"AND" => [
 		"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
 		"urunVaryantDilBilgiDurum" => 1,
+		//"urunVaryantDefaultSecim" => 1, //default seçili olanlar listelenecek
 		"OR" => [
 			"urunVaryantDilBilgiAdi[~]" => $ara,
-			"urunModel[~]" => $ara
+			"urunModel[~]" => $ara,
+			"urunVaryantDilBilgiEtiketler[~]" => $ara,
+			"varyantDilBilgiBaslik" => $ara
 		]
 	],
 	"ORDER" => [
@@ -42,6 +47,7 @@ $totalRecord = $db->select("Urunler", [
 	"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
 	"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
 	"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
+	"[>]VaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantVaryantId" => "varyantDilBilgiVaryatId"],
 ],$sutunlar,$sartlar);
 
 $totalRecord = count($totalRecord);
@@ -69,15 +75,20 @@ $sutunlar=[
 	"paraBirimSembol",
 	"urunVaryantDilBilgiAdi",
 	"urunVaryantKodu",
+	"urunVaryantDilBilgiEtiketler",
+	"varyantDilBilgiBaslik"
 ];
 
 $sartlar=array_merge($sartlar,[
 	"AND" => [
 		"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
 		"urunVaryantDilBilgiDurum" => 1,
+		//"urunVaryantDefaultSecim" => 1, //default seçili olanlar listelenecek
 		"OR" => [
 			"urunVaryantDilBilgiAdi[~]" => $ara,
-			"urunModel[~]" => $ara
+			"urunModel[~]" => $ara,
+			"urunVaryantDilBilgiEtiketler[~]" => $ara,
+			"varyantDilBilgiBaslik" => $ara
 		]
 	],
 	"ORDER" => [
@@ -91,6 +102,7 @@ $urunler = $db->select("Urunler", [
 	"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
 	"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
 	"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
+	"[>]VaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantVaryantId" => "varyantDilBilgiVaryatId"],
 ],$sutunlar,$sartlar);
 ///----- Saylafama Sorgu
 
@@ -141,7 +153,7 @@ foreach ($urunler as $value) {
 			<input type="hidden" class="input-text qty text tc qty_pr_js qty_cart_js" id="adet_<?= $value["urunVaryantId"] ?>" name="quantity" value="1">
 			<div class="product-info mt__15">
 				<h3 class="product-title pr fs__14 mg__0 fwm">
-					<a class="cd chp" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
+					<a class="cd chp kisalt" href="product/<?= $value["urunVaryantKodu"] . "-" . $value["urunVaryantDilBilgiSlug"]; ?>">
 						<?= $value["urunVaryantDilBilgiAdi"]; ?>
 					</a>
 				</h3>
@@ -153,7 +165,7 @@ foreach ($urunler as $value) {
 							<?= $fonk->getDil("Liste Özel Fiyat"); ?>:
 							<del style="color:white;"> 
 								<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-								<?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?>
+								<?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
 							</del>
 						</div>
 						<br>
@@ -161,12 +173,12 @@ foreach ($urunler as $value) {
 							<?= $fonk->getDil("Bayi Özel Fiyat"); ?>: 
 							<ins style="color:white;"> 
 								<?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-								<?= $value["paraBirimSembol"] ?><?=$hesapla2["birimFiyat"];?>
+								<?= $value["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
 							</ins>
 						</div>
 					<?php else: ?>
 						<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-						<ins> <?= $value["paraBirimSembol"] ?><?=$hesapla["birimFiyat"];?></ins>
+						<ins> <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?></ins>
 					<?php endif; ?>
 				</span>
 				<?php } ?> 

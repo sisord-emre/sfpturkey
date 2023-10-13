@@ -1,30 +1,5 @@
 <?php
 include('layouts/header.php');
-
-if ($_POST["gelen"] == 1) {
-    extract($_POST);
-
-    $parametreler = array(
-        'iletisimFormAdSoyad' => $iletisimFormAdSoyad,
-        'iletisimFormEmail' => $iletisimFormEmail,
-        'iletisimFormTel' => $iletisimFormTel,
-        'iletisimFormMesaj' => $iletisimFormMesaj,
-        'iletisimFormDurum' => "0",
-        'iletisimFormKayitTarihi' => date("Y-m-d H:i:s")
-    );
-    $query = $db->insert('IletisimFormlari', $parametreler);
-
-
-    if ($query) {
-        $baslik = "İletisim";
-        include("Mailtemplate/contactMailTemplate.php");
-        $sonuc = $fonk->mailGonder($gondericiMail[1], $baslik, $body, $sabitB);
-
-        echo '<script> swal("' . $fonk->getDil('Başarılı') . '", "' . $fonk->getDil('Başarılı') . '", "success");</script>';
-    } else {
-        echo '<script> swal("' . $fonk->getDil('Hata') . '", "' . $fonk->getDil('Hata Oluştu! Lütfen tekrar deneyiniz') . '", "error");  </script>';
-    }
-}
 ?>
 <div id="nt_content">
     <!--shop banner-->
@@ -44,7 +19,7 @@ if ($_POST["gelen"] == 1) {
     <div class="kalles-section container mb__50 cb">
         <div class="row fl_center">
             <div class="contact-form col-12 col-md-6 order-1 order-md-0">
-                <form method="post" action="" class="contact-form">
+                <form id="contactpost" class="contact-form" method="post" action="" enctype="multipart/form-data">
                     <h3 class="mb__20 mt__40"><?= $fonk->getDil("İLETİŞİM"); ?></h3>
                     <p>
                         <label for="iletisimFormAdSoyad"><?= $fonk->getDil("İsim (zorunlu)"); ?></label>
@@ -63,7 +38,7 @@ if ($_POST["gelen"] == 1) {
                         <textarea rows="10" id="iletisimFormMesaj" name="iletisimFormMesaj" required="required"></textarea>
                     </p>
                     <input type="hidden" name="gelen" value="1">
-                    <input type="submit" class="button button_primary w__100" value="<?= $fonk->getDil("Gönder"); ?>">
+                    <button type="submit" id="submitBtn" class="button button_primary w__100"><?= $fonk->getDil("Gönder"); ?></button>
                 </form>
             </div>
 
@@ -73,8 +48,25 @@ if ($_POST["gelen"] == 1) {
                     <?= $fonk->getDil("Müşteri hizmetlerimiz, ürünlerimiz, web sitemiz veya bizimle paylaşmak istediğiniz herhangi bir konuda sizden haber almayı çok seviyoruz. Yorumlarınız ve önerileriniz takdir edilecektir. Lütfen aşağıdaki formu doldurunuz."); ?>
                 </p>
                 <p class="mb__5 d-flex"><i class="las la-home fs__20 mr__10 text-primary"></i> <?= $sabitB["sabitBilgiAdres"]; ?></p>
-                <p class="mb__5 d-flex"><i class="las la-phone fs__20 mr__10 text-primary"></i><?= $siteTel[0]; ?></p>
-                <p class="mb__5 d-flex"><i class="las la-envelope fs__20 mr__10 text-primary"></i><?= $gondericiMail[1]; ?></p>
+                <p class="mb__5 d-flex"><i class="las la-phone fs__20 mr__10 text-primary"></i><?= $siteTel[0]; ?> (<?= $fonk->getDil("SFP Satış"); ?>)</p>
+                <p class="mb__5 d-flex"><i class="las la-phone fs__20 mr__10 text-primary"></i><?= $siteTel[1]; ?> (<?= $fonk->getDil("SFP Teknik Destek"); ?>)</p>
+                <p class="mb__5 d-flex"><i class="las la-phone fs__20 mr__10 text-primary"></i><?= $siteTel[2]; ?> (<?= $fonk->getDil("SFP Finans Operasyon"); ?>)</p>
+                <p class="mb__5 d-flex"><i class="las la-envelope fs__20 mr__10 text-primary"></i>
+                    <a href="mailto:<?= $gondericiMail[1]; ?>">
+                        <?= $fonk->getDil("Satış için tıklayınız."); ?>
+                    </a>
+                </p>
+                <p class="mb__5 d-flex"><i class="las la-envelope fs__20 mr__10 text-primary"></i>
+                    <a href="mailto:<?= $gondericiMail[2]; ?>">
+                        <?= $fonk->getDil("Teknik destek için tıklayınız."); ?>
+                    </a>
+                </p>
+                <p class="mb__5 d-flex"><i class="las la-envelope fs__20 mr__10 text-primary"></i>
+                    <a href="mailto:<?= $gondericiMail[3]; ?>">
+                        <?= $fonk->getDil("Finans Operasyonu için tıklayınız."); ?>
+                    </a>
+                </p>
+
                 <p class="mb__5 d-flex"><i class="las la-clock fs__20 mr__10 text-primary"></i> <?= $fonk->getDil("Hafta içi 09:00-18:00"); ?> </p>
             </div>
         </div>
@@ -83,3 +75,35 @@ if ($_POST["gelen"] == 1) {
 </div>
 
 <?php include('layouts/footer.php') ?>
+
+<script>
+    $("#contactpost").submit(function(e) {
+        const submitButton = document.getElementById("submitBtn");
+        submitButton.disabled = true;
+        e.preventDefault();
+        var error = 0;
+        var data = new FormData(this);
+        $.ajax({
+            type: "POST",
+            url: "ajax/contactPost.php",
+            data: data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(gelenSayfa) {
+                if (gelenSayfa == "1") {
+                    document.getElementById("contactpost").reset();
+                    swal("<?=$fonk->getDil('Başarılı')?>", "<?=$fonk->getDil('Başarılı')?>", "success")
+                } 
+                else if (gelenSayfa == "2") {
+                    swal("<?=$fonk->getDil('Hata')?>", "<?=$fonk->getDil('Hata Oluştu! Lütfen tekrar deneyiniz')?>", "success")
+                }
+                setTimeout(function () {
+                    // Re-enable the submit button after some time (e.g., after AJAX request completes)
+                    submitButton.disabled = false;
+                }, 2000); // 2 seconds (you can adjust this as needed)
+            },
+        });
+
+    });
+</script>

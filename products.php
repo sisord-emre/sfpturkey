@@ -1,6 +1,7 @@
 <?php
 include('layouts/header.php');
 $seo = intval(explode('-', $_GET['seo'])[0]);
+
 $kategoriBul = $db->get("Kategoriler", [
     "[>]KategoriDilBilgiler" => ["Kategoriler.kategoriId" => "kategoriDilBilgiKategoriId"]
 ], "*", [
@@ -49,70 +50,70 @@ $fonk->findCategoryById($kategoriList, $kategoriBul["kategoriUstMenuId"], $resul
         <!--grid control-->
         <form id="formpost" action="" method="get">
             <div class="cat_toolbar row fl_center al_center mt__30">
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urunSFPPort" id="urunSFPPort" <?= ($_GET['urunSFPPort'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urunSFPPort">
                         100Mbit SFP Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urun1GSFPPort" id="urun1GSFPPort" <?= ($_GET['urun1GSFPPort'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urun1GSFPPort">
                         1Gigabit SFP Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urunSFPPortBirlikte" id="urunSFPPortBirlikte" <?= ($_GET['urunSFPPortBirlikte'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urunSFPPortBirlikte">
                         SFP+ Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urunSFP28Port" id="urunSFP28Port" <?= ($_GET['urunSFP28Port'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urunSFP28Port">
                         SFP28 Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urunQSFPPort" id="urunQSFPPort" <?= ($_GET['urunQSFPPort'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urunQSFPPort">
                         QSFP+ Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urunQSFP28Port" id="urunQSFP28Port" <?= ($_GET['urunQSFP28Port'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urunQSFP28Port">
                         QSFP28 Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urunEndustriyelTip" id="urunEndustriyelTip" <?= ($_GET['urunEndustriyelTip'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urunEndustriyelTip">
                         Endüstriyel Tip
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urun100MegabitRJ45Port" id="urun100MegabitRJ45Port" <?= ($_GET['urun100MegabitRJ45Port'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urun100MegabitRJ45Port">
                         100Mbit RJ45 Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urun1GigabitRJ45Port" id="urun1GigabitRJ45Port" <?= ($_GET['urun1GigabitRJ45Port'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urun1GigabitRJ45Port">
                         1 Gigabit RJ45 Port
                     </label>
                 </div>
 
-                <div class="form-check" style="padding: 15px !important;">
+                <div class="form-check" style="padding: 20px !important;">
                     <input class="form-check-input" type="checkbox" value="1" name="urun10GigabitRJ45Port" id="urun10GigabitRJ45Port" <?= ($_GET['urun10GigabitRJ45Port'] == '1') ? 'checked="checked"' : '0' ?>>
                     <label class="form-check-label" for="urun10GigabitRJ45Port">
                         10 Gigabit RJ45 Port
@@ -120,64 +121,46 @@ $fonk->findCategoryById($kategoriList, $kategoriBul["kategoriUstMenuId"], $resul
                 </div>
 
                 <?php
-                $kelimeler = array(
-                    "patch-cordpigtail",
-                    "sm-patch-cord",
-                    "om4-patch-cord",
-                    "sm-pigtail",
-                    "om2-patch-cord",
-                    "patch-cord",
-                    "cat5e",
-                    "cat6",
-                    "cat6a",
-                    "cat7",
-                    "cat8",
-                    "om3-patch-cord",
-                    "om2-pigtail",
-                    "om3-pigtail",
-                    "om4-pigtail"
-                );
-
-                if (in_array($_GET['seo'], $kelimeler)) { ?>
+                if ($kategoriBul['kategoriOzelFiltre'] == 1) { ?>
                     <div class="form-check" style="padding: 15px !important;">
                         <input class="form-check-input" type="checkbox" value="1" name="urun1Metre" id="urun1Metre" <?= ($_GET['urun1Metre'] == '1') ? 'checked="checked"' : '0' ?>>
                         <label class="form-check-label" for="urun1Metre">
-                            1 Metre
+                            1Mt ve altı
                         </label>
                     </div>
 
                     <div class="form-check" style="padding: 15px !important;">
                         <input class="form-check-input" type="checkbox" value="1" name="urun2Metre" id="urun2Metre" <?= ($_GET['urun2Metre'] == '1') ? 'checked="checked"' : '0' ?>>
                         <label class="form-check-label" for="urun2Metre">
-                            2 Metre
+                            2Mt
                         </label>
                     </div>
 
                     <div class="form-check" style="padding: 15px !important;">
                         <input class="form-check-input" type="checkbox" value="1" name="urun3Metre" id="urun3Metre" <?= ($_GET['urun3Metre'] == '1') ? 'checked="checked"' : '0' ?>>
                         <label class="form-check-label" for="urun3Metre">
-                            3 Metre
+                            3Mt
                         </label>
                     </div>
 
                     <div class="form-check" style="padding: 15px !important;">
                         <input class="form-check-input" type="checkbox" value="1" name="urun510Metre" id="urun510Metre" <?= ($_GET['urun510Metre'] == '1') ? 'checked="checked"' : '0' ?>>
                         <label class="form-check-label" for="urun510Metre">
-                            5-10 Metre
+                            5-10Mt
                         </label>
                     </div>
 
                     <div class="form-check" style="padding: 15px !important;">
                         <input class="form-check-input" type="checkbox" value="1" name="urun1020Metre" id="urun1020Metre" <?= ($_GET['urun1020Metre'] == '1') ? 'checked="checked"' : '0' ?>>
                         <label class="form-check-label" for="urun1020Metre">
-                            10-20 Metre
+                            10-20Mt
                         </label>
                     </div>
 
                     <div class="form-check" style="padding: 15px !important;">
                         <input class="form-check-input" type="checkbox" value="1" name="urun2030Metre" id="urun2030Metre" <?= ($_GET['urun2030Metre'] == '1') ? 'checked="checked"' : '0' ?>>
                         <label class="form-check-label" for="urun2030Metre">
-                            20-30 Metre
+                            20Mt ve üzeri
                         </label>
                     </div>
                 <?php } ?>

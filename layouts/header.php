@@ -1,7 +1,7 @@
 <?php
 include('Panel/System/Config.php');
 
-$assetVersion = "1.8.1";
+$assetVersion = "1.8.8";
 $siteTitle = $sabitB["sabitBilgiTitle"];
 $siteDescription = $sabitB["sabitBilgiDescription"];
 $siteTel = explode(';', $sabitB['sabitBilgiTel']);
@@ -120,7 +120,7 @@ if ($_SESSION['uyeSessionKey'] != "") {
                                     </div>
                                  </div>
                                 <?php if (!$uyeVar) { ?>
-                                    <div class="col-lg-2 col-12 tc col-md-12 tr_lg dn_false_1024">
+                                    <div class="col-lg-2 col-12 tc col-md-12 tr_lg dn_false_1024 mt-3 mt-md-0">
                                         <div class="nt_action in_flex al_center cart_des_1">
                                             <div class="my-account ts__05">
                                                 <button onclick="location.href='account.php';" class="btn btn-sm h_search_btn text-white">
@@ -130,7 +130,7 @@ if ($_SESSION['uyeSessionKey'] != "") {
                                         </div>
                                     </div>
                                 <?php } else {?>
-                                    <div class="col-lg-2 col-12 tc col-md-12 tr_lg dn_false_1024">
+                                    <div class="col-lg-2 col-12 tc col-md-12 tr_lg dn_false_1024 mt-3 mt-md-0">
                                         <div class="nt_action in_flex al_center cart_des_1">
                                             <div class="my-account ts__05">
                                                 <?= $fonk->getDil("Hoşgeldiniz"); ?> <?= $uye['uyeAdi'] ?> <?= $uye['uyeSoyadi'] ?> <a href="account.php?exit=ok" style="color:#f1734c;">Çıkış</a>
@@ -147,7 +147,7 @@ if ($_SESSION['uyeSessionKey'] != "") {
                         <div class="container">
                             <div class="row al_center min-height__64px">
 
-                                <div class="col-lg-1 col-md-1 col-2 lh__1">
+                                <div class="col-lg-1 col-md-1 col-1 lh__1">
                                     <a href="#" data-id="#nt_menu_canvas" class="push_side push-menu-btn lh__1 flex al_center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" viewBox="0 0 30 16">
                                             <rect width="30" height="1.5"></rect>
@@ -238,13 +238,13 @@ if ($_SESSION['uyeSessionKey'] != "") {
                                 </div>
 
 
-                                <div class="col-lg-2 col-md-4 col-4 tc tr_lg dn_false_1024">
+                                <div class="col-lg-2 col-md-5 col-5 tc tr_lg dn_false_1024">
                                     <div class="nt_action in_flex al_center cart_des_1">
                                         <?php if ($uyeVar) { ?>
                                             <div class="my-account ts__05 pr">
                                                 <a class="cb chp db push_side" href="user-profile.php" data-id="#nt_login_canvas"><i class="iccl iccl-user"></i></a>
                                             </div>
-                                            <a class="icon_like cb chp pr dn db_md js_link_wis" href="favori">
+                                            <a class="icon_like cb chp pr db_md js_link_wis" href="favori">
                                                 <i class="iccl iccl-heart pr"> </i>
                                             </a>
                                         <?php } ?>

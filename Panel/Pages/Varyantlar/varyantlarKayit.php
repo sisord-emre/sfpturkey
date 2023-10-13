@@ -65,20 +65,22 @@ else{//Listeleme Yetkisi Var
 
 	if($_POST['formdan']=="1"){
 		$fonk->csrfKontrol();
-		if ($varyanDurum=="") {
-			$varyanDurum=0;
-		}
+		
+		$varyanDurum=($varyanDurum=="") ? 0 : 1;
+		$varyantOzelFiltre=($varyantOzelFiltre=="") ? 0 : 1;
 		if($primaryId!=""){
 			//günclelemedeki parametreler
 			$parametreler=array(
 				'varyanKodu' => $varyanKodu,
-				'varyanDurum' => $varyanDurum
+				'varyanDurum' => $varyanDurum,
+				'varyantOzelFiltre' => $varyantOzelFiltre
 			);
 		}else{
 			//eklemedeki parametreler
 			$parametreler=array(
 				'varyanKodu' => $varyanKodu,
-				'varyanDurum' => $varyanDurum
+				'varyanDurum' => $varyanDurum,
+				'varyantOzelFiltre' => $varyantOzelFiltre
 			);
 		}
 
@@ -182,12 +184,22 @@ else{//Listeleme Yetkisi Var
 												<input type="text" class="form-control border-primary" id="varyanKodu" name="varyanKodu" value="<?=$Listeleme['varyanKodu']?>" autocomplete="off" readonly required>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-3">
 											<div class="form-group">
 												<label for="varyanDurum"><?=$fonk->getPDil("Durumu")?></label>
 												<fieldset>
 													<div class="float-left">
 														<input type="checkbox" class="switch hidden" data-on-label="<?=$fonk->getPDil("Aktif")?>" data-off-label="<?=$fonk->getPDil("Pasif")?>" id="varyanDurum" name="varyanDurum" value="1" <?php if($Listeleme['varyanDurum']==1){echo 'checked';}?> >
+													</div>
+												</fieldset>
+											</div>
+										</div>
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="varyantOzelFiltre"><?=$fonk->getPDil("Özel Filtre")?></label>
+												<fieldset>
+													<div class="float-left">
+														<input type="checkbox" class="switch hidden" data-on-label="<?=$fonk->getPDil("Aktif")?>" data-off-label="<?=$fonk->getPDil("Pasif")?>" id="varyantOzelFiltre" name="varyantOzelFiltre" value="1" <?php if($Listeleme['varyantOzelFiltre']==1){echo 'checked';}?> >
 													</div>
 												</fieldset>
 											</div>

@@ -96,7 +96,7 @@ if ($_SESSION['uyeSessionKey'] == "") {
                                 ?>
                                     <tr class="cart_item">
                                         <td class="product-name"><?= $list['siparisKodu'] ?></td>
-                                        <td class="product-total"><span class="cart_price"><?= $list["paraBirimSembol"] . round($toplamTutar, 2); ?></span></td>
+                                        <td class="product-total"><span class="cart_price"><?= $list["paraBirimSembol"] . number_format($toplamTutar,2,',','.'); ?></span></td>
                                         <td class="product-name"><?= $fonk->sqlToDateTime($list['siparisKayitTarihi']); ?></td>
                                         <td class="product-total"><?= $siparisDurum['siparisDurumDilBilgiBaslik']; ?></td>
                                         <td class="product-total" style="display:flex;">

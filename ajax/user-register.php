@@ -24,7 +24,19 @@ if($_POST['formdan']=="1")
             'uyeMail'=> $uyeMail
         ]);
 
-      
+
+        if($_FILES['uyeTicaretSicilGazetesi']['name'] == "")
+        {
+            echo '8';
+        }
+        if($_FILES['uyeMukerrerImza']['name'] == "")
+        {
+            echo '9';
+        }
+        if(count($_FILES['uyeVergiLevhasiDosya']['name']) == 0)
+        {
+            echo '10';
+        }
         if ($uyeSifre!=$uyeSifreTekrar) 
         {
             echo '4';
@@ -55,8 +67,8 @@ if($_POST['formdan']=="1")
                 'uyeFirmaAdi' => $uyeFirmaAdi,
                 'uyeDurum' => 0, //pasif
                 'uyeIndirimOrani' => 0, //başta 0 olacak
-                'uyeTicaretSicilGazetesiBaseUrl' => $sabitB["sabitBilgiSiteUrl"]."Images/SicilGazetesi/",
-                'uyeMukerrerImzaBaseUrl' => $sabitB["sabitBilgiSiteUrl"]."Images/MukerrerImza/",
+                'uyeTicaretSicilGazetesiBaseUrl' => $sabitB["sabitBilgiSiteUrl"]."Images/TicaretSicilGazetesi/",
+                'uyeMukerrerImzaBaseUrl' => $sabitB["sabitBilgiSiteUrl"]."Images/ImzaSirkuleri/",
                 'uyeGizlilikOnay' => $gizlilikonay, 
                 'uyeKvkkOnay' => $kvkk, 
                 'uyeKayitTarihi' => date("Y-m-d h:i:s")
@@ -69,7 +81,7 @@ if($_POST['formdan']=="1")
             if ($tmpFilePath != "")
             {
                 $ext = pathinfo($_FILES['uyeTicaretSicilGazetesi']['name'], PATHINFO_EXTENSION);
-                $newFilePath = "../Images/SicilGazetesi/".$fileName ."." .$ext;
+                $newFilePath = "../Images/TicaretSicilGazetesi/".$fileName ."." .$ext;
                 if(move_uploaded_file($tmpFilePath, $newFilePath)) 
                 {
                     $parametreler=array_merge($parametreler,array('uyeTicaretSicilGazetesi' => $fileName. "." .$ext));
@@ -82,7 +94,7 @@ if($_POST['formdan']=="1")
             if ($tmpFilePath3 != "")
             {
                 $ext = pathinfo($_FILES['uyeMukerrerImza']['name'], PATHINFO_EXTENSION);
-                $newFilePath3 = "../Images/MukerrerImza/".$fileName3 ."." .$ext;
+                $newFilePath3 = "../Images/ImzaSirkuleri/".$fileName3 ."." .$ext;
                 if(move_uploaded_file($tmpFilePath3, $newFilePath3)) 
                 {
                     $parametreler=array_merge($parametreler,array('uyeMukerrerImza' => $fileName3. "." .$ext));
@@ -105,12 +117,12 @@ if($_POST['formdan']=="1")
                     if($tmpFilePath2 != "")
                     {
                         $ext = pathinfo($_FILES['uyeVergiLevhasiDosya']['name'][$i], PATHINFO_EXTENSION);
-                        $newFilePath2 = "../Images/SicilTicaret/".$faturaAdi2 ."." . $ext;
+                        $newFilePath2 = "../Images/VergiLevhasi/".$faturaAdi2 ."." . $ext;
                         if(move_uploaded_file($tmpFilePath2, $newFilePath2)) 
                         {
                             $datas=array(
                                 'uyeVergiLevhasiUyeId' => $uyeId,
-                                'uyeVergiLevhasiBaseUrl' => $sabitB["sabitBilgiSiteUrl"]."Images/SicilTicaret/",
+                                'uyeVergiLevhasiBaseUrl' => $sabitB["sabitBilgiSiteUrl"]."Images/VergiLevhasi/",
                                 'uyeVergiLevhasiDosya' => $faturaAdi2. "." .$ext
                             );
                             $uyeVergiLevhasi = $db->insert('UyeVergiLevhasi', $datas);
@@ -138,8 +150,9 @@ if($_POST['formdan']=="1")
 
                 include ("../userInfoMailTemplate.php");
                 $baslik = "Yeni Kullanici (" .$uyeId." )";
-                $sonuc=$fonk->mailGonder($uyeMail,$baslik,$body);
-               
+                $baslik2 = "SFPTURKEY-Yeni Uye Kaydi";
+                $fonk->mailGonder($uyeMail,$baslik2,$body);
+                $fonk->mailGonder($gondericiMail[3], $baslik, $body); 
             }
             else
             {

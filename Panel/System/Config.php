@@ -74,7 +74,7 @@ $_SESSION = $fonk->injKontrol($_SESSION,$panelUrl); // SESSION verilerini temizl
 $_COOKIE = $fonk->injKontrol($_COOKIE,$panelUrl); // COOKIE verilerini temizledik.
 
 if (!isset($_SESSION['SessionKey']) || $_SESSION['SessionKey'] == "") {//oturum açılmışmı
-	if (strstr(strtolower($_SERVER['REQUEST_URI']), strtolower($panelUrl)) && strtolower($_SERVER['REQUEST_URI']) != strtolower($loginUrl)) { //**Panel Klasör adı değişir ise buraradan günceleyiniz
+	if (strstr(strtolower($_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']), strtolower($_SERVER['HTTP_HOST']."/".$panelUrl)) && strtolower($_SERVER['REQUEST_URI']) != strtolower($loginUrl)) { //**Panel Klasör adı değişir ise buraradan günceleyiniz
 		session_regenerate_id(true); //sessionId sıfırlamak için
 		$fonk->yonlendir($loginUrl);
 		exit;

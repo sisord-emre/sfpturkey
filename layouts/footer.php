@@ -32,10 +32,7 @@
                 <div class="row">
                     <div class="col-lg-4 col-md-6 col-12 mb__50 order-lg-1 order-1">
                         <div class="widget widget_text widget_logo">
-                            <h3 class="widget-title fwsb flex al_center fl_between fs__16 mg__0 mb__30 dn_md">
-                                <span class="txt_title"> <?= $fonk->getDil("KURUMSAL"); ?></span>
-                                <span class="nav_link_icon ml__5"></span>
-                            </h3>
+                           
                             <div class="widget_footer">
                                 <div class="footer-contact">
                                     <p>
@@ -92,7 +89,7 @@
 
                     foreach ($footerMenuler as $key => $value) {
                     ?>
-                    <div class="col-lg-2 col-md-6 col-12 mb__50 order-lg-2 order-1">
+                    <div class="col-lg-<?=($value['footerMenuBaslik']=='MÜŞTERİ HİZMETLERİ') ? '4' : '1'?> col-md-6 col-12 mb__50 order-lg-2 order-1">
                         <div class="widget widget_nav_menu">
                             <h3 class="widget-title fwsb flex al_center fl_between fs__16 mg__0 mb__30">
                                 <span class="txt_title"><?= $value['footerMenuBaslik'] ?></span>
@@ -112,7 +109,7 @@
                                 <ul class="menu">
                                     <?php foreach ($footerAltMenuler as $value) { ?>
                                     <li class="menu-item">
-                                        <a href="<?= $value['footerMenuLink'] ?>">
+                                        <a href="<?= $value['footerMenuLink'] ?>" target="_blank">
                                             <?= $value['footerMenuBaslik'] ?>
                                         </a>
                                     </li>

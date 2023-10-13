@@ -71,11 +71,16 @@ else{//Listeleme Yetkisi Var
 			$kategoriDurum=0;
 		}
 
+		if ($kategoriOzelFiltre=="") {
+			$kategoriOzelFiltre=0;
+		}
+
 		if($primaryId!=""){
 			//günclelemedeki parametreler
 			$parametreler=array(
 				'kategoriKodu' => $kategoriKodu,
-				'kategoriDurum' => $kategoriDurum
+				'kategoriDurum' => $kategoriDurum,
+				'kategoriOzelFiltre' => $kategoriOzelFiltre
 			);
 		}
 		else{
@@ -85,6 +90,7 @@ else{//Listeleme Yetkisi Var
 				'kategoriSirasi' => 0,
 				'kategoriUstMenuId' => 0,
 				'kategoriDurum' => $kategoriDurum,
+				'kategoriOzelFiltre' => $kategoriOzelFiltre,
 				'kategoriKayitTarihi' => date("Y-m-d H:i:s")
 			);
 		}
@@ -192,6 +198,17 @@ else{//Listeleme Yetkisi Var
 											<div class="form-group">
 												<label for="kategoriKodu"><?=$fonk->getPDil("Kodu")?></label>
 												<input type="text" class="form-control border-primary" id="kategoriKodu" name="kategoriKodu" value="<?=$Listeleme['kategoriKodu']?>" autocomplete="off" readonly required>
+											</div>
+										</div>
+
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="kategoriOzelFiltre"><?=$fonk->getPDil("Özel Filtre")?></label>
+												<fieldset>
+													<div class="float-left">
+														<input type="checkbox" class="switch hidden" data-on-label="<?=$fonk->getPDil("Var")?>" data-off-label="<?=$fonk->getPDil("Yok")?>" id="kategoriOzelFiltre" name="kategoriOzelFiltre" value="1" <?php if($Listeleme['kategoriOzelFiltre']==1){echo 'checked';}?> >
+													</div>
+												</fieldset>
 											</div>
 										</div>
 									

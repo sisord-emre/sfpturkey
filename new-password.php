@@ -47,11 +47,7 @@ if ($gecerlilikSuresi < $simdikiZaman) {
                             <input type="password" class="form-control" name="uyeSifreTekrar" id="uyeSifreTekrar" aria-required="true">
                         </p>
 
-                        <p class="form-row">
-                            <?php if ($sabitB['sabitBilgiPublicRecaptcha'] != "" && $sabitB['sabitBilgiPrivateRecaptcha'] != "") { ?>
-                                <div class="g-recaptcha" data-sitekey="<?= $sabitB['sabitBilgiPublicRecaptcha'] ?>"></div>
-                            <?php } ?>
-                        </p>
+                       
 
                     <input type="hidden" name="formdan" value="4" />
                     <input type="submit" value="Kaydet" class="btn btn-sm">

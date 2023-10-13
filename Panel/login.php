@@ -18,24 +18,24 @@ if(isset($_SESSION['SessionKey']) || $_SESSION['SessionKey']!=""){
 if($_POST){
 	$fonk->csrfKontrol();
 	//recaptcha aktif ise kontroller yapılıyor
-	if($sabitB['sabitBilgiPublicRecaptcha']!="" && $sabitB['sabitBilgiPrivateRecaptcha']!=""){ //panelden recaptcha ayarlandıysa
-		if(isset($_POST['g-recaptcha-response'])){
-			$captcha=$_POST['g-recaptcha-response'];
-		}
-		if(!$captcha){
-			$hata = '<small style="color:red;">'.$fonk->getPDil("* Recaptcha Doğrulanamadı Lütfen Tekrar Deneyiniz.").'</small>';
-		}
-		$secretKey = $sabitB['sabitBilgiPrivateRecaptcha'];
-		$ip = $_SERVER['REMOTE_ADDR'];
-		// post request to server
-		$url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
-		$response = file_get_contents($url);
-		$responseKeys = json_decode($response,true);
-		// should return JSON with success as true
-		if(!$responseKeys["success"]) {
-			$hata = '<small style="color:red;">'.$fonk->getPDil("* Recaptcha Doğrulanamadı Lütfen Tekrar Deneyiniz.").'</small>';
-		}
-	}
+	// if($sabitB['sabitBilgiPublicRecaptcha']!="" && $sabitB['sabitBilgiPrivateRecaptcha']!=""){ //panelden recaptcha ayarlandıysa
+	// 	if(isset($_POST['g-recaptcha-response'])){
+	// 		$captcha=$_POST['g-recaptcha-response'];
+	// 	}
+	// 	if(!$captcha){
+	// 		$hata = '<small style="color:red;">'.$fonk->getPDil("* Recaptcha Doğrulanamadı Lütfen Tekrar Deneyiniz.").'</small>';
+	// 	}
+	// 	$secretKey = $sabitB['sabitBilgiPrivateRecaptcha'];
+	// 	$ip = $_SERVER['REMOTE_ADDR'];
+	// 	// post request to server
+	// 	$url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
+	// 	$response = file_get_contents($url);
+	// 	$responseKeys = json_decode($response,true);
+	// 	// should return JSON with success as true
+	// 	if(!$responseKeys["success"]) {
+	// 		$hata = '<small style="color:red;">'.$fonk->getPDil("* Recaptcha Doğrulanamadı Lütfen Tekrar Deneyiniz.").'</small>';
+	// 	}
+	// }
 
 	if($hata==""){//bir problem yok ise giriş yap
 		$kullaniciGiris = $db->get("Kullanicilar", "*", [
@@ -147,14 +147,13 @@ if($_POST){
 													<i class="la la-key"></i>
 												</div>
 											</fieldset>
-											<?php if($sabitB['sabitBilgiPublicRecaptcha']!="" && $sabitB['sabitBilgiPrivateRecaptcha']!=""){ ?>
+											<!-- <?php if($sabitB['sabitBilgiPublicRecaptcha']!="" && $sabitB['sabitBilgiPrivateRecaptcha']!=""){ ?>
 												<div class="form-group row">
 													<div class="col-sm-12 col-12 text-center text-sm-center pr-0 recaptchaMobil">
-														<!-- recaptcha -->
 														<div class="g-recaptcha" data-sitekey="<?=$sabitB['sabitBilgiPublicRecaptcha']?>" style="transform:scale(0.77);-webkit-transform:scale(0.77);text-align: -webkit-center;"></div>
 													</div>
 												</div>
-											<?php } echo $hata;?>
+											<?php } echo $hata;?> -->
 											<input type="hidden" name="token" value="<?=$_SESSION['token']?>" />
 											<button type="submit" class="btn btn-outline-info btn-block"><i class="ft-unlock"></i> <?=$fonk->getPDil("Giriş Yap")?></button>
 										</form>
