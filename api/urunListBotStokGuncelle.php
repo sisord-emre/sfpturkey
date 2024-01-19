@@ -48,7 +48,7 @@ if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
 
         }
         if($query){
-            echo "başarılı";
+            echo "1";
         }
     }
     else 

@@ -68,7 +68,7 @@ if ($_POST['formdan'] == "1")
 
 
 	$files2 = array_filter($_FILES['uyeVergiLevhasiDosya']['name']); 
-	$total_count2 = count($_FILES['uyeVergiLevhasiDosya']['name']);
+	$total_count2 = count($files2);
 	if($total_count2 > 0)
 	{
 		$silUyeVergiLevhasi = $db->delete("UyeVergiLevhasi", [
@@ -83,7 +83,7 @@ if ($_POST['formdan'] == "1")
 		if($tmpFilePath2 != "")
 		{
 			$ext = pathinfo($_FILES['uyeVergiLevhasiDosya']['name'][$i], PATHINFO_EXTENSION);
-			$newFilePath2 = "../Images/VergiLevhasi//".$faturaAdi2 ."." . $ext;
+			$newFilePath2 = "../Images/VergiLevhasi/".$faturaAdi2 ."." . $ext;
 			if(move_uploaded_file($tmpFilePath2, $newFilePath2)) 
 			{
 				$datas=array(

@@ -1,5 +1,7 @@
 <?php 
 include('../Panel/System/Config.php');
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
 if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
 	
     $userLink = $fonk->akinSoftConnection('wlogin','MUHASEBE','6512bd43d9caa6e02c990b0a82652dca','202217518','535AD','60');
@@ -32,7 +34,7 @@ if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
         );
         $query = $db->insert("UrunListBotlari", $parametreler);
         if($query){
-            echo "İşlem Başarılı";
+            echo "1";
         }
     }
     else 

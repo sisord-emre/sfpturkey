@@ -28,6 +28,7 @@ $sartlar = array_merge($sartlar, [
 									<th><?= $fonk->getPDil("Marka Kodu") ?></th>
 									<th><?= $fonk->getPDil("Marka Adı") ?></th>
 									<th><?= $fonk->getPDil("Fiyat") ?></th>
+									<th><?= $fonk->getPDil("Liste Fiyat (Sadece Kampanyalı Urunlerde)") ?></th>
 									<th style="width:235px;"><?= $fonk->getPDil("İslem") ?></th>
 								</tr>
 							</thead>
@@ -45,6 +46,7 @@ $sartlar = array_merge($sartlar, [
 										<td><?= $item['urunVaryantKodu'] ?></td>
 										<td><?= $item['varyantDilBilgiBaslik'] ?></td>
 										<td><?= $item['urunVaryantFiyat'] ?></td>
+										<td><?= $item['urunVaryantKampanyasizFiyat'] ?></td>
 										<td>
 											<button type="button" onclick="altBirimGuncelle('<?= $item['urunVaryantId'] ?>');" class="btn btn-warning btn-sm">
 												<i class="la la-upload"></i>

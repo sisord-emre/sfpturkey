@@ -12,6 +12,7 @@ $itemPar = array(
 	'urunVaryantUrunId' => intval($urunVaryantUrunId),
 	'urunVaryantVaryantId' => intval($urunVaryantVaryantId),
 	'urunVaryantFiyat' => floatval($urunVaryantFiyat),
+	'urunVaryantKampanyasizFiyat' => floatval($urunVaryantKampanyasizFiyat),
 	'urunVaryantDefaultSecim' => $urunVaryantDefaultSecim
 );
 if ($urunVaryantId != "") {
@@ -47,9 +48,9 @@ foreach ($dilList as $dil) {
 		'urunVaryantDilBilgiDilId' => $dil["dilId"],
 		'urunVaryantDilBilgiAdi' => $_POST["urunVaryantDilBilgiAdi-" . $dil["dilId"]],
 		'urunVaryantDilBilgiSlug' => $_POST["urunVaryantDilBilgiSlug-" . $dil["dilId"]],
-		'urunVaryantDilBilgiDescription' => $_POST["urunVaryantDilBilgiDescription-" . $dil["dilId"]],
+		'urunVaryantDilBilgiDescription' => "",
 		'urunVaryantDilBilgiEtiketler' => $_POST["urunVaryantDilBilgiEtiketler-" . $dil["dilId"]],
-		'urunVaryantDilBilgiAciklama' => $_POST["urunVaryantDilBilgiAciklama-" . $dil["dilId"]],
+		'urunVaryantDilBilgiAciklama' => "",
 		'urunVaryantDilBilgiDurum' => $_POST["urunVaryantDilBilgiDurum-" . $dil["dilId"]]
 	);
 

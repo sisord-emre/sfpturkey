@@ -74,6 +74,7 @@ else{//Listeleme Yetkisi Var
 				'bankaBilgiBankaAdi' => $bankaBilgiBankaAdi,
 				'bankaBilgiHesapSahibi' => $bankaBilgiHesapSahibi,
 				'bankaBilgiIban' => $bankaBilgiIban,
+				'bankaBilgiSirasi' => $bankaBilgiSirasi,
 				'bankaBilgiDurum' => $bankaBilgiDurum
 			);
 		}else{
@@ -82,6 +83,7 @@ else{//Listeleme Yetkisi Var
 				'bankaBilgiBankaAdi' => $bankaBilgiBankaAdi,
 				'bankaBilgiHesapSahibi' => $bankaBilgiHesapSahibi,
 				'bankaBilgiIban' => $bankaBilgiIban,
+				'bankaBilgiSirasi' => $bankaBilgiSirasi,
 				'bankaBilgiDurum' => $bankaBilgiDurum,
 				'bankaBilgiKayitTarihi' => date("Y-m-d H:i:s")
 			);
@@ -160,7 +162,7 @@ else{//Listeleme Yetkisi Var
 												<input type="text" class="form-control border-primary" id="bankaBilgiBankaAdi" name="bankaBilgiBankaAdi" value="<?=$Listeleme['bankaBilgiBankaAdi']?>" autocomplete="off" required>
 											</div>
 										</div>
-										<div class="col-md-5">
+										<div class="col-md-6">
 											<div class="form-group">
 												<label for="bankaBilgiHesapSahibi"><?=$fonk->getPDil("Hesap Sahibi")?></label>
 												<input type="text" class="form-control border-primary" id="bankaBilgiHesapSahibi" name="bankaBilgiHesapSahibi" value="<?=$Listeleme['bankaBilgiHesapSahibi']?>" autocomplete="off" required>
@@ -174,7 +176,13 @@ else{//Listeleme Yetkisi Var
 												<input type="text" class="form-control border-primary" id="bankaBilgiIban" name="bankaBilgiIban" value="<?=$Listeleme['bankaBilgiIban']?>" autocomplete="off" required>
 											</div>
 										</div>
-										<div class="col-md-6">
+										<div class="col-md-3">
+											<div class="form-group">
+												<label for="bankaBilgiSirasi"><?=$fonk->getPDil("Sırası")?></label>
+												<input type="number" class="form-control border-primary" id="bankaBilgiSirasi" name="bankaBilgiSirasi" value="<?=$Listeleme['bankaBilgiSirasi']?>" autocomplete="off" required>
+											</div>
+										</div>
+										<div class="col-md-3">
 											<div class="form-group">
 												<label for="bankaBilgiDurum"><?=$fonk->getPDil("Durumu")?></label>
 												<fieldset>

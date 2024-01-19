@@ -128,11 +128,14 @@ else{//Listeleme Yetkisi Var
 	$sartlar=[];
 	if ($_SESSION["islemDilId"]!="") {
 		$sartlar=array_merge($sartlar,["urunDilBilgiDilId" => $_SESSION["islemDilId"]]);
+		$sartlar=array_merge($sartlar,["urunVaryantDilBilgiDilId" => $_SESSION["islemDilId"]]);
 	}
 	else {
 		$sartlar=array_merge($sartlar,["urunDilBilgiDilId" => $sabitB["sabitBilgiPanelVarsayilanDilId"]]);
+		$sartlar=array_merge($sartlar,["urunVaryantDilBilgiDilId" => $sabitB["sabitBilgiPanelVarsayilanDilId"]]);
 	}
 	$sartlar=array_merge($sartlar,[
+		"urunVaryantDefaultSecim" => 1,
 		"ORDER" => [
 			$tabloPrimarySutun => "DESC"
 		],
@@ -140,7 +143,9 @@ else{//Listeleme Yetkisi Var
 	]);
 	$listeleme = $db->select($tableName,[
 		"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
-		"[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"]
+		"[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+		"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
+        "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"]
 	],"*",$sartlar);
 	//****** tam excel alma bas
 	$sayac=1;
@@ -284,9 +289,7 @@ else{//Listeleme Yetkisi Var
 							<h4 class="card-title"><?=$fonk->getPDil($baslik)?></h4>
 							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 							<div class="heading-elements">
-								<?php if($tamExcelYetki){?>
-									<a href="Pages/excel.php" class="btn mr-1 btn-outline-warning btn-sm"><i class="la la-print"></i> <?=$fonk->getPDil("Tam Excel")?></a>
-								<?php } if($eklemeYetki){?>
+								<?php if($eklemeYetki){?>
 									<button type="button" onclick="SayfaGetir('<?=$menuId?>','<?=$duzenlemeSayfasi?>');" class="btn mr-1 btn-primary btn-sm"><i class="la la-plus-circle"></i> <?=$fonk->getPDil("Yeni Ekle")?></button>
 								<?php } ?>
 							</div>
@@ -347,10 +350,10 @@ else{//Listeleme Yetkisi Var
 														<?php } ?>
 													</td>
 													<td><?=$list['urunModel'];?></td>
-													<td><?=$list['urunDilBilgiAdi'];?></td>
+													<td><?=$list['urunVaryantDilBilgiAdi'];?></td>
 													<td><?=$kategoriler;?></td>
 													<td><div class="badge badge-glow badge-pill badge-info"><?=$list['urunStok'];?></div></td>
-													<td><?=$list['urunFiyat']?></td>
+													<td><?=number_format($list['urunFiyat'],2,',','.')?></td>
 													<td><?=$list['urunKdv']?></td>
 													<!-- <td><input type="number" min="0" step="0.01" placeholder="0.00 <?=$list['paraBirimSembol']?>" onchange="UrunGuncelle(<?=$list[$tabloPrimarySutun];?>)" style="min-width:75px;" class="form-control border-primary" id="fiyat_<?=$list[$tabloPrimarySutun];?>" value="<?=$list['urunFiyat']?>" autocomplete="off"></td>
 													<td><input type="number" min="0" step="1" placeholder="0.00 <?=$list['paraBirimSembol']?>" onchange="UrunGuncelle(<?=$list[$tabloPrimarySutun];?>)" style="min-width:75px;" class="form-control border-primary" id="kdv_<?=$list[$tabloPrimarySutun];?>" value="<?=$list['urunKdv']?>" autocomplete="off"></td> -->

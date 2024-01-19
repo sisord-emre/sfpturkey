@@ -91,11 +91,11 @@ foreach ($kategoriList as $key => $value) {
 							</tr>
 							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Fiyat")?></b></td>
-								<td><?=$detay['urunFiyat']." ".$detay['paraBirimSembol'];?></td>
+								<td><?=number_format($detay['urunFiyat'],2,',','.')." ".$detay['paraBirimSembol'];?></td>
 							</tr>
 							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("İndirimli Fiyat")?></b></td>
-								<td><?=$detay['urunIndirimliFiyat']." ".$detay['paraBirimSembol'];?></td>
+								<td><?=number_format($detay['urunIndirimliFiyat'],2,',','.')." ".$detay['paraBirimSembol'];?></td>
 							</tr>
 							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Beğeni/Sepet/Satış")?></b></td>

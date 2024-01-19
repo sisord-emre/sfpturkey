@@ -13,9 +13,7 @@ if (!$_SESSION['uyeSessionKey']) {
     exit;
 } 
 else {
-    $uye = $db->get("Uyeler",[
-        "[<]UyeAdresler" => ["Uyeler.uyeId" => "uyeAdresUyeId"],
-    ], "*", [
+    $uye = $db->get("Uyeler", "*", [
         "uyeDurum" => 1,
         "uyeSessionKey" => $_SESSION['uyeSessionKey']
     ]);
@@ -28,6 +26,7 @@ if (count($sepet) <= 0) {
     echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . '"; </script>';
     exit;
 }
+
 ?>
 
 <div id="nt_content">
@@ -157,12 +156,20 @@ if (count($sepet) <= 0) {
                     <?php 
                         $siparisKargoUcreti = $fonk->KargoUcreti($fonk->paraCevir($toplamTutar,$urun["paraBirimKodu"],"TRY")); 
                     ?>
-                    <input type="hidden" name="siparisKargoUcreti" value="<?=$siparisKargoUcreti?>">
+                    <input type="hidden" name="siparisKargoUcreti" id="siparisKargoUcreti" value="<?=$siparisKargoUcreti?>">
                 </div>
                 <div class="col-12 col-md-3">
                     <div class="cart__footer mt__60">
                         <div class="row">
                             <div class="col-12 tr_md tc order-md-4 order-4 col-md-12">
+                                <div class="total row in_flex fl_between al_center cd fs__18 tu">
+                                    <div class="col-auto">
+                                        <strong>
+                                            <?= $fonk->getDil("Sepetinizde iskonto tanımlanmışsa ödemeye geçince görebilirsiniz."); ?>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                                 <div class="total row in_flex fl_between al_center cd fs__18 tu">
                                     <div class="col-auto"><strong><?= $fonk->getDil("Aratutar"); ?>:</strong></div>
                                     <div class="col-auto tr js_cat_ttprice fs__20 fwm">
@@ -225,12 +232,12 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 		'siparisKodu' => $siparisKodu,
 		'siparisUyeId' => $uye['uyeId'],
 		'siparisNot' => $note,
-		'siparisTeslimatUyeAdresId' => $uye['uyeAdresId'],
-		'siparisFaturaUyeAdresId' => $uye['uyeAdresId'],
+		'siparisTeslimatUyeAdresId' => 0,
+		'siparisFaturaUyeAdresId' => 0,
 		'siparisOdemeTipiId' => 0,
 		'siparisIndirimKodu' => "",
 		//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
-		'siparisKargoUcreti' => $siparisKargoUcreti,
+		//'siparisKargoUcreti' => $siparisKargoUcreti,
 		'siparisDilId' => $_SESSION["dilId"],
 		'siparisParaBirimId' => $_SESSION["paraBirimId"],
 		'siparisOdemeBilgileri' => "",
@@ -298,12 +305,12 @@ else //eğer sipariş kaydı var ise
 		$siparis = $db->update('Siparisler', [
 			'siparisUyeId' => $uye['uyeId'],
 			'siparisNot' => $note,
-			'siparisTeslimatUyeAdresId' => $uye['uyeAdresId'],
-		    'siparisFaturaUyeAdresId' => $uye['uyeAdresId'],
+			'siparisTeslimatUyeAdresId' => 0,
+		    'siparisFaturaUyeAdresId' => 0,
 			'siparisOdemeTipiId' => 0,
 			'siparisIndirimKodu' => "",
 			//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
-			'siparisKargoUcreti' => $siparisKargoUcreti,
+			//'siparisKargoUcreti' => $siparisKargoUcreti,
 			'siparisDilId' => $_SESSION["dilId"],
             'siparisOdenenIskontoUcreti' => $siparisOdenenIskontoUcreti,
 			//'siparisTeslimatTarihi' => "",

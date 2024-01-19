@@ -97,10 +97,6 @@ else{//Listeleme Yetkisi Var
 	]);
 	$listeleme = $db->select($tableName,[
 		"[>]Uyeler" => ["Siparisler.siparisUyeId" => "uyeId"],
-		"[>]UyeAdresler" => ["Siparisler.siparisTeslimatUyeAdresId" => "uyeAdresId"],
-		"[><]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
-		"[><]Iller" => ["UyeAdresler.uyeAdresIlId" => "ilId"],
-		"[><]Ilceler" => ["UyeAdresler.uyeAdresIlceId" => "ilceId"],
 		"[>]OdemeTipleri" => ["Siparisler.siparisOdemeTipiId" => "odemeTipId"],
 		"[>]Diller" => ["Siparisler.siparisDilId" => "dilId"],
 		"[>]ParaBirimleri" => ["Siparisler.siparisParaBirimId" => "paraBirimId"]
@@ -283,7 +279,7 @@ else{//Listeleme Yetkisi Var
 												<th><?=$fonk->getPDil("Uye Firma Adi")?></th>
 												<th><?=$fonk->getPDil("Ürün Kodu")?></th>
 												<th><?=$fonk->getPDil("İçerik")?></th>
-												<th><?=$fonk->getPDil("Ödeme Tipi")?></th>
+												<th><?=$fonk->getPDil("Adet")?></th>
 												<th><?=$fonk->getPDil("İskonto")?> ($)</th>
 												<th><?=$fonk->getPDil("Ödenecek Tutar")?></th>
 												<th><?=$fonk->getPDil("Durumu")?></th>
@@ -294,6 +290,7 @@ else{//Listeleme Yetkisi Var
 										</thead>
 										<tbody>
 											<?php
+										
 											foreach($listeleme as $list){
 												$satirRenk="";
 												$siparisDurum = $db->get("SiparisSiparisDurumlari",[
@@ -327,26 +324,27 @@ else{//Listeleme Yetkisi Var
 													"urunDilBilgiDurum" => 1,
 													"siparisIcerikSiparisId" => $list["siparisId"]
 												]);
+												// echo "<pre>"; 
+												// print_r($siparisIcerikleri);
+												// echo "</pre>";
 												$icerik="";
 												$urunKodu="";
 												$icerikSayac=0;
 												$toplamTutar=0;
 												$siparisIskontoUcreti=0;
+												$toplamUrunAdet=0;
 												foreach($siparisIcerikleri as $siparisIcerik){
 													$icerikSayac++;
-													if ($icerikSayac<=2) {
-														$icerik.="<span style='display: flex;width: max-content;'>
-														".$siparisIcerik["siparisIcerikUrunVaryantDilBilgiAdi"]."
-														</span>";
+													$icerik.="<span style='display: flex;width: max-content;'>
+													".$siparisIcerik["siparisIcerikUrunVaryantDilBilgiAdi"]." x ".$siparisIcerik["siparisIcerikAdet"]."
+													</span>";
 
-														$urunKodu.="<span style='display: flex;width: max-content;'>
-														".$siparisIcerik["urunModel"]."
-														</span>";
-													}else{
-														$icerik.="<span style='display: flex;width: max-content;'>...</span>";
-														$urunKodu.="<span style='display: flex;width: max-content;'>...</span>";
-													}
+													$urunKodu.="<span style='display: flex;width: max-content;'>
+													".$siparisIcerik["urunModel"]."
+													</span>";
+													
 													$toplamTutar+=$siparisIcerik['siparisIcerikAdet']*$siparisIcerik['siparisIcerikFiyat'];
+													$toplamUrunAdet+=$siparisIcerik['siparisIcerikAdet'];
 												}
 												if($list['siparisIndirimKodu']!="" && $list['siparisIndirimYuzdesi']!=0){
 													$toplamTutar-=($toplamTutar/100*$list['siparisIndirimYuzdesi']);
@@ -367,14 +365,12 @@ else{//Listeleme Yetkisi Var
 													<td><?=$list['uyeFirmaAdi'];?></td>
 													<td><?=$urunKodu;?></td>
 													<td><?=$icerik;?></td>
-													<td><?=$list['odemeTipAdi'];?></td>
-													
+													<td><?=$toplamUrunAdet;?></td>
 													<th>
 														<input type="text" onchange="FiyatDegistir('<?=$list[$tabloPrimarySutun];?>');" name="siparisIskontoUcreti" id="durum-<?=$list[$tabloPrimarySutun];?>" value="<?=$list['siparisIskontoUcreti']?>">
 													</th>
-												
 													<th id="tutar-<?=$list[$tabloPrimarySutun];?>">
-														<?=$list["paraBirimSembol"].round($toplamTutar,2);?>
+														<?=$list["paraBirimSembol"].number_format($toplamTutar,2,',','.');?>
 													</th>
 													<td data-sort="<?=$siparisDurum['siparisDurumId'];?>"><?=$siparisDurum['siparisDurumDilBilgiBaslik'];?></td>
 													<td><?=$list['dilAdi'];?></td>
@@ -383,7 +379,7 @@ else{//Listeleme Yetkisi Var
 
 													<td style="text-align:center">
 														<div class="btn-group btn-group-sm" role="group">
-															<button type="button" onclick="veriDetay('<?=$list[$tabloPrimarySutun];?>');" id="detay-<?=$list[$tabloPrimarySutun];?>" class="btn btn-info"><i class="la la-external-link"></i> <?=$fonk->getPDil("Detay")?></button>
+															
 															<?php if($silmeYetki){?><button type="button" onclick="veriSil('<?=$menuId?>','<?=$list[$tabloPrimarySutun];?>');"  class="btn btn-danger"><i class="la la-trash-o"></i> <?=$fonk->getPDil("Sil")?></button><?php } ?>
 														</div>
 													</td>
@@ -441,7 +437,7 @@ else{//Listeleme Yetkisi Var
 			success: function(res){
 				if(res.status == "success"){
 					toastr.success('<?=$fonk->getPDil("Güncelleme Sağlandı.")?>');
-					document.getElementById("tutar-"+Id).innerHTML = "$"+ parseFloat(res.result.tutar).formatMoney(2, ",", ".");
+					document.getElementById("tutar-"+Id).innerHTML = "₺"+ parseFloat(res.result.tutar).formatMoney(2, ",", ".");
 				}else{
 					alert(res);
 				}

@@ -96,10 +96,15 @@ if ($_SESSION['uyeSessionKey'] == "") {
                                 ?>
                                     <tr class="cart_item">
                                         <td class="product-name"><?= $list['siparisKodu'] ?></td>
-                                        <td class="product-total"><span class="cart_price"><?= $list["paraBirimSembol"] . number_format($toplamTutar,2,',','.'); ?></span></td>
+                                        <td class="product-total"><span class="cart_price"><?= $list["paraBirimSembol"] . number_format($list["siparisToplam"],2,',','.'); ?></span></td>
                                         <td class="product-name"><?= $fonk->sqlToDateTime($list['siparisKayitTarihi']); ?></td>
                                         <td class="product-total"><?= $siparisDurum['siparisDurumDilBilgiBaslik']; ?></td>
                                         <td class="product-total" style="display:flex;">
+                                            <?php if($siparisDurum['siparisSiparisDurumKargoTakipKodu']){ ?>
+                                            <a type="button" href="https://www.hepsijet.com/gonderi-takibi/<?= $siparisDurum['siparisSiparisDurumKargoTakipKodu'] ?>" target="_blank" class="button button_info btn-sm w-100 mr-2 d-flex align-items-center">
+                                                <?= $fonk->getDil("Kargo Takibi"); ?>
+                                            </a>
+                                            <?php } ?>
                                             <a type="button" href="myorder/<?= $list['siparisKodu'] ?>" class="button button_primary btn-sm w-100 mr-2 d-flex align-items-center"><?= $fonk->getDil("Detay"); ?></a>
                                             <a type="button" href="<?= $list['siparisFaturaBaseUrl'] ?><?= $list['siparisFatura'] ?>" target="_blank" class="button btn-success btn-sm w-100 d-flex align-items-center"><?= $fonk->getDil("Fatura Görüntüle"); ?></a>
                                         </td>

@@ -1,11 +1,11 @@
 <?php
 include "../Panel/System/Config.php";
 
-$ara=$_GET['ara'];
+$ara=strtoupper($_GET['ara']);
 
-///----- Saylafama Sorgu
-$sutunlar=[
-	"@urunId",
+$totalRecord = $db->query(
+	'SELECT DISTINCT ON ("urunVaryantDilBilgiId") "urunVaryantDilBilgiAdi","urunVaryantDilBilgiId",
+	"urunId",
 	"urunModel",
 	"urunVaryantId",
 	"urunBaseUrl",
@@ -22,34 +22,17 @@ $sutunlar=[
 	"urunVaryantDilBilgiAdi",
 	"urunVaryantKodu",
 	"urunVaryantDilBilgiEtiketler",
-	"varyantDilBilgiBaslik"
-];
-$sartlar=[];
-//toplam veri
-$sartlar=array_merge($sartlar,[
-	"AND" => [
-		"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
-		"urunVaryantDilBilgiDurum" => 1,
-		//"urunVaryantDefaultSecim" => 1, //default seçili olanlar listelenecek
-		"OR" => [
-			"urunVaryantDilBilgiAdi[~]" => $ara,
-			"urunModel[~]" => $ara,
-			"urunVaryantDilBilgiEtiketler[~]" => $ara,
-			"varyantDilBilgiBaslik" => $ara
-		]
-	],
-	"ORDER" => [
-		"urunVaryantDilBilgiAdi" => "ASC"
-	]
-]);
-$totalRecord = $db->select("Urunler", [
-	"[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
-	"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
-	"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
-	"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
-	"[>]VaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantVaryantId" => "varyantDilBilgiVaryatId"],
-],$sutunlar,$sartlar);
-
+	"varyantDilBilgiBaslik" 
+	FROM "Urunler" 
+	LEFT JOIN "UrunDilBilgiler" ON "Urunler"."urunId" = "UrunDilBilgiler"."urunDilBilgiUrunId" 
+	LEFT JOIN "UrunVaryantlari" ON "Urunler"."urunId" = "UrunVaryantlari"."urunVaryantUrunId" 
+	LEFT JOIN "UrunVaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantId" = "UrunVaryantDilBilgiler"."urunVaryantDilBilgiVaryantId" 
+	LEFT JOIN "ParaBirimleri" ON "Urunler"."urunParaBirimId" = "ParaBirimleri"."paraBirimId" 
+	LEFT JOIN "VaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantVaryantId" = "VaryantDilBilgiler"."varyantDilBilgiVaryatId" 
+	WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true 
+	AND ((UPPER("urunVaryantDilBilgiAdi") ILIKE \'%'.$ara.'%\') OR ("urunModel" ILIKE \'%'.$ara.'%\') OR ("urunVaryantDilBilgiEtiketler" ILIKE \'%'.$ara.'%\') OR UPPER("varyantDilBilgiBaslik") ILIKE \'%'.$ara.'%\')) 
+	ORDER BY "urunVaryantDilBilgiId"'
+)->fetchAll();
 $totalRecord = count($totalRecord);
 
 $pageLimit = 8;
@@ -58,8 +41,9 @@ $pageParam = 'page';
 // limit için start ve limit değerleri hesaplanıyor
 $pagination = $fonk->paginationNormal($totalRecord, $pageLimit, $pageParam);
 
-$sutunlar=[
-	"@urunId",
+$urunler = $db->query(
+	'SELECT DISTINCT ON ("urunVaryantDilBilgiId") "urunVaryantDilBilgiAdi","urunVaryantDilBilgiId",
+	"urunId",
 	"urunModel",
 	"urunVaryantId",
 	"urunBaseUrl",
@@ -76,34 +60,17 @@ $sutunlar=[
 	"urunVaryantDilBilgiAdi",
 	"urunVaryantKodu",
 	"urunVaryantDilBilgiEtiketler",
-	"varyantDilBilgiBaslik"
-];
-
-$sartlar=array_merge($sartlar,[
-	"AND" => [
-		"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
-		"urunVaryantDilBilgiDurum" => 1,
-		//"urunVaryantDefaultSecim" => 1, //default seçili olanlar listelenecek
-		"OR" => [
-			"urunVaryantDilBilgiAdi[~]" => $ara,
-			"urunModel[~]" => $ara,
-			"urunVaryantDilBilgiEtiketler[~]" => $ara,
-			"varyantDilBilgiBaslik" => $ara
-		]
-	],
-	"ORDER" => [
-		"urunVaryantDilBilgiAdi" => "ASC"
-	],
-	'LIMIT' => [$pagination['start'], $pagination['limit']]
-]);
-//normal sorgumuz
-$urunler = $db->select("Urunler", [
-	"[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
-	"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
-	"[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
-	"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
-	"[>]VaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantVaryantId" => "varyantDilBilgiVaryatId"],
-],$sutunlar,$sartlar);
+	"varyantDilBilgiBaslik" 
+	FROM "Urunler" 
+	LEFT JOIN "UrunDilBilgiler" ON "Urunler"."urunId" = "UrunDilBilgiler"."urunDilBilgiUrunId" 
+	LEFT JOIN "UrunVaryantlari" ON "Urunler"."urunId" = "UrunVaryantlari"."urunVaryantUrunId" 
+	LEFT JOIN "UrunVaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantId" = "UrunVaryantDilBilgiler"."urunVaryantDilBilgiVaryantId" 
+	LEFT JOIN "ParaBirimleri" ON "Urunler"."urunParaBirimId" = "ParaBirimleri"."paraBirimId" 
+	LEFT JOIN "VaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantVaryantId" = "VaryantDilBilgiler"."varyantDilBilgiVaryatId" 
+	WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true 
+	AND ((UPPER("urunVaryantDilBilgiAdi") ILIKE \'%'.$ara.'%\') OR ("urunModel" ILIKE \'%'.$ara.'%\') OR ("urunVaryantDilBilgiEtiketler" ILIKE \'%'.$ara.'%\') OR UPPER("varyantDilBilgiBaslik") ILIKE \'%'.$ara.'%\')) 
+	ORDER BY "urunVaryantDilBilgiId" ASC LIMIT '.$pagination['limit'].' OFFSET '.$pagination['start']
+)->fetchAll();
 ///----- Saylafama Sorgu
 
 if ($_SESSION['uyeSessionKey'] != "") 

@@ -52,16 +52,16 @@ if ($_SESSION['uyeSessionKey'] == "") {
                              
                                 <p class="checkout-section__field col-lg-6 col-12">
                                     <label for="f-name"><?= $fonk->getDil("Ticaret Sicil Gazetesi"); ?></label>
-                                    <a href="<?=$uye['uyeTicaretSicilGazetesiBaseUrl']?><?=$uye['uyeTicaretSicilGazetesi']?>" target="_blank">
-										<img src="<?=$uye['uyeTicaretSicilGazetesiBaseUrl']?><?=$uye['uyeTicaretSicilGazetesi']?>" width="150">
-									</a>
+                                   
+									<a href="<?=$uye['uyeTicaretSicilGazetesiBaseUrl']?><?=$uye['uyeTicaretSicilGazetesi']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
                                 </p>
 
                                 <p class="checkout-section__field col-lg-6 col-12">
                                     <label for="f-name"><?= $fonk->getDil("Mükerrer İmza"); ?></label>
-                                    <a href="<?=$uye['uyeMukerrerImzaBaseUrl']?><?=$uye['uyeMukerrerImza']?>" target="_blank">
-										<img src="<?=$uye['uyeMukerrerImzaBaseUrl']?><?=$uye['uyeMukerrerImza']?>" width="150">
-									</a>
+                                    
+									<a href="<?=$uye['uyeMukerrerImzaBaseUrl']?><?=$uye['uyeMukerrerImza']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
                                 </p>
                                 
                                 <p class="checkout-section__field col-lg-12 col-12">
@@ -71,9 +71,9 @@ if ($_SESSION['uyeSessionKey'] == "") {
                                         "uyeVergiLevhasiUyeId" => $uye['uyeId']
                                     ]);
                                     foreach ($vergiLevhasi as $value) {?>
-                                        <a href="<?=$value['uyeVergiLevhasiBaseUrl']?><?=$value['uyeVergiLevhasiDosya']?>" target="_blank">
-                                            <img src="<?=$value['uyeVergiLevhasiBaseUrl']?><?=$value['uyeVergiLevhasiDosya']?>" width="150">
-                                        </a>
+                                        
+									    <a href="<?=$value['uyeVergiLevhasiBaseUrl']?><?=$value['uyeVergiLevhasiDosya']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
                                     <?php } ?>
                                 </p>
 
@@ -187,3 +187,14 @@ if ($_SESSION['uyeSessionKey'] == "") {
 </div>
 
 <?php include('layouts/footer.php') ?>
+<script>
+    <?php if($_SESSION['isProduct'] == ""){?>
+        <?php
+        foreach ($enSonSiparis as $key => $value) { 
+            if(count($enSonSiparis) > 0){
+                $_SESSION['SiparisKodu'] = $value["siparisKodu"];
+        ?>
+            SepetTekrarKayit(<?=$value["siparisIcerikUrunId"]?>, "0", <?=$value["siparisIcerikAdet"]?>);
+        <?php } } ?>
+    <?php } $_SESSION['isProduct'] = "1";?>
+</script>

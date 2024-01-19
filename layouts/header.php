@@ -1,7 +1,7 @@
 <?php
 include('Panel/System/Config.php');
 
-$assetVersion = "1.8.8";
+$assetVersion = "1.2.3";
 $siteTitle = $sabitB["sabitBilgiTitle"];
 $siteDescription = $sabitB["sabitBilgiDescription"];
 $siteTel = explode(';', $sabitB['sabitBilgiTel']);
@@ -26,14 +26,15 @@ if (strstr($_SERVER['PHP_SELF'], "product.php")) {
     ], "*", [
         "urunVaryantKodu" => $seo,
         "urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
-        "urunVaryantDilBilgiDurum" => 1,
+        "urunDilBilgiDilId" => $_SESSION["dilId"],
+        "urunDilBilgiDurum" => 1,
         "ORDER" => [
             "urunId" => "ASC"
         ]
     ]);
 
     $siteTitle = $urun["urunVaryantDilBilgiAdi"];
-    $siteDescription = $urun["urunVaryantDilBilgiDescription"];
+    $siteDescription = $urun["urunDilBilgiDescription"];
 }
 
 if ($_SESSION['uyeSessionKey'] != "") {
@@ -41,6 +42,13 @@ if ($_SESSION['uyeSessionKey'] != "") {
     $uye = $db->get("Uyeler", "*", [
         "uyeSessionKey" => $_SESSION['uyeSessionKey']
     ]);
+
+	$enSonSiparis = $db->select("Siparisler",[
+		"[>]SiparisIcerikleri" => ["Siparisler.siparisId" => "siparisIcerikSiparisId"],
+	],"*",[
+		"siparisOdemeTipiId" => 0,//yani herhangi bir ödeme tipi olmayan
+        "siparisUyeId" =>$uye["uyeId"]
+	]);
 }
 ?>
 <!DOCTYPE html>
@@ -54,6 +62,7 @@ if ($_SESSION['uyeSessionKey'] != "") {
     <title><?= $siteTitle ?></title>
     <meta name="keywords" content="<?= $sabitB["sabitBilgiKeywords"] ?>">
     <meta name="author" content="<?= $sabitB["sabitBilgiLisansFirmaAdi"] ?>">
+    <meta name="description" content="<?= $siteDescription ?>">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:300,300i,400,400i,500,500i&display=swap" rel="stylesheet">
@@ -70,6 +79,24 @@ if ($_SESSION['uyeSessionKey'] != "") {
 
     <script src='https://www.google.com/recaptcha/api.js?hl=eng'></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q6QEP18KQ5"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q6QEP18KQ5');
+    </script>
+	<!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-961001604"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-961001604');
+    </script>
 </head>
 
 <body class="lazy_icons btnt4_style_2 zoom_tp_2 css_scrollbar template-index js_search_true cart_pos_side kalles_toolbar_true hover_img2 swatch_style_rounded swatch_list_size_small label_style_rounded wrapper_full_width header_sticky_true hide_scrolld_true des_header_1 h_banner_true top_bar_true prs_bordered_grid_1 search_pos_full lazyload js_search_type template-cart">
@@ -185,7 +212,7 @@ if ($_SESSION['uyeSessionKey'] != "") {
 
                                     <div class="pr">
                                         <div class="mini_cart_content fixcl-scroll widget">
-                                            <div class="fixcl-scroll-content product_list_widget">
+                                            <div class="fixcl-scroll-content product_list_widget" id="isNullSearch">
                                                 <div class="ld_bar_search"></div>
                                                 <div class="skeleton_wrap skeleton_js dn">
                                                     <div class="row mb__10 pb__10">

@@ -409,6 +409,12 @@
 																</tr>
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
+																		<b>' . $fonk->getPDil("Satır Sırası: ") . '</b> '.$siparis["siparisId"].'
+																	</td>
+																</tr>
+																
+																<tr>
+																	<td valign="top" style="padding-top:0; padding-bottom:0;">
 																		<b>' . $fonk->getPDil("Sipariş No: ") . '</b> '.$siparis["siparisKodu"].'
 																	</td>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
@@ -464,7 +470,11 @@
 																		' . $fonk->getPDil("VERGİ DAİRESİ/NO: ") . ' ÜSKÜDAR / 5890457461 
 																	</td>
 																</tr>';
-																foreach ($bankalar as $key => $value)
+																$bankalar2 = $db->select("BankaBilgileri", "*", [
+																	"bankaBilgiDurum" => 1,
+																	"ORDER" => "bankaBilgiSirasi",
+																]);
+																foreach ($bankalar2 as $key => $value)
 																{
 																	$body = $body . 
 																	'
@@ -612,6 +622,7 @@
 																₺ ' . number_format($araTutar,2,',','.') . '
 															</td>
 														</tr>
+
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
 																<b>' . $fonk->getPDil("Kargo: ") . '</b>
@@ -620,6 +631,7 @@
 																₺ ' . number_format($siparisKargoUcreti,2,',','.') . '
 															</td>
 														</tr>
+
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
 																<b>' . $fonk->getPDil("KDV: ") . '</b>
@@ -628,12 +640,45 @@
 																₺ ' .  number_format(($kdvTutar + $siparisKargoKdvUcreti),2,',','.') . '
 															</td>
 														</tr>
+
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("KDV Dahil Toplam: ") . '</b>
+																<b>' . $fonk->getPDil("Kdv Dahil Toplam: ") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . number_format(($toplamTutar - $siparisOdenenIskontoUcreti + $siparisKargoKdvUcreti),2,',','.') . '
+																₺ ' .  number_format($toplamTutar,2,',','.') . '
+															</td>
+														</tr>
+														';
+
+														if($siparisOdenenIskontoUcreti > 0) {
+															$body = $body . '
+															<tr style="text-align:right;">
+																<td valign="top" style="padding:10px; width:85%;">
+																	<b>' . $fonk->getPDil("KDV Dahil Proje İndirimi: ") . '</b>
+																</td>
+																<td valign="top" style="padding:10px; text-align:left;">
+																	₺ ' .  number_format($siparisOdenenIskontoUcreti,2,',','.') . '
+																</td>
+															</tr>
+
+															<tr style="text-align:right;">
+																<td valign="top" style="padding:10px; width:85%;">
+																	<b>' . $fonk->getPDil("Kdv Dahil Proje Fiyatı: ") . '</b>
+																</td>
+																<td valign="top" style="padding:10px; text-align:left;">
+																	₺ ' .  number_format(($siparis["siparisToplam"]),2,',','.') . '
+																</td>
+															</tr>
+														';
+														} 
+														$body = $body . '
+														<tr style="text-align:right;">
+															<td valign="top" style="padding:10px; width:85%;">
+																<b>' . $fonk->getPDil("Toplam: ") . '</b>
+															</td>
+															<td valign="top" style="padding:10px; text-align:left;">
+																₺ ' . number_format($siparis["siparisToplam"],2,',','.') . '
 															</td>
 														</tr>
 													</tbody>

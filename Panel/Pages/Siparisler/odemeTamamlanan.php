@@ -351,16 +351,18 @@ else{//Listeleme Yetkisi Var
 													}
 													$toplamTutar+=$siparisIcerik['siparisIcerikAdet']*$siparisIcerik['siparisIcerikFiyat'];
 												}
+												
 												if($list['siparisIndirimKodu']!="" && $list['siparisIndirimYuzdesi']!=0){
 													$toplamTutar-=($toplamTutar/100*$list['siparisIndirimYuzdesi']);
 												}
 												if($list['siparisKargoUcreti']!=0){
 													$toplamTutar+=$list['siparisKargoUcreti'];
 												}
-												if($list["siparisIskontoUcreti"] > 0){
-													$siparisIskontoUcreti=$fonk->paraCevir($list["siparisIskontoUcreti"],"USD","TRY");
-													$toplamTutar-=$siparisIskontoUcreti;
+												if($list["siparisOdenenIskontoUcreti"] > 0){
+													$siparisOdenenIskontoUcreti=$list["siparisOdenenIskontoUcreti"];
+													$toplamTutar-=$siparisOdenenIskontoUcreti;
 												}
+
 												?>
 												<tr id="trSatir-<?=$list[$tabloPrimarySutun];?>" class="<?=$satirRenk?>">
 													<td><?=$list[$tabloPrimarySutun];?></td>
@@ -372,7 +374,7 @@ else{//Listeleme Yetkisi Var
 													<td><?=$icerik;?></td>
 													<td><?=$list['odemeTipAdi'];?></td>
 													<th id="tutar-<?=$list[$tabloPrimarySutun];?>">
-														<?=$list["paraBirimSembol"].round($toplamTutar,2);?>
+														<?=$list["paraBirimSembol"].number_format($list["siparisToplam"],2,',','.');?>
 													</th>
 													<td data-sort="<?=$siparisDurum['siparisDurumId'];?>"><?=$siparisDurum['siparisDurumDilBilgiBaslik'];?></td>
 													<td><?=$list['dilAdi'];?></td>

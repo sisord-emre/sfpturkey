@@ -28,6 +28,7 @@ $isStockControl = $db->get("Urunler", [
     ]
 ]);
 
+
 $kontrol = ($adet <= $isStockControl["urunStok"] ? '1' : '0');
 
 for ($i=0; $i <count($sepet) ; $i++)
@@ -45,13 +46,12 @@ for ($i=0; $i <count($sepet) ; $i++)
 
     if($urunIdBulma["urunId"] == $isStockControl["urunId"])
     {
-        $adetSayisi+=$sepet[$i]["adet"]+$adet;
+        $adetSayisi=$sepet[$i]["adet"]+$adet;
     }
     else 
     {
         $adetSayisi=$sepet[$i]["adet"]+$adet;
     }
-    //echo $adetSayisi;
     $kontrol = ($adetSayisi <= $isStockControl["urunStok"] ? '1' : '0');
     if($kontrol == 1)
     {

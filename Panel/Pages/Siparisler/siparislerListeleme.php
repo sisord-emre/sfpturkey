@@ -371,8 +371,10 @@ else{//Listeleme Yetkisi Var
 													<td><?=$urunKodu;?></td>
 													<td><?=$icerik;?></td>
 													<td><?=$list['odemeTipAdi'];?></td>
-												 	<th><?="$".round($list["siparisIskontoUcreti"],2);?> ( <?=$list["paraBirimSembol"].round($siparisOdenenIskontoUcreti,2);?> )</th> 
-													<th><?=$list["paraBirimSembol"].round($toplamTutar,2);?> ( <?="$".round($toplamPanelTutar,2);?> )</th>
+												 	<th><?="$".number_format($list["siparisIskontoUcreti"],2,',','.');?> ( <?=$list["paraBirimSembol"].number_format($siparisOdenenIskontoUcreti,2,',','.');?> )</th> 
+													<th>
+														<?=$list["paraBirimSembol"].number_format($list["siparisToplam"],2,',','.');?> ( <?="$".number_format($toplamPanelTutar- $list["siparisIskontoUcreti"],2,',','.');?> )
+													</th>
 													<td data-sort="<?=$siparisDurum['siparisDurumId'];?>"><?=$siparisDurum['siparisDurumDilBilgiBaslik'];?></td>
 													<td><?=$list['dilAdi'];?></td>
 													<td data-sort="<?=$fonk->sqlToDateTimeTiresiz($list['siparisKayitTarihi']);?>"><?=$fonk->sqlToDateTime($list['siparisKayitTarihi']);?></td>
@@ -441,6 +443,62 @@ else{//Listeleme Yetkisi Var
 				alert("Result: "+status+" Status: "+jqXHR.status);
 			}
 		});
+	}
+
+	function SiparisTeslimatAdresiDurumDegistir(Id){
+		var e = document.getElementById("siparisTeslimatUyeAdresId");
+		var durum = e.value;
+		if(confirm('<?=$fonk->getPDil("Teslimat Adresini Değiştirmek İstediğinize Emin misiniz ?")?>')) {
+			$.ajax({
+				type: "POST",
+				url: "Pages/Siparisler/siparisTeslimatAdresiDurumDegistir.php",
+				data:{'Id':Id,'durum':durum},
+				success: function(res){
+					result = res.split(","); 
+					if(result[0]=='1'){
+						$("#fadeIn").modal("hide");
+						setTimeout(function() {
+							veriDetay(result[1])
+							toastr.success('<?=$fonk->getPDil("Güncelleme Sağlandı.")?>');
+						}, 500);
+					}else{
+						alert(res);
+					}
+				}
+			});
+		}
+		else {
+			e.querySelector("option:nth-child("+durum+")").selected = true;
+			console.log("else : " +durum)
+		}
+	}
+
+	function SiparisFaturaAdresiDurumDegistir(Id){
+		var e = document.getElementById("siparisFaturaUyeAdresId");
+		var durum = e.value;
+		if(confirm('<?=$fonk->getPDil("Fatura Adresini Değiştirmek İstediğinize Emin misiniz ?")?>')) {
+			$.ajax({
+				type: "POST",
+				url: "Pages/Siparisler/SiparisFaturaAdresiDurumDegistir.php",
+				data:{'Id':Id,'durum':durum},
+				success: function(res){
+					result = res.split(","); 
+					if(result[0]=='1'){
+						$("#fadeIn").modal("hide");
+						setTimeout(function() {
+							veriDetay(result[1])
+							toastr.success('<?=$fonk->getPDil("Güncelleme Sağlandı.")?>');
+						}, 500);
+					}else{
+						alert(res);
+					}
+				}
+			});
+		}
+		else {
+			e.querySelector("option:nth-child("+durum+")").selected = true;
+			console.log("else : " +durum)
+		}
 	}
 
 	function veriDetay(detayId){

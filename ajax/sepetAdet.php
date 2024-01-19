@@ -37,12 +37,13 @@ for ($i=0; $i <count($sepet) ; $i++) {
     $araTutar+=($hesapla["birimFiyat"])*$sepet[$i]["adet"];
     $kdvTutar+=($hesapla["birimFiyat"]/100*$urun["urunKdv"])*$sepet[$i]["adet"];
 }
-
+$siparisKargoUcreti = $fonk->KargoUcreti($fonk->paraCevir($toplamTutar,$urun["paraBirimKodu"],"TRY")); 
 $_SESSION['Sepet']=json_encode($sepet);
 $json["result"]=array(
     "toplamTutar"=>$fonk->paraCevir($toplamTutar,$urun["paraBirimKodu"],"TRY"),
     "araTutar"=>$fonk->paraCevir($araTutar,$urun["paraBirimKodu"],"TRY"),
-    "kdvTutar"=>$fonk->paraCevir($kdvTutar,$urun["paraBirimKodu"],"TRY")
+    "kdvTutar"=>$fonk->paraCevir($kdvTutar,$urun["paraBirimKodu"],"TRY"),
+    "siparisKargoUcreti"=>$siparisKargoUcreti
 );
 print_r(json_encode($json));
 ?>

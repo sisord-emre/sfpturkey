@@ -77,7 +77,6 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                     if ($val['siparisIndirimKodu'] != "" && $val['siparisIndirimYuzdesi'] != 0) {
                                         $indirimMiktar = $toplamTutar / 100 * $val['siparisIndirimYuzdesi'];
                                         $toplamTutar -= $indirimMiktar;
-                                        $indirimMiktar = round($indirimMiktar, 2);
                                     }
                                 ?>
                                     <tr class="cart_item">
@@ -90,8 +89,9 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                 <?php } ?>
                                 <?php
                                 if ($siparislerim['siparisKargoUcreti'] != 0) {
-                                    $siparisKargoUcreti = round($siparislerim['siparisKargoUcreti'], 2);
+                                    $siparisKargoUcreti = $siparislerim['siparisKargoUcreti'];
                                 }
+                               
                                 ?>
                             </tbody>
                             <tfoot>
@@ -111,7 +111,7 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                     <th></th>
                                     <th></th>
                                     <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Kdv Dahil Toplam"); ?></th>
-                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($toplamTutar,2,',','.'); ?></span></td>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($araTutar + $kdvTutar ,2,',','.'); ?></span></td>
                                 </tr>
                                 <?php if ($siparisOdenenIskontoUcreti > 0) { ?>
                                     <tr class="cart_item">
@@ -137,7 +137,7 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                     <th></th>
                                     <th></th>
                                     <th colspan="2" style="text-align:right;"><?= $fonk->getDil("TOPLAM"); ?></th>
-                                    <td class="text-center"><strong><span class="cart_price amount"><?= $siparislerim["paraBirimSembol"] ?><?=number_format($toplamTutar - $siparisOdenenIskontoUcreti + $siparisKargoUcreti,2,',','.'); ?></span></strong></td>
+                                    <td class="text-center"><strong><span class="cart_price amount"><?= $siparislerim["paraBirimSembol"] ?><?=number_format($siparislerim["siparisToplam"],2,',','.'); ?></span></strong></td>
                                 </tr>
                             </tfoot>
                         </table>

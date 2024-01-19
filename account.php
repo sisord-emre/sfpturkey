@@ -2,9 +2,14 @@
 include('layouts/header.php');
 
 if($_GET['exit']=="ok"){//oturumu kapatma
+    unset($_SESSION['isProduct']);
 	unset($_SESSION['uyeSessionKey']);
-	session_regenerate_id(true); //sessionId sıfırlamak için
-	session_destroy();
+    unset($_SESSION['Sepet']);
+    unset($_SESSION['SiparisKodu']);
+    $_SESSION['Sepet'] = '';
+	$_SESSION['isProduct'] = '';
+    $_SESSION['uyeSessionKey'] = '';
+    $_SESSION['SiparisKodu'] = '';
 	session_start();
 	$fonk->yonlendir(index);
 	exit;
@@ -47,11 +52,11 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                             <input type="password" class="form-control" name="uyeSifre" id="uyeSifre" required>
                         </p>
 
-                        <p class="form-row">
+                        <!-- <p class="form-row">
                             <?php if ($sabitB['sabitBilgiPublicRecaptcha'] != "" && $sabitB['sabitBilgiPrivateRecaptcha'] != "") { ?>
                                 <div class="g-recaptcha" data-sitekey="<?= $sabitB['sabitBilgiPublicRecaptcha'] ?>"></div>
                             <?php } ?>
-                        </p>
+                        </p> -->
 
                         <p>
                             <a href="#RecoverPasswordForm" class="btn-change-login-form"><?= $fonk->getDil("Parolamı Unutum"); ?>?</a>
@@ -137,7 +142,7 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                             <span class="required">*</span>
                             ( <?= $fonk->getDil("Sadece jpeg, png, pdf uzantılı dosyalar yüklenebilir"); ?> )
                         </label><br>
-                            <input type="file" class="form-control" id="uyeVergiLevhasiDosya" name="uyeVergiLevhasiDosya[]" accept=".png, .jpg, .jpeg, .pdf" required multiple>
+                            <input type="file" class="form-control" id="uyeVergiLevhasiDosya" name="uyeVergiLevhasiDosya[]" accept=".png, .jpg, .jpeg, .pdf" required>
                         </p>
 
                         <p class="form">
@@ -183,11 +188,11 @@ if($_GET['exit']=="ok"){//oturumu kapatma
                         </p>
 
 
-                        <p class="form-row">
+                        <!-- <p class="form-row">
                             <?php if ($sabitB['sabitBilgiPublicRecaptcha'] != "" && $sabitB['sabitBilgiPrivateRecaptcha'] != "") { ?>
                                 <div class="g-recaptcha" data-sitekey="<?= $sabitB['sabitBilgiPublicRecaptcha'] ?>"></div>
                             <?php } ?>
-                        </p>
+                        </p> -->
 
                        
                         <input type="hidden" name="formdan" value="1" />

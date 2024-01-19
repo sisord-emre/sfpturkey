@@ -22,7 +22,7 @@ $list = $db->get("UrunVaryantlari", [
 <div class="card-body">
     <form id="altBirimGuncellePost" class="form" action="" method="post">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="form-group" style="width:100%!important">
                     <label for="userinput1"><?= $fonk->getPDil("Marka") ?></label>
                     <select class="select2 form-control block" name="urunVaryantVaryantId" style="width:100%!important">
@@ -55,6 +55,13 @@ $list = $db->get("UrunVaryantlari", [
                 <div class="form-group" style="width:100%!important">
                     <label for="userinput1"><?= $fonk->getPDil("Markaya Göre Fiyat") ?></label>
                     <input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" value="<?= $list['urunVaryantFiyat'] ?>" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group" style="width:100%!important">
+                    <label for="urunVaryantKampanyasizFiyat"><?= $fonk->getPDil("Liste Fiyat") ?></label>
+                    <input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" value="<?= $list['urunVaryantKampanyasizFiyat'] ?>" autocomplete="off">
                 </div>
             </div>
 
@@ -117,24 +124,14 @@ $list = $db->get("UrunVaryantlari", [
                                                 </fieldset>
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="urunVaryantDilBilgiDescription-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Description / Kısa Açıklama") ?></label>
-                                                <textarea class="form-control" id="urunVaryantDilBilgiDescription-<?= $dil["dilId"] ?>" name="urunVaryantDilBilgiDescription-<?= $dil["dilId"] ?>" rows="3" placeholder="..."><?= $item['urunVaryantDilBilgiDescription'] ?></textarea>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label for="urunVaryantDilBilgiEtiketler-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Etiketler") ?><small style="color:red;margin-left:1rem">*</small></label>
                                                 <input type="text" class="form-control border-primary" id="urunVaryantDilBilgiEtiketler-<?= $dil["dilId"] ?>" name="urunVaryantDilBilgiEtiketler-<?= $dil["dilId"] ?>" value="<?= $item['urunVaryantDilBilgiEtiketler'] ?>" autocomplete="off">
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label for="urunVaryantDilBilgiAciklama-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Detay Açıklama") ?></label>
-                                                <textarea class="editorCk3" id="urunVaryantDilBilgiAciklama-<?= $dil["dilId"] ?>" name="urunVaryantDilBilgiAciklama-<?= $dil["dilId"] ?>"><?= $item['urunVaryantDilBilgiAciklama'] ?></textarea>
-                                            </div>
-                                        </div>
+                                       
                                     </div>
                                 </div>
                             </div>

@@ -68,7 +68,6 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 	$width = 360;
 	$height = 460;
 	if ($_POST['formdan'] == "1") {
-
 		$fonk->csrfKontrol();
 		$gorselAdi = $urunKodu . "-" . mt_rand();
 
@@ -80,7 +79,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 
 		$gorselUploadPath = '../../../Images/Urunler/'.$gorselPath;
 		$kontrol = $fonk->imageResizeUpload($_FILES['urunGorsel'], $gorselUploadPath, $gorselAdi, 0, 0, jpg); //boyutlandırmalı resim yükleme yükleme başarılı ise 1 döner
-
+		
 		$urunDurum = ($urunDurum == "") ? 0 : 1;
 		$urunKampanya = ($urunKampanya == "") ? 0 : 1;
 		$urunEnCokSatan = ($urunEnCokSatan == "") ? 0 : 1;
@@ -100,7 +99,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 		$urun510Metre = ($urun510Metre == "") ? 0 : 1;
 		$urun1020Metre = ($urun1020Metre == "") ? 0 : 1;
 		$urun2030Metre = ($urun2030Metre == "") ? 0 : 1;
-
+		
 
 		if ($primaryId != "") {
 			//günclelemedeki parametreler
@@ -168,26 +167,26 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 				'urunKayitTarihi' => date("Y-m-d H:i:s")
 			);
 		}
-
+		
 		if ($kontrol == 1) { //eğer duruma göre boş bırakılabiliyor ise parametre, sonradan arraye eklenir
 			$parametreler = array_merge($parametreler, array('urunGorsel' => $gorselAdi . ".jpg"));
 		}
-
 		$files = array_filter($_FILES['urunDataSheet']['name']); 
-		$fileName = mt_rand();
+		$fileName = $_FILES['urunDataSheet']['name'];
 		$tmpFilePath = $_FILES['urunDataSheet']['tmp_name'];
 		if ($tmpFilePath != "")
 		{
-			$newFilePath = "../../../Dokuman/Sheet/".$fileName .".pdf";
+			$newFilePath = "../../../Dokuman/Sheet/".$fileName;
 			if(move_uploaded_file($tmpFilePath, $newFilePath)) 
 			{
-				$parametreler=array_merge($parametreler,array('urunDataSheet' => $fileName. ".pdf"));
+				$parametreler=array_merge($parametreler,array('urunDataSheet' => $fileName));
 			}		
 		}
 
 		if ($primaryId != "") {
 			$fonk->logKayit(2, $tableName . ' ; ' . $primaryId . ' ; ' . json_encode($parametreler)); //1=>ekleme,2=>güncelleme,3=>silme,4=>oturum açma,5=>diğer
 			///güncelleme
+			
 			$query = $db->update($tableName, $parametreler, [
 				$tabloPrimarySutun => $primaryId
 			]);
@@ -204,6 +203,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 				'urunVaryantUrunId' => $primaryId,
 				'urunVaryantVaryantId' => 20, //generic
 				'urunVaryantFiyat' => floatval($urunFiyat),
+				'urunVaryantKampanyasizFiyat' => 0,
 				'urunVaryantDefaultSecim' => 1
 			);
 			$urunVaryantKodu = mt_rand(100000000, 999999999);
@@ -216,8 +216,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 			foreach ($dilList as $dil) {
 				$itemPrimaryId = $_POST["urunVaryantDilBilgiId-" . $dil["dilId"]]; //primary sutun
 				
-				if ($_POST["urunVaryantDilBilgiDurum-" . $dil["dilId"]] == "") {
-					$_POST["urunVaryantDilBilgiDurum-" . $dil["dilId"]] = 0;
+				if ($_POST["urunDilBilgiDurum-" . $dil["dilId"]] == "") {
+					$_POST["urunDilBilgiDurum-" . $dil["dilId"]] = 0;
 				}
 				$itemPar = array(
 					'urunVaryantDilBilgiUrunId' => $primaryId,
@@ -225,17 +225,17 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 					'urunVaryantDilBilgiDilId' => $dil["dilId"],
 					'urunVaryantDilBilgiAdi' => $_POST["urunDilBilgiAdi-" . $dil["dilId"]],
 					'urunVaryantDilBilgiSlug' => $_POST["urunDilBilgiSlug-" . $dil["dilId"]],
-					'urunVaryantDilBilgiDescription' => $_POST["urunDilBilgiDescription-" . $dil["dilId"]],
-					'urunVaryantDilBilgiEtiketler' => $_POST["urunDilBilgiEtiketler-" . $dil["dilId"]],
-					'urunVaryantDilBilgiAciklama' => $_POST["urunDilBilgiAciklama-" . $dil["dilId"]],
-					'urunVaryantDilBilgiDurum' => $_POST["urunDilBilgiDurum-" . $dil["dilId"]]
+					'urunVaryantDilBilgiDescription' => "",
+					'urunVaryantDilBilgiEtiketler' => "",
+					'urunVaryantDilBilgiAciklama' => "",
+					'urunVaryantDilBilgiDurum' => 1
 				);
 				$fonk->logKayit(1, $itemTableName . ' ; ' . json_encode($itemPar)); //1=>ekleme,2=>güncelleme,3=>silme,4=>oturum açma,5=>diğer
 				$queryAlt = $db->insert($itemTableName, $itemPar);
 			}
 			// otomatik sfp isimli varyant oluşacak
 		}
-
+		
 		//dile göre değerlerin kayıt edilmesi
 		$itemTableName = "UrunDilBilgiler";
 		$dilList = $db->select("Diller", "*");
@@ -251,8 +251,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 				'urunDilBilgiSlug' => $_POST["urunDilBilgiSlug-" . $dil["dilId"]],
 				'urunDilBilgiDescription' => $_POST["urunDilBilgiDescription-" . $dil["dilId"]],
 				'urunDilBilgiAciklama' => $_POST["urunDilBilgiAciklama-" . $dil["dilId"]],
-				'urunDilBilgiEtiketler' => $_POST["urunDilBilgiEtiketler-" . $dil["dilId"]],
-				'urunDilBilgiDurum' => $_POST["urunDilBilgiDurum-" . $dil["dilId"]]
+				'urunDilBilgiEtiketler' => "",
+				'urunDilBilgiDurum' => 1
 			);
 			if ($itemPrimaryId != "") {
 				$fonk->logKayit(2, $itemTableName . ' ; ' . $itemPrimaryId . ' ; ' . json_encode($itemPar)); //1=>ekleme,2=>güncelleme,3=>silme,4=>oturum açma,5=>diğer
@@ -267,6 +267,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 			}
 		}
 		//!dile göre değerlerin kayıt edilmesi
+		
 
 		$silKategoriler = $db->delete("UrunKategoriler", [
 			"urunKategoriUrunId" => $primaryId
@@ -328,6 +329,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 			<strong>' . $fonk->getPDil("Hata!") . '</strong> ' . $fonk->getPDil("Kayıt Esnasında Bir Hata Oluştu. Lütfen Tekrar Deneyiniz.") . '(' . $db->error . ')
 			</div>';
 		}
+		
+		
 	}
 	echo "<script>$('#ustYazi').html('&nbsp;-&nbsp;'+'" . $fonk->getPDil($baslik) . "');</script>"; //Başlık Güncelleniyor
 	//update ise bilgiler getiriliyor
@@ -340,6 +343,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 		$Listeleme['urunKodu'] = mt_rand(100000000, 999999999);
 		$Listeleme['urunKdv'] = 0;
 	}
+	
 ?>
 	<!-- Basic form layout section start -->
 	<section id="basic-form-layouts">
@@ -693,19 +697,19 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 														<div class="card-content">
 															<div class="card-body">
 																<div class="row">
-																	<div class="col-md-5">
+																	<div class="col-md-6">
 																		<div class="form-group">
 																			<label for="urunDilBilgiAdi-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Adi") ?><small style="color:red;margin-left:1rem">*</small></label>
 																			<input type="text" onkeyup="toSeo('urunDilBilgiAdi-<?= $dil["dilId"] ?>','urunDilBilgiSlug-<?= $dil["dilId"] ?>')" class="form-control border-primary" id="urunDilBilgiAdi-<?= $dil["dilId"] ?>" name="urunDilBilgiAdi-<?= $dil["dilId"] ?>" value="<?= $item['urunDilBilgiAdi'] ?>" autocomplete="off">
 																		</div>
 																	</div>
-																	<div class="col-md-5">
+																	<div class="col-md-6">
 																		<div class="form-group">
 																			<label for="urunDilBilgiSlug-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Link") ?><small style="color:red;margin-left:1rem">*</small></label>
 																			<input type="text" class="form-control border-primary" id="urunDilBilgiSlug-<?= $dil["dilId"] ?>" name="urunDilBilgiSlug-<?= $dil["dilId"] ?>" value="<?= $item['urunDilBilgiSlug'] ?>" autocomplete="off" readonly>
 																		</div>
 																	</div>
-																	<div class="col-md-2">
+																	<!-- <div class="col-md-2">
 																		<div class="form-group">
 																			<label for="urunDilBilgiDurum-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Durumu") ?></label>
 																			<fieldset>
@@ -714,13 +718,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 																				</div>
 																			</fieldset>
 																		</div>
-																	</div>
-																	<div class="col-md-12">
-																		<div class="form-group">
-																			<label for="urunDilBilgiEtiketler-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Etiketler") ?><small style="color:red;margin-left:1rem">*</small></label>
-																			<input type="text" class="form-control border-primary" id="urunDilBilgiEtiketler-<?= $dil["dilId"] ?>" name="urunDilBilgiEtiketler-<?= $dil["dilId"] ?>" value="<?= $item['urunDilBilgiEtiketler'] ?>" autocomplete="off">
-																		</div>
-																	</div>
+																	</div> -->
+																	
 																	<div class="col-md-12">
 																		<div class="form-group">
 																			<label for="urunDilBilgiDescription-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Description / Kısa Açıklama") ?></label>
@@ -730,9 +729,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 																	<div class="col-md-12">
 																		<div class="form-group">
 																			<label for="urunDilBilgiAciklama-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Detay Açıklama") ?></label>
-																			<textarea class="editorCk" id="urunDilBilgiAciklama-<?= $dil["dilId"] ?>" name="urunDilBilgiAciklama-<?= $dil["dilId"] ?>">
-																					<?= $item['urunDilBilgiAciklama'] ?>
-																				</textarea>
+																			<textarea class="editorCk" id="urunDilBilgiAciklama-<?= $dil["dilId"] ?>" name="urunDilBilgiAciklama-<?= $dil["dilId"] ?>"><?= $item['urunDilBilgiAciklama'] ?></textarea>
 																		</div>
 																	</div>
 																</div>
@@ -798,7 +795,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 									<div class="card-body">
 										<form id="altBirimPost" class="form" action="" method="post">
 											<div class="row">
-												<div class="col-md-6">
+												<div class="col-md-3">
 													<div class="form-group" style="width:100%!important">
 														<label for="userinput1"><?= $fonk->getPDil("Marka") ?></label>
 														<select class="select2 form-control block" name="urunVaryantVaryantId" style="width:100%!important">
@@ -831,6 +828,13 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 													<div class="form-group" style="width:100%!important">
 														<label for="userinput1"><?= $fonk->getPDil("Markaya Göre Fiyat") ?></label>
 														<input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" autocomplete="off">
+													</div>
+												</div>
+
+												<div class="col-md-3">
+													<div class="form-group" style="width:100%!important">
+														<label for="urunVaryantKampanyasizFiyat"><?= $fonk->getPDil("Liste Fiyat") ?></label>
+														<input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" autocomplete="off">
 													</div>
 												</div>
 
@@ -885,24 +889,14 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 																					</fieldset>
 																				</div>
 																			</div>
-																			<div class="col-md-12">
-																				<div class="form-group">
-																					<label for="urunVaryantDilBilgiDescription-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Description / Kısa Açıklama") ?></label>
-																					<textarea class="form-control" id="urunVaryantDilBilgiDescription-<?= $dil["dilId"] ?>" name="urunVaryantDilBilgiDescription-<?= $dil["dilId"] ?>" rows="3" placeholder="..."></textarea>
-																				</div>
-																			</div>
+																			
 																			<div class="col-md-12">
 																				<div class="form-group">
 																					<label for="urunVaryantDilBilgiEtiketler-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Etiketler") ?><small style="color:red;margin-left:1rem">*</small></label>
 																					<input type="text" class="form-control border-primary" id="urunVaryantDilBilgiEtiketler-<?= $dil["dilId"] ?>" name="urunVaryantDilBilgiEtiketler-<?= $dil["dilId"] ?>" autocomplete="off">
 																				</div>
 																			</div>
-																			<div class="col-md-12">
-																				<div class="form-group">
-																					<label for="urunVaryantDilBilgiAciklama-<?= $dil["dilId"] ?>"><?= $fonk->getPDil("Detay Açıklama") ?></label>
-																					<textarea class="editorCk" id="urunVaryantDilBilgiAciklama-<?= $dil["dilId"] ?>" name="urunVaryantDilBilgiAciklama-<?= $dil["dilId"] ?>"></textarea>
-																				</div>
-																			</div>
+																			
 																		</div>
 																	</div>
 																</div>

@@ -235,7 +235,7 @@ include('../Panel/System/Config.php');
 //                         'urunVaryantDilBilgiDilId' => $dil["dilId"],
 //                         'urunVaryantDilBilgiAdi' => $r[0],
 //                         'urunVaryantDilBilgiSlug' => $fonk->toSeo($r[0]),
-//                         'urunVaryantDilBilgiDescription' => $r[4],
+//                         'urunVaryantDilBilgiDescription' => "",
 //                         'urunVaryantDilBilgiEtiketler' =>  $r[5],
 //                         'urunVaryantDilBilgiAciklama' => "",
 //                         'urunVaryantDilBilgiDurum' => 1

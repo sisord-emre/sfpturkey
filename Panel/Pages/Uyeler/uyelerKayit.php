@@ -82,6 +82,54 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
                 'uyeIndirimOrani' => $uyeIndirimOrani
             );
 
+            $files = array_filter($_FILES['uyeTicaretSicilGazetesi']['name']); 
+            $fileName = mt_rand();
+            $tmpFilePath = $_FILES['uyeTicaretSicilGazetesi']['tmp_name'];
+            if ($tmpFilePath != "")
+            {
+                $ext = pathinfo($_FILES['uyeTicaretSicilGazetesi']['name'], PATHINFO_EXTENSION);
+                $newFilePath = "../../../Images/TicaretSicilGazetesi/".$fileName ."." .$ext;
+                if(move_uploaded_file($tmpFilePath, $newFilePath)) 
+                {
+                    $parametreler=array_merge($parametreler,array('uyeTicaretSicilGazetesi' => $fileName. "." .$ext));
+                }		
+            }
+
+            $files3 = array_filter($_FILES['uyeMukerrerImza']['name']); 
+            $fileName3 = mt_rand();
+            $tmpFilePath3 = $_FILES['uyeMukerrerImza']['tmp_name'];
+            if ($tmpFilePath3 != "")
+            {
+                $ext = pathinfo($_FILES['uyeMukerrerImza']['name'], PATHINFO_EXTENSION);
+                $newFilePath3 = "../../../Images/ImzaSirkuleri/".$fileName3 ."." .$ext;
+                if(move_uploaded_file($tmpFilePath3, $newFilePath3)) 
+                {
+                    $parametreler=array_merge($parametreler,array('uyeMukerrerImza' => $fileName3. "." .$ext));
+                }		
+            }
+
+            $files2 = array_filter($_FILES['uyeVergiLevhasiDosya']['name']);  
+            $faturaAdi2 = mt_rand();
+            $tmpFilePath2 = $_FILES['uyeVergiLevhasiDosya']['tmp_name'];
+            if($tmpFilePath2 != "")
+            {
+                $ext = pathinfo($_FILES['uyeVergiLevhasiDosya']['name'], PATHINFO_EXTENSION);
+                $newFilePath2 = "../../../Images/VergiLevhasi/".$faturaAdi2 ."." . $ext;
+                if(move_uploaded_file($tmpFilePath2, $newFilePath2)) 
+                {
+                    $silUyeVergiLevhasi = $db->delete("UyeVergiLevhasi", [
+                        "uyeVergiLevhasiUyeId" => $primaryId
+                    ]);	
+
+                    $datas=array(
+                        'uyeVergiLevhasiUyeId' => $primaryId,
+                        'uyeVergiLevhasiBaseUrl' => $sabitB["sabitBilgiSiteUrl"]."Images/VergiLevhasi//",
+                        'uyeVergiLevhasiDosya' => $faturaAdi2. "." .$ext
+                    );
+                    $uyeVergiLevhasi = $db->insert('UyeVergiLevhasi', $datas);
+                }
+            }
+
             $fonk->logKayit(2, $tableName . ' ; ' . $primaryId . ' ; ' . json_encode($parametreler)); //1=>ekleme,2=>güncelleme,3=>silme,4=>oturum açma,5=>diğer
             ///güncelleme
             $query = $db->update($tableName, $parametreler, [
@@ -90,7 +138,8 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
         } 
        
         if ($query) 
-        { //uyarı metinleri
+        { 
+            //uyarı metinleri
             echo '
             <div class="alert alert-success alert-dismissible mb-2" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -127,8 +176,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
                         <h4 class="card-title" id="basic-layout-colored-form-control"><?= $fonk->getPDil($baslik) ?></h4>
                         <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
                         <div class="heading-elements">
-                            <?php if ($eklemeYetki) { ?><button type="button" onclick="YeniEkle('<?= $menuId ?>','<?= $duzenlemeSayfasi ?>');" class="btn mr-1 btn-primary btn-sm"><i class="la la-plus-circle"></i></button><?php } ?>
-                            <?php if ($listelemeYetki) { ?><button type="button" onclick="SayfaGetir('<?= $menuId ?>','<?= $listelemeSayfasi ?>');" class="btn mr-1 btn-primary btn-sm"><i class="la la-th-list"></i> <?= $fonk->getPDil("Listeleme") ?></button><?php } ?>
+                          <?php if ($listelemeYetki) { ?><button type="button" onclick="SayfaGetir('<?= $menuId ?>','<?= $listelemeSayfasi ?>');" class="btn mr-1 btn-primary btn-sm"><i class="la la-th-list"></i> <?= $fonk->getPDil("Listeleme") ?></button><?php } ?>
                         </div>
                     </div>
                     <div class="card-content collapse show">
@@ -182,13 +230,55 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
                                         </div>
 
                                         <div class="col-md-6">
+											<div class="form-group">
+												<label for="uyeMukerrerImza"><?= $fonk->getPDil("Mükerrer İmza") ?></label>
+                                                <a href="<?=$Listeleme['uyeMukerrerImzaBaseUrl']?><?=$Listeleme['uyeMukerrerImza']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
+												<div class="custom-file">
+													<input type="file" class="custom-file-input" name="uyeMukerrerImza" id="uyeMukerrerImza" accept=".png, .jpg, .jpeg, .pdf">
+													<label class="custom-file-label" name="uyeMukerrerImza" id="uyeMukerrerImza" for="uyeMukerrerImza" aria-describedby="uyeMukerrerImza"><?= $fonk->getPDil("Dosya Seçiniz") ?></label>
+												</div>
+											</div>
+										</div>
+
+                                        <div class="col-md-6">
+											<div class="form-group">
+												<label for="uyeTicaretSicilGazetesi"><?= $fonk->getPDil("Ticaret sicil gazetesi") ?></label>
+                                                <a href="<?=$Listeleme['uyeTicaretSicilGazetesiBaseUrl']?><?=$Listeleme['uyeTicaretSicilGazetesi']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
+                                                <div class="custom-file">
+													<input type="file" class="custom-file-input" name="uyeTicaretSicilGazetesi" id="uyeTicaretSicilGazetesi" accept=".png, .jpg, .jpeg, .pdf">
+													<label class="custom-file-label" name="uyeTicaretSicilGazetesi" id="uyeTicaretSicilGazetesi" for="uyeTicaretSicilGazetesi" aria-describedby="uyeTicaretSicilGazetesi"><?= $fonk->getPDil("Dosya Seçiniz") ?></label>
+												</div>
+											</div>
+										</div>
+
+                                        <div class="col-md-6">
+											<div class="form-group">
+												<label for="uyeVergiLevhasiDosya"><?= $fonk->getPDil("Vergi Levhası") ?> </label>
+                                                <?php
+                                                $vergiLevhasi = $db->select("UyeVergiLevhasi","*",[
+                                                    "uyeVergiLevhasiUyeId" => $primaryId
+                                                ]);
+                                                foreach ($vergiLevhasi as $value) {?>
+                                                    <a href="<?=$value['uyeVergiLevhasiBaseUrl']?><?=$value['uyeVergiLevhasiDosya']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
+                                                <?php } ?>
+												<div class="custom-file">
+													<input type="file" class="custom-file-input" name="uyeVergiLevhasiDosya" id="uyeVergiLevhasiDosya" accept=".png, .jpg, .jpeg, .pdf">
+													<label class="custom-file-label" name="uyeVergiLevhasiDosya" id="uyeVergiLevhasiDosya" for="uyeVergiLevhasiDosya" aria-describedby="uyeVergiLevhasiDosya"><?= $fonk->getPDil("Dosya Seçiniz") ?></label>
+												</div>
+											</div>
+										</div>
+
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="uyeIndirimOrani"><?= $fonk->getPDil("İndirim Oranı") ?></label>
                                                 <input type="text" class="form-control border-primary" id="uyeIndirimOrani" name="uyeIndirimOrani" value="<?= $Listeleme['uyeIndirimOrani'] ?>" autocomplete="off" required>
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 <label for="uyeDurum"><?= $fonk->getPDil("Durumu") ?></label>
                                                 <fieldset>

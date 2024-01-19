@@ -2,7 +2,7 @@ var AT_Search = {
 	ajaxProductItems: function () {
 		var result = new Array();
 		//var searchURL = 'ajax/search.php?view=ajax';
-		var searchURL = 'https://sfpturkey.com.tr/ajax/search.php?view=ajax';
+		var searchURL = 'https://www.sfpturkey.com.tr/ajax/search.php?view=ajax';
 
 		$.ajax({
 			type: 'GET',
@@ -56,6 +56,13 @@ var AT_Search = {
 
 			//console.log(keyword);
 
+			if(keyword.length < 1){
+				$('#isNullSearch').hide();
+			}
+			else {
+				$('#isNullSearch').show();
+			}
+
 			if (keyword.length >= 2) {
 
 				jQuery(this).removeClass('error warning valid').addClass('valid');
@@ -92,7 +99,7 @@ var AT_Search = {
 				}
 
 				if ($('#result-ajax-search .search-results li').length < 1) {
-					result.append('<li><p>Aramanız için sonuç bulunamadı.</p></li>')
+					result.append('<li><p style="margin-bottom: 0;">Aramanız için sonuç bulunamadı.</p></li>')
 				}
 
 				if ($('#result-ajax-search .search-results li').length) {
@@ -101,12 +108,11 @@ var AT_Search = {
 				}
 
 			} else {
-
 				if (keyword.length == 1) {
 					jQuery(this).removeClass('error warning valid').addClass('error');
 					//todo : change the place holder to notice customer
 
-					var t = '<li><p style="color: black;"><b>En az 2 karakter girmelisiniz</b></p></li>';
+					var t = '<li><p style="color: black; margin-bottom: 0;"><b>En az 2 karakter girmelisiniz</b></p></li>';
 					var result = $('#result-ajax-search .search-results').empty();
 					result.append(t);
 					$('#result-ajax-search').show();

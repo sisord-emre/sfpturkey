@@ -31,7 +31,7 @@ if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
         );
         $query = $db->insert("UrunListBotlari", $parametreler);
         if($query){
-            echo "İşlem Başarılı";
+            echo "1";
         }
     }
     else 

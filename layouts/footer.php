@@ -270,7 +270,11 @@
 <script src="assets/js/bootstrap.min.js?v=<?=$assetVersion?>"></script>
 <script src="assets/gl.ajax-search.js?v=<?=$assetVersion?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
+<script>
+    $( document ).ready(function() {
+        document.getElementById("isNullSearch").style.display="none";
+    });
+</script>
 </body>
 
 </html>

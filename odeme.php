@@ -1,5 +1,11 @@
 <?php
 extract($_POST);
+
+if($uyeTeslimatAdresId == ""){
+	echo '<script> alert("Teslimat adresi veya Fatura Adresi boş olamaz") </script>';
+	echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . 'checkout"; </script>';
+	exit;
+}
 //havale eft ödeme 
 if ($odemeTipi == "cash") {
 	include 'Panel/System/Config.php';
@@ -59,7 +65,6 @@ else if ($odemeTipi == "cash") {
 }
 
 $siparisIskontoUcreti = 0;
-$siparisKargoUcreti = 0;
 $siparisIndirimYuzdesi = 0;
 $toplamTutar = 0;
 
@@ -80,17 +85,19 @@ else //eğer sipariş kaydı var ise
 		$siparis = $db->update('Siparisler', [
 			'siparisUyeId' => $uye['uyeId'],
 			'siparisNot' => $note,
-			'siparisTeslimatUyeAdresId' => $uyeTeslimatAdresId,
-			'siparisFaturaUyeAdresId' => $uyeFaturaAdresId,
+			'siparisTeslimatUyeAdresId' => intval($uyeTeslimatAdresId),
+			'siparisFaturaUyeAdresId' => intval($uyeFaturaAdresId),
 			'siparisIndirimKodu' => "",
-			'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
-			'siparisKargoUcreti' => $siparisKargoUcreti,
-			'siparisOdenenIskontoUcreti' => $siparisOdenenIskontoUcreti,
+			'siparisIndirimYuzdesi' => floatval($siparisIndirimYuzdesi),
+			'siparisKargoUcreti' => floatval($siparisKargoUcreti),
+			'siparisOdenenIskontoUcreti' => floatval($siparisOdenenIskontoUcreti),
+			'siparisToplam' => floatval($siparisToplam),
+			'siparisDolarKur' => floatval($sabitB["sabitBilgiDolar"]),
 			'siparisDilId' => $_SESSION["dilId"],
-			'siparisTeslimatTarihi' => "",
+			'siparisTeslimatTarihi' => null,
 			'siparisKayitTarihi' => date("Y-m-d H:i:s")
 		], [
-			"siparisId" => $siparisKontrol["siparisId"]
+			"siparisKodu" => $siparisKontrol["siparisKodu"]
 		]);
 
 		$silIcerik = $db->delete("SiparisIcerikleri", [
@@ -107,6 +114,7 @@ else //eğer sipariş kaydı var ise
 				"[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
 			], "*", [
 				"urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
+				"urunDilBilgiDilId" => $_SESSION["dilId"],
 				"urunVaryantDilBilgiVaryantId" => $sepet[$i]["urunId"],
 				"urunVaryantDilBilgiDurum" => 1,
 				"ORDER" => [
@@ -129,13 +137,13 @@ else //eğer sipariş kaydı var ise
 				'siparisIcerikUrunAdi' => $urun["urunDilBilgiAdi"],
 				'siparisIcerikUrunVaryantDilBilgiAdi' => $urun["urunVaryantDilBilgiAdi"],
 				'siparisIcerikTeslimatDurumu' => 1,
-				'siparisIcerikFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]), $urun["paraBirimKodu"], "TRY"),
-				'siparisIcerikKdvsizFiyat' => $fonk->paraCevir($hesapla["birimFiyat"],$urun["paraBirimKodu"],"TRY"),
-				'siparisIcerikIndirimliFiyat' => $fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]), $urun["paraBirimKodu"], "TRY"),
-				'siparisIcerikPanelFiyat' => $hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),
-				'siparisIcerikPanelFiyatKdvsiz' => $hesapla["birimFiyat"],
-				'siparisIcerikPanelIndirimliFiyat' => $hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]),
-				'siparisIcerikKdv' => $fonk->paraCevir($hesapla["birimFiyat"] / 100 * $urun["urunKdv"],$urun["paraBirimKodu"],"TRY"),
+				'siparisIcerikFiyat' => floatval($fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]), $urun["paraBirimKodu"], "TRY")),
+				'siparisIcerikKdvsizFiyat' => floatval($fonk->paraCevir($hesapla["birimFiyat"],$urun["paraBirimKodu"],"TRY")),
+				'siparisIcerikIndirimliFiyat' => floatval($fonk->paraCevir($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"]), $urun["paraBirimKodu"], "TRY")),
+				'siparisIcerikPanelFiyat' => floatval($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"])),
+				'siparisIcerikPanelFiyatKdvsiz' => floatval($hesapla["birimFiyat"]),
+				'siparisIcerikPanelIndirimliFiyat' => floatval($hesapla["birimFiyat"] + ($hesapla["birimFiyat"] / 100 * $urun["urunKdv"])),
+				'siparisIcerikKdv' => floatval($fonk->paraCevir($hesapla["birimFiyat"] / 100 * $urun["urunKdv"],$urun["paraBirimKodu"],"TRY")),
 				'siparisIcerikGorsel' => $urun["urunGorsel"]
 			]);
 		}
@@ -149,7 +157,6 @@ else //eğer sipariş kaydı var ise
 		exit;
 	}
 }
-
 $siparis = $db->get("Siparisler", "*", [
 	"siparisKodu" => $_SESSION['SiparisKodu'],
 	"siparisUyeId" => $uye['uyeId']
@@ -268,7 +275,7 @@ if ($siparisOdemeTipiId == 2) //havale eft ödeme
 		$baslik2 = "SFPTURKEY-Siparis No: ".$siparisKodu."";
 		include("Mailtemplate/odemeEmailTemplate.php");
 		$fonk->mailGonder($siparis["uyeMail"], $baslik2, $body);
-		$fonk->mailGonder($gondericiMail[3], $baslik, $body); 
+		// $fonk->mailGonder($gondericiMail[3], $baslik, $body); 
 		header("HTTP/1.1 303 See Other");
 		header("Location: " . $sabitB["sabitBilgiSiteUrl"] . "havale?s=" . $_SESSION["SiparisKodu"]);
 	}

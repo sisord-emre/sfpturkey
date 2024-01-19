@@ -12,7 +12,7 @@ $urun = $db->get("Urunler", [
 ], "*", [
     "urunVaryantKodu" => $urunVaryantKodu,
     "urunVaryantDilBilgiDilId" => $_SESSION["dilId"],
-    "urunVaryantDilBilgiDurum" => 1,
+    "urunDilBilgiDurum" => 1,
     "ORDER" => [
         "urunId" => "ASC"
     ]
@@ -127,7 +127,7 @@ $favoriDurum = $db->get("UrunFavoriler", [
 
                                     <div class="pr_short_des">
                                         <p class="mb__40 cb">
-                                            <?= $urun["urunVaryantDilBilgiAciklama"]; ?>
+                                            <?= $urun["urunDilBilgiAciklama"]; ?>
                                         </p>
                                     </div>
 

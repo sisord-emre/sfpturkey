@@ -113,6 +113,16 @@ if (isset($_GET["islemDilKodu"])) {
                     </ul>
                     <ul class="nav navbar-nav float-right">
                         <li class="dropdown dropdown-language nav-item">
+                            <a class="dropdown-toggle nav-link" onclick='stokGuncelle()' id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 1.5rem 1rem 0.5rem 1rem;">
+                                <?= $fonk->getPDil("Stok Güncelle") ?>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-language nav-item">
+                            <a class="dropdown-toggle nav-link" onclick='kurGuncelle()' id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 1.5rem 1rem 0.5rem 1rem;">
+                                <?= $fonk->getPDil("Kur Güncelle") ?>
+                            </a>
+                        </li>
+                        <li class="dropdown dropdown-language nav-item">
                             <a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding: 1.5rem 1rem 0.5rem 1rem;">
                                 <?= "$: " . $sabitB['sabitBilgiDolar']; ?>
                                 <br />
@@ -224,9 +234,7 @@ if (isset($_GET["islemDilKodu"])) {
                     } //eğer iki yetkide yoksa başlıkı hiç gösterme
                     if ($menuYetki) {
                 ?>
-                        <li class=" nav-item <?php if ($menu['menuId'] == $_GET["sayfaBilgi"]) {
-                                                    echo "open";
-                                                } ?>"><a href="<?= $menu['menuSayfa'] ?>"><i class="la <?= $menu['menuIcon'] ?>"></i><span class="menu-title" data-i18n="nav.dash.main"><?= $fonk->getPDil($menu['menuAdi']) ?></span></a>
+                        <li class=" nav-item <?php if ($menu['menuId'] == $_GET["sayfaBilgi"]) { echo "open"; } ?>"><a href="<?= $menu['menuSayfa'] ?>"><i class="la <?= $menu['menuIcon'] ?>"></i><span class="menu-title" data-i18n="nav.dash.main"><?= $fonk->getPDil($menu['menuAdi']) ?></span></a>
                             <ul class="menu-content">
                                 <?php
                                 ///Alt Menüler
@@ -331,6 +339,84 @@ if (isset($_GET["islemDilKodu"])) {
         } ?>
         panelDil = JSON.parse('<?= str_replace(array(";", "'", "\""), array("\;", "\'", "\""), json_encode($_SESSION["panelDil"], JSON_UNESCAPED_UNICODE)) ?>');
     });
+
+    function kurGuncelle(){
+        $.ajax({
+			type: "GET",
+			url: "<?=$sabitB['sabitBilgiSiteUrl']?>Crons/kurGuncelle.php?ApiKey=8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp",
+			contentType:false,
+			processData:false,
+			success: function(res){
+                toastr.info(res);
+                setTimeout(function() {
+                    location.reload();
+                }, 2000);
+			},
+			error: function (jqXHR, status, errorThrown) {
+				alert("Result: "+status+" Status: "+jqXHR.status);
+			}
+		});
+    }
+
+    function stokGuncelle(){
+        $.ajax({
+			type: "GET",
+			url: "<?=$sabitB['sabitBilgiSiteUrl']?>api/urunListBot.php?ApiKey=8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp",
+			contentType:false,
+			processData:false,
+			success: function(res){
+                if(res == 1)
+                {
+                    $.ajax({
+                        type: "GET",
+                        url: "<?=$sabitB['sabitBilgiSiteUrl']?>api/urunListBotGuncelle.php?ApiKey=8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp",
+                        contentType:false,
+                        processData:false,
+                        success: function(res){
+                            if(res == 1)
+                            {
+                                $.ajax({
+                                    type: "GET",
+                                    url: "<?=$sabitB['sabitBilgiSiteUrl']?>api/urunListBotStokBot.php?ApiKey=8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp",
+                                    contentType:false,
+                                    processData:false,
+                                    success: function(res){
+                                        if(res == 1)
+                                        {
+                                            $.ajax({
+                                                type: "GET",
+                                                url: "<?=$sabitB['sabitBilgiSiteUrl']?>api/urunListBotStokGuncelle.php?ApiKey=8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp",
+                                                contentType:false,
+                                                processData:false,
+                                                success: function(res){
+                                                    if(res == 1)
+                                                    {
+                                                        toastr.info("Stok Güncelleme Başarılı");
+                                                    }
+                                                },
+                                                error: function (jqXHR, status, errorThrown) {
+                                                    alert("Result: "+status+" Status: "+jqXHR.status);
+                                                }
+                                            });
+                                        }
+                                    },
+                                    error: function (jqXHR, status, errorThrown) {
+                                        alert("Result: "+status+" Status: "+jqXHR.status);
+                                    }
+                                });
+                            }
+                        },
+                        error: function (jqXHR, status, errorThrown) {
+                            alert("Result: "+status+" Status: "+jqXHR.status);
+                        }
+                    });
+                }
+			},
+			error: function (jqXHR, status, errorThrown) {
+				alert("Result: "+status+" Status: "+jqXHR.status);
+			}
+		});
+    }
 </script>
 
 </html>

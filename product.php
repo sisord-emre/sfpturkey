@@ -30,9 +30,7 @@ $favoriDurum = $db->get("UrunFavoriler",[
     ]
 ]);
 
-// echo "<pre>"; 
-// print_r($urun);
-// echo "</pre>";
+
 ?>
 <div id="brandList">
     <div id="nt_content">
@@ -112,7 +110,7 @@ $favoriDurum = $db->get("UrunFavoriler",[
 
                                         <div class="pr_short_des">
                                             <p class="mb__40 cb">
-                                                <?= $urun["urunVaryantDilBilgiAciklama"]; ?>
+                                                <?= $urun["urunDilBilgiAciklama"]; ?>
                                             </p>
                                         </div>
 
@@ -135,21 +133,29 @@ $favoriDurum = $db->get("UrunFavoriler",[
                                                           
                                                             <div class="flex wrap fl_between al_center price-review">
                                                                 <?php if($uye['uyeIndirimOrani'] > 0 ): ?>
+                                                                    <?php if($urun['urunVaryantKampanyasizFiyat'] == 0 ): ?>
+                                                                    <span class="button-liste mr-3">
+                                                                        <ins style="color:white;"> 
+                                                                        <?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"");?>
+                                                                            <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
+                                                                        </ins>
+                                                                    </span>
+                                                                    <?php else: ?>
                                                                     <span class="button-liste mr-3">
                                                                         <?= $fonk->getDil("Liste Fiyat"); ?>:
                                                                         <del style="color:white;"> 
-                                                                            <?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"");?>
-                                                                            <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
+                                                                            <?= $urun["paraBirimSembol"] ?><?=number_format($urun["urunVaryantKampanyasizFiyat"],2,',','.');?>
                                                                         </del>
                                                                     </span>
                                                                     <br>
                                                                     <span class="button-bayi">
-                                                                        <?= $fonk->getDil("Bayi Fiyat"); ?>: 
+                                                                        <?= $fonk->getDil("Kampanyalı Fiyat"); ?>:
                                                                         <ins style="color:white;"> 
                                                                             <?php $hesapla2=$fonk->Hesapla($urun["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
                                                                             <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
                                                                         </ins>
                                                                     </span>
+                                                                    <?php endif; ?>
                                                                 <?php else: ?>
                                                                     <span class="button-liste mr-3">
                                                                         <ins style="color:white;"> 
@@ -186,18 +192,28 @@ $favoriDurum = $db->get("UrunFavoriler",[
 
                                         <div class="row">
                                             <?php
-                                            $markalar = $db->select("UrunVaryantlari", [
-                                                "[>]Varyantlar" => ["UrunVaryantlari.urunVaryantVaryantId" => "varyantId"],
-                                                "[>]VaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantVaryantId" => "varyantDilBilgiVaryatId"],
-                                            ], "*", [
-                                                "varyantDilBilgiDilId" => $_SESSION["dilId"],
-                                                "urunVaryantUrunId" => $urun["urunId"],
-                                                "varyanDurum" => 1,
-                                                "ORDER" => [
-                                                    "varyantDilBilgiBaslik" => "ASC"
-                                                ]
-                                            ]);
-                                           
+                                            
+                                            $markalar = $db->query(
+                                                'SELECT "varyantDilBilgiBaslik",
+                                                "urunVaryantDilBilgiId",
+                                                "urunVaryantKodu",
+                                                "urunVaryantDilBilgiSlug",
+                                                "urunVaryantUrunId",
+                                                "varyanDurum",
+                                                "urunVaryantId",
+                                                "urunVaryantDilBilgiVaryantId",
+                                                "urunVaryantVaryantId",
+                                                "varyantId",
+                                                "varyantDilBilgiVaryatId",
+                                                "urunVaryantDilBilgiDilId"
+                                                FROM "UrunVaryantlari" 
+                                                LEFT JOIN "UrunVaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantId" = "UrunVaryantDilBilgiler"."urunVaryantDilBilgiVaryantId" 
+                                                LEFT JOIN "Varyantlar" ON "UrunVaryantlari"."urunVaryantVaryantId" = "Varyantlar"."varyantId" 
+                                                LEFT JOIN "VaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantVaryantId" = "VaryantDilBilgiler"."varyantDilBilgiVaryatId" 
+                                                WHERE "urunVaryantDilBilgiDilId" = '.$_SESSION["dilId"].' AND "urunVaryantUrunId" = '.$urun["urunId"].' AND "varyantDilBilgiDilId" = 1 AND "varyanDurum" = true 
+                                                ORDER BY "varyantDilBilgiBaslik" ASC'
+                                            )->fetchAll();
+                                         
                                             foreach ($markalar as $value) {
                                                 if($value['urunVaryantKodu'] == $urun["urunVaryantKodu"])
                                                 {
@@ -208,13 +224,13 @@ $favoriDurum = $db->get("UrunFavoriler",[
                                                 }
                                             ?>
                                                 <div class="col-lg-3 col-sm-12">
-                                                    <a type="button" onclick="brandCall(<?= $value['urunVaryantKodu'] ?>)" class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block animated mr-4" <?=$css?>>
+                                                    <a href="/product/<?= $value['urunVaryantKodu'].'-'.$value['urunVaryantDilBilgiSlug'] ?>" class="button truncate w__100 mt__20 order-4 d-inline-block animated mr-4" <?=$css?>>
                                                         <span class="txt_add ">
                                                             <?= $value['varyantDilBilgiBaslik'] ?>
                                                         </span>
                                                     </a>
                                                 </div>
-                                            <?php } ?>
+                                            <?php }  ?>
                                         </div>
 
                                         <p class="mb__40 cb">

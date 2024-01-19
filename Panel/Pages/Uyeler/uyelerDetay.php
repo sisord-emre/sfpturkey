@@ -108,32 +108,31 @@ $detay = $db->get($tableName,[
 								"uyeVergiLevhasiUyeId" => $detay['uyeId']
 							]);
 							foreach ($vergiLevhasi as $value) {?>
-							<tr>
-								<td colspan="2"><hr></td>
-							</tr>
+							
 							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Vergi Levhası")?></b></td>
 								<td>
-									<a href="<?=$value['uyeVergiLevhasiBaseUrl']?><?=$value['uyeVergiLevhasiDosya']?>" target="_blank">
-										<img src="<?=$value['uyeVergiLevhasiBaseUrl']?><?=$value['uyeVergiLevhasiDosya']?>" width="150">
-									</a>
+
+									<a href="<?=$value['uyeVergiLevhasiBaseUrl']?><?=$value['uyeVergiLevhasiDosya']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
 								</td>
 							</tr>
 							<?php } ?>
 							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Ticaret Sicil Gazetesi")?></b></td>
 								<td>
-									<a href="<?=$detay['uyeTicaretSicilGazetesiBaseUrl']?><?=$detay['uyeTicaretSicilGazetesi']?>" target="_blank">
-										<img src="<?=$detay['uyeTicaretSicilGazetesiBaseUrl']?><?=$detay['uyeTicaretSicilGazetesi']?>" width="150">
-									</a>
+
+									<a href="<?=$detay['uyeTicaretSicilGazetesiBaseUrl']?><?=$detay['uyeTicaretSicilGazetesi']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
+									
 								</td>
 							</tr>
 							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Mükerrer İmza")?></b></td>
 								<td>
-									<a href="<?=$detay['uyeMukerrerImzaBaseUrl']?><?=$detay['uyeMukerrerImza']?>" target="_blank">
-										<img src="<?=$detay['uyeMukerrerImzaBaseUrl']?><?=$detay['uyeMukerrerImza']?>" width="150">
-									</a>
+
+									<a href="<?=$detay['uyeMukerrerImzaBaseUrl']?><?=$detay['uyeMukerrerImza']?>" class="btn btn-info btn-sm" style="padding:0.1rem 0.3rem;" target="_blank"><i class="la la-search"></i></a>
+									
 								</td>
 							</tr>
 							

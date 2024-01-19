@@ -372,7 +372,7 @@ else{//Listeleme Yetkisi Var
 													<td><?=$icerik;?></td>
 													<td><?=$list['odemeTipAdi'];?></td>
 													<th id="tutar-<?=$list[$tabloPrimarySutun];?>">
-														<?=$list["paraBirimSembol"].round($toplamTutar,2);?>
+														<?=$list["paraBirimSembol"].number_format($list['siparisToplam'],2,',','.');?>
 													</th>
 													<td data-sort="<?=$siparisDurum['siparisDurumId'];?>"><?=$siparisDurum['siparisDurumDilBilgiBaslik'];?></td>
 													<td><?=$list['dilAdi'];?></td>

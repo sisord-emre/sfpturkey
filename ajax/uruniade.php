@@ -30,7 +30,7 @@ if($_POST['formdan']=="1")
             'iadeTalepUrunAcildimi' => $iadeTalepUrunAcildimi,
             'iadeTalepDetay' => $iadeTalepDetay,
             'iadeTalepDurumu' => 0,
-            'iadeTalepKayitTarihi' => date("Y-m-d h:i:s")
+            'iadeTalepKayitTarihi' => date("Y-m-d H:i:s")
         );
         
         $query = $db->insert('IadeTalepleri', $parametreler);

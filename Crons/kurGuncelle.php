@@ -33,5 +33,5 @@ if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
 		echo "Oto Güncelleme Kapalı.";
 	}
 } else {
-	echo "Api Key Haralı.";
+	echo "Api Key Hatalı.";
 }

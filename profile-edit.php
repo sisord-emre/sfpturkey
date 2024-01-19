@@ -68,7 +68,7 @@ if ($_SESSION['uyeSessionKey'] == "") {
                                     <label for="uyeVergiLevhasiDosya"><?= $fonk->getDil("Vergi Levhası"); ?> 
                                     ( <?= $fonk->getDil("Sadece jpeg, png, pdf uzantılı dosyalar yüklenebilir"); ?> )
                                     </label>
-                                    <input type="file" id="uyeVergiLevhasiDosya" name="uyeVergiLevhasiDosya[]" accept=".png, .jpg, .jpeg, .pdf" multiple>
+                                    <input type="file" id="uyeVergiLevhasiDosya" name="uyeVergiLevhasiDosya[]" accept=".png, .jpg, .jpeg, .pdf">
                                 </p>
 
                                 <p class="checkout-section__field col-lg-6 col-12">

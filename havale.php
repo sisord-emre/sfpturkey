@@ -4,7 +4,8 @@ unset($_SESSION["SiparisKodu"]);
 unset($_SESSION["Sepet"]);
 
 $bankalar = $db->select("BankaBilgileri", "*", [
-	"bankaBilgiDurum" => 1
+	"bankaBilgiDurum" => 1,
+    "ORDER" => "bankaBilgiSirasi",
 ]);
 
 $siparis = $db->get("Siparisler", "*", [
@@ -68,7 +69,7 @@ $odemeLoglari = $db->insert('OdemeLoglari', [
                     <p><b><?= $fonk->getDil("Hesap Sahibi") ?></b> : <?=$value['bankaBilgiHesapSahibi'] ?></p>
                     <hr>
                 <?php } ?>
-                <p><b><?= $fonk->getDil("Ödenecek Tutar") ?></b> : <?=number_format($toplamTutar,2,',','.');?> <?= $_SESSION["paraBirimSembol"]?></p>
+                <p><b><?= $fonk->getDil("Ödenecek Tutar") ?></b> : <?=number_format($siparis["siparisToplam"],2,',','.');?> <?= $_SESSION["paraBirimSembol"]?></p>
                 <p>
                     <?= $fonk->getDil("Lütfen hesaba havale/eft yaparken ilgili sipariş kodunu ")?> <b> <?=$_GET["s"] ?> </b> <?= $fonk->getDil("açıklamaya yazmayı unutmayınız")?>
                 </p>

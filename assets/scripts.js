@@ -132,7 +132,7 @@ function FavoriKayit(urunId,uyeId) {
             }
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
@@ -169,7 +169,41 @@ function SepetKayit(urunId, varyantId, adet) {
             }
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
+        },
+    });
+}
+
+function SepetTekrarKayit(urunId, varyantId, adet) {
+    if (document.getElementById("sepetButton_" + urunId) != null) {
+        document.getElementById("sepetButton_" + urunId).disabled = true;
+    }
+    var data = new FormData();
+    data.append("urunId", urunId);
+    data.append("varyantId", varyantId);
+    data.append("adet", adet);
+    $.ajax({
+        type: "POST",
+        url: "ajax/sepetKayit.php",
+        data: data,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            if (res.status == "success") {
+                document.getElementById("sepet_adet").innerHTML = res.result.sepet_adet;
+            }
+            else if(res.status=="stockNotFound"){
+                swal(getDil("Uyarı"), getDil("Stokta Olmayan Ürün."), "error", { button: 'OK' });
+            } 
+            else {
+                alert(res);
+            }
+            if (document.getElementById("sepetButton_" + urunId) != null) {
+                document.getElementById("sepetButton_" + urunId).disabled = false;
+            }
+        },
+        error: function (jqXHR, status, errorThrown) {
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
@@ -194,7 +228,7 @@ function SepetUrunAdet(sira,birimFiyat,paraIcon){
             }
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
@@ -217,13 +251,14 @@ function SepetAdet(sira, birimFiyat, paraIcon,uyeIndirimOrani) {
                 document.getElementById("toplamTutar").innerHTML =paraIcon + parseFloat(res.result.toplamTutar).formatMoney(2, ",", ".");
                 document.getElementById("araTutar").innerHTML =paraIcon + parseFloat(res.result.araTutar).formatMoney(2, ",", ".");
                 document.getElementById("kdvTutar").innerHTML =paraIcon + parseFloat(res.result.kdvTutar).formatMoney(2, ",", ".");
-                console.log(parseFloat(res.result.kdvTutar).formatMoney(2, ",", "."));
+                document.getElementById("siparisKargoUcreti").value = res.result.siparisKargoUcreti;
+                console.log(res.result.siparisKargoUcreti);
             } else {
                 alert(res);
             }
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
@@ -247,7 +282,7 @@ function SepetList() {
             }
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
@@ -277,7 +312,7 @@ function SepetSil(sira, isCart) {
             }
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
@@ -301,7 +336,7 @@ function AdresModal(uyeAdresId, link) {
             $("#fadeIn").modal("show");
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
@@ -333,7 +368,7 @@ $("#adresKayitForm").submit(function (e) {
             submitButKontrol(formId, 1);
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 });
@@ -357,7 +392,7 @@ function AdresBilgi(kaynak, hedef) {
             document.getElementById(hedef).innerHTML = res;
         },
         error: function (jqXHR, status, errorThrown) {
-            alert("Result: " + status + " Status: " + jqXHR.status);
+            // alert("Result: " + status + " Status: " + jqXHR.status);
         },
     });
 }
