@@ -12,17 +12,17 @@ require 'php-excel.class.php';
 include ('fonksiyonlar.php');
 include ('SimpleXLSX.php');
 
-$loginUrl="/sfpturkey/Panel/login.php";//login urli
-$panelUrl="sfpturkey/Panel";//panel urli
+$loginUrl="/Panel/login.php";//login urli
+$panelUrl="Panel";//panel urli
 
 use Medoo\Medoo;
 //host,veritabanı adı,kullanıcı adı,şifre
 $db = new Medoo([
 	'type' => 'pgsql',
-	'host' => 'localhost',
-	'database' => 'sfp_local',
-	'username' => 'postgres',
-	'password' => '8282',
+	'host' => '185.136.86.50',
+	'database' => 'sfpturkey_vt',
+	'username' => 'sfpturk_vt',
+	'password' => 'Zk4#om613',
 	'port' => 5432,
 	'charset' => 'utf8',
 	'collation' => 'utf8_general_ci',

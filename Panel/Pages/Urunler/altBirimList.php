@@ -27,8 +27,8 @@ $sartlar = array_merge($sartlar, [
 									<th>#</th>
 									<th><?= $fonk->getPDil("Marka Kodu") ?></th>
 									<th><?= $fonk->getPDil("Marka Adı") ?></th>
-									<th><?= $fonk->getPDil("Fiyat") ?></th>
-									<th><?= $fonk->getPDil("Liste Fiyat (Sadece Kampanyalı Urunlerde)") ?></th>
+									<th><?= $fonk->getPDil("Markaya Göre Satış Fiyat/Kampanya Satış Fiyatı") ?></th>
+									<th><?= $fonk->getPDil("Liste Fiyat") ?></th>
 									<th style="width:235px;"><?= $fonk->getPDil("İslem") ?></th>
 								</tr>
 							</thead>

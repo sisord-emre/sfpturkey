@@ -122,7 +122,7 @@ if (count($orSartlar) > 0) {
 
 $sartlar=array_merge($sartlar,[
 	"ORDER" => [
-		"urunId" => "ASC"
+		"urunId" => "DESC"
 	]
 ]);
 
@@ -240,7 +240,7 @@ if (count($urunOrSartlar) > 0) {
 
 $urunSartlar=array_merge($urunSartlar,[
 	"ORDER" => [
-		"urunId" => "ASC"
+		"urunId" => "DESC"
 	],
 	'LIMIT' => [$pagination['start'], $pagination['limit']]
 ]);
@@ -321,7 +321,7 @@ foreach ($urunler as $value) {
 					<span class="price dib mb__5 w-100">
 						<?php if($uye['uyeIndirimOrani'] > 0 ): ?>
 							<div class="button-liste w-100">
-								<?= $fonk->getDil("Liste Özel Fiyat"); ?>:
+								<?= $fonk->getDil("Ürün Satış Fiyat"); ?>:
 								<del style="color:white;"> 
 									<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
 									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>

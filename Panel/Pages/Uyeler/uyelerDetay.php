@@ -55,6 +55,10 @@ $detay = $db->get($tableName,[
 								<td><?=$detay['uyeTel']?></td>
 							</tr>
 							<tr>
+								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Üye İndirim Oranı")?></b></td>
+								<td>%<?=$detay['uyeIndirimOrani']?></td>
+							</tr>
+							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Durumu")?></b></td>
 								<td><?php if($detay['uyeDurum']==1){?><div class="badge badge-success"><?=$fonk->getPDil("Aktif")?></div><?php } else{ ?><div class="badge badge-danger"><?=$fonk->getPDil("Pasif")?></div><?php } ?></td>
 							</tr>

@@ -252,7 +252,7 @@ include('layouts/header.php');
                                 <?php if ($uyeVar == 1) : ?>
                                     <?php if ($uye['uyeIndirimOrani'] > 0) : ?>
                                         <div class="button-liste w-100">
-                                            <?= $fonk->getDil("Liste Özel Fiyat"); ?>:
+                                            <?= $fonk->getDil("Ürün Satış Fiyat"); ?>:
                                             <del style="color:white;">
                                                 <?php $hesapla = $fonk->Hesapla($value["urunVaryantId"], ""); ?>
                                                 <?= $value["paraBirimSembol"] ?><?= number_format($hesapla["birimFiyat"], 2, ',', '.'); ?>

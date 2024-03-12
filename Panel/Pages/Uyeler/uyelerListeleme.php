@@ -91,14 +91,12 @@ else{//Listeleme Yetkisi Var
 			$tabloPrimarySutun => "DESC"
 		]
 	]);
-	$listeleme = $db->select($tableName,[
-		"[>]Diller" => ["Uyeler.uyeId" => "dilId"]
-	],"*",$sartlar);
+	$listeleme = $db->select($tableName,"*",$sartlar);
 	//****** tam excel alma bas
 	$sayac=1;
-	$ExportData[0]=array('Kodu','Tc/Vergi No','Kodu','Ad','Soyad','Mail','Tel','Durum','Dil','Son Giriş Tarihi','Kayıt Tarihi');///başlıklar
+	$ExportData[0]=array('Kodu','Tc/Vergi No','Ad','Soyad','Mail','Tel','Uye İndirim Oranı','Durum','Son Giriş Tarihi','Kayıt Tarihi');///başlıklar
 	foreach ($listeleme as $satir) {//içerikler
-		$ExportData[$sayac]=array($satir['uyeKodu'],$satir['uyeTcVergiNo'],$satir['uyeAdi'],$satir['uyeSoyadi'],$satir['uyeMail'],$satir['uyeTel'],$satir['uyeDurum'],$satir['dilAdi'],$fonk->sqlToDateTime($satir['uyeSonGirisTarihi']),$fonk->sqlToDateTime($satir['uyeKayitTarihi']));
+		$ExportData[$sayac]=array($satir['uyeKodu'],$satir['uyeTcVergiNo'],$satir['uyeAdi'],$satir['uyeSoyadi'],$satir['uyeMail'],$satir['uyeTel'],$satir['uyeIndirimOrani'],$satir['uyeDurum'],$fonk->sqlToDateTime($satir['uyeSonGirisTarihi']),$fonk->sqlToDateTime($satir['uyeKayitTarihi']));
 		$sayac++;
 	}
 	//!otomatik excel alma
