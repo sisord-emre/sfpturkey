@@ -100,6 +100,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 		$urun1020Metre = ($urun1020Metre == "") ? 0 : 1;
 		$urun2030Metre = ($urun2030Metre == "") ? 0 : 1;
 		
+		$urunFiyat = str_replace(',', '.', $urunFiyat);
 
 		if ($primaryId != "") {
 			//günclelemedeki parametreler
@@ -600,7 +601,7 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 										<div class="col-md-3">
 											<div class="form-group">
 												<label for="urunFiyat"><?= $fonk->getPDil("Fiyat") ?><small style="color:red;margin-left:1rem">*</small></label>
-												<input type="number" min="0" step="0.01" placeholder="0.00" class="form-control border-primary" id="urunFiyat" name="urunFiyat" value="<?= $Listeleme['urunFiyat'] ?>" autocomplete="off" required>
+												<input type="text" min="0" step="0.01" placeholder="0,00" class="form-control border-primary" id="urunFiyat" name="urunFiyat" value="<?= str_replace('.', ',', $Listeleme['urunFiyat']) ?>" autocomplete="off" required>
 											</div>
 										</div>
 
@@ -827,14 +828,14 @@ if (!$eklemeYetki && !$duzenlemeYetki) {
 												<div class="col-md-3">
 													<div class="form-group" style="width:100%!important">
 														<label for="userinput1"><?= $fonk->getPDil("Markaya Göre Fiyat") ?></label>
-														<input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" autocomplete="off">
+														<input type="text" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" autocomplete="off">
 													</div>
 												</div>
 
 												<div class="col-md-3">
 													<div class="form-group" style="width:100%!important">
 														<label for="urunVaryantKampanyasizFiyat"><?= $fonk->getPDil("Liste Fiyat") ?></label>
-														<input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" autocomplete="off">
+														<input type="text" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" autocomplete="off">
 													</div>
 												</div>
 

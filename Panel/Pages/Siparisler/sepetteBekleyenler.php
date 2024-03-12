@@ -323,8 +323,6 @@ else{//Listeleme Yetkisi Var
 													"[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
 												],"*",[
 													"urunDilBilgiDilId" => $list["siparisDilId"],
-													"urunDurum" => 1,
-													"urunDilBilgiDurum" => 1,
 													"siparisIcerikSiparisId" => $list["siparisId"]
 												]);
 												// echo "<pre>"; 

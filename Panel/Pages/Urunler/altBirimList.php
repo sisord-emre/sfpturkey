@@ -45,8 +45,8 @@ $sartlar = array_merge($sartlar, [
 										<th scope="row"><?= $satir ?></th>
 										<td><?= $item['urunVaryantKodu'] ?></td>
 										<td><?= $item['varyantDilBilgiBaslik'] ?></td>
-										<td><?= $item['urunVaryantFiyat'] ?></td>
-										<td><?= $item['urunVaryantKampanyasizFiyat'] ?></td>
+										<td><?= str_replace('.', ',', $item['urunVaryantFiyat']) ?></td>
+										<td><?= str_replace('.', ',', $item['urunVaryantKampanyasizFiyat']) ?></td>
 										<td>
 											<button type="button" onclick="altBirimGuncelle('<?= $item['urunVaryantId'] ?>');" class="btn btn-warning btn-sm">
 												<i class="la la-upload"></i>

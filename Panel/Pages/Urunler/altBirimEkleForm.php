@@ -38,14 +38,14 @@ $primaryId = $_POST['Id'];
             <div class="col-md-3">
                 <div class="form-group" style="width:100%!important">
                     <label for="userinput1"><?= $fonk->getPDil("Markaya Göre Satış Fiyat/Kampanya Satış Fiyatı") ?></label>
-                    <input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" autocomplete="off">
+                    <input type="text" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" autocomplete="off">
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group" style="width:100%!important">
                     <label for="urunVaryantKampanyasizFiyat"><?= $fonk->getPDil("Liste Fiyat") ?></label>
-                    <input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" autocomplete="off">
+                    <input type="text" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" autocomplete="off">
                 </div>
             </div>
 

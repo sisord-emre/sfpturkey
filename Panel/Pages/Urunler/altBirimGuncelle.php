@@ -54,14 +54,14 @@ $list = $db->get("UrunVaryantlari", [
             <div class="col-md-3">
                 <div class="form-group" style="width:100%!important">
                     <label for="userinput1"><?= $fonk->getPDil("Markaya Göre Fiyat") ?></label>
-                    <input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" value="<?= $list['urunVaryantFiyat'] ?>" autocomplete="off">
+                    <input type="text" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantFiyat" name="urunVaryantFiyat" value="<?=str_replace('.', ',', $list['urunVaryantFiyat']) ?>" autocomplete="off">
                 </div>
             </div>
 
             <div class="col-md-3">
                 <div class="form-group" style="width:100%!important">
                     <label for="urunVaryantKampanyasizFiyat"><?= $fonk->getPDil("Liste Fiyat") ?></label>
-                    <input type="number" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" value="<?= $list['urunVaryantKampanyasizFiyat'] ?>" autocomplete="off">
+                    <input type="text" min="0" step="0.01" placeholder="<?= $fonk->getPDil("Fiyat") ?> (0.00)" class="form-control border-primary" id="urunVaryantKampanyasizFiyat" name="urunVaryantKampanyasizFiyat" value="<?= str_replace('.', ',', $list['urunVaryantKampanyasizFiyat']) ?>" autocomplete="off">
                 </div>
             </div>
 

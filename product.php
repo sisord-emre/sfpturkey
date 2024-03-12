@@ -223,7 +223,7 @@ $favoriDurum = $db->get("UrunFavoriler",[
                                                     $css = 'style="background: #fff; border-color: #eee; color: #19191a;"';
                                                 }
                                             ?>
-                                                <div class="col-lg-3 col-sm-12">
+                                                <div class="col-lg-3 col-4">
                                                     <a href="/product/<?= $value['urunVaryantKodu'].'-'.$value['urunVaryantDilBilgiSlug'] ?>" class="button truncate w__100 mt__20 order-4 d-inline-block animated mr-4" <?=$css?>>
                                                         <span class="txt_add ">
                                                             <?= $value['varyantDilBilgiBaslik'] ?>

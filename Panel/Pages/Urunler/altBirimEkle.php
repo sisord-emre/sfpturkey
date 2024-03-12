@@ -6,6 +6,8 @@ $fonk->csrfKontrol();
 extract($_POST); //POST parametrelerini değişken olarak çevirir
 
 $urunVaryantDefaultSecim =($urunVaryantDefaultSecim == "" ? 0 : $urunVaryantDefaultSecim); 
+$urunVaryantFiyat = str_replace(',', '.', $urunVaryantFiyat);
+$urunVaryantKampanyasizFiyat = str_replace(',', '.', $urunVaryantKampanyasizFiyat);
 //varyant işlemleri
 $varyantTableName = "UrunVaryantlari";
 $itemPar = array(
