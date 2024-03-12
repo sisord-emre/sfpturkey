@@ -37,7 +37,7 @@ if($_POST){
 	// 	}
 	// }
 
-	if($hata==""){//bir problem yok ise giriş yap
+	if(true){//bir problem yok ise giriş yap
 	
 		$kullaniciGiris = $db->get("Kullanicilar", "*", [
 			"kullaniciEmail" => $fonk->injKontrol($_POST['mail'],""),

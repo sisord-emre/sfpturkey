@@ -265,6 +265,9 @@ else{//Listeleme Yetkisi Var
 								<?php if($tamExcelYetki){?>
 									<a href="Pages/excel.php" class="btn mr-1 btn-outline-warning btn-sm"><i class="la la-print"></i> <?=$fonk->getPDil("Tam Excel")?></a>
 								<?php } ?>
+								<?php if($duzenlemeYetki){?>
+									<button class="btn mr-1 btn-outline-success btn-sm" onclick="siparisBekleyenKurGuncelle();"> <?=$fonk->getPDil("Kura Göre Fiyat Güncelle")?></a>
+								<?php } ?>
 							</div>
 						</div>
 						<div class="card-content collapse show">
@@ -426,6 +429,25 @@ else{//Listeleme Yetkisi Var
 				: "")
 		);
 	};
+
+	function siparisBekleyenKurGuncelle(){
+		if(confirm('<?=$fonk->getPDil("Güncellemek İstediğinize Emin misiniz ?")?>')) {
+			$.ajax({
+				type: "POST",
+				url: "Pages/Siparisler/siparisBekleyenKurGuncelle.php",
+				success: function(res){
+					if (res==1) {
+						SayfaYenile();
+					}else {
+						$('#Sayfalar').html(res);
+					}
+				},
+				error: function (jqXHR, status, errorThrown) {
+					alert("Result: "+status+" Status: "+jqXHR.status);
+				}
+			});
+		}
+	}
 
 	function FiyatDegistir(Id){
 		var e = document.getElementById("durum-"+Id);
