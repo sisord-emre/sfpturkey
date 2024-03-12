@@ -673,14 +673,7 @@
 														';
 														} 
 														$body = $body . '
-														<tr style="text-align:right;">
-															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("Toplam: ") . '</b>
-															</td>
-															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . number_format($siparis["siparisToplam"],2,',','.') . '
-															</td>
-														</tr>
+														
 													</tbody>
 												</table>
 											 
