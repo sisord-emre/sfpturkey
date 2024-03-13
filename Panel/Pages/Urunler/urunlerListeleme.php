@@ -149,9 +149,61 @@ else{//Listeleme Yetkisi Var
 	],"*",$sartlar);
 	//****** tam excel alma bas
 	$sayac=1;
-	$ExportData[0]=array('Ürün Adı','Görsel Linki');///başlıklar
+	
+	$ExportData[0]=array(
+		'Kodu',
+		'Adı',
+		'Kategori',
+		'Stok',
+		'Fiyat',
+		'Kdv',
+		'Durumu',
+		'Kayıt Tarihi',
+		'Görsel Linki'
+	);///başlıklar
 	foreach ($listeleme as $satir) {//içerikler
-		$ExportData[$sayac]=array($satir['urunDilBilgiAdi'],$satir['urunBaseUrl'].$satir['urunGorsel']);
+		$kategoriler="";
+		$sartlar=[
+			"urunKategoriUrunId" => $satir["urunId"],
+			"ORDER" => [
+				"kategoriId" => "ASC"
+			]
+		];
+		if ($_SESSION["islemDilId"]!="") {
+			$sartlar=array_merge($sartlar,["kategoriDilBilgiDilId" => $_SESSION["islemDilId"]]);
+		}
+		else {
+			$sartlar=array_merge($sartlar,["kategoriDilBilgiDilId" => $sabitB["sabitBilgiPanelVarsayilanDilId"]]);
+		}
+		$kategoriList = $db->select("UrunKategoriler",[
+			"[>]Kategoriler" => ["UrunKategoriler.urunKategoriKategoriId" => "kategoriId"],
+			"[>]KategoriDilBilgiler" => ["Kategoriler.kategoriId" => "kategoriDilBilgiKategoriId"]
+		],"*",$sartlar);
+		foreach ($kategoriList as $key => $value) {
+			$kategoriler .=$value["kategoriDilBilgiBaslik"];
+		}
+
+		if($satir['urunDurum'] == 1){
+			$durum = "Aktif";
+		}
+		else if($satir['urunDurum'] == 0){
+			$durum = "Pasif";
+		}
+		else {
+			$durum = "-";
+		}
+
+		$ExportData[$sayac]=array(
+			$satir['urunModel'],
+			$satir['urunDilBilgiAdi'],
+			$kategoriler,
+			$satir['urunStok'],
+			number_format($satir['urunFiyat'],2,',','.'),
+			$satir['urunKdv'],
+			$durum,
+			$satir['urunKayitTarihi'],
+			$satir['urunBaseUrl'].$satir['urunGorsel']
+		);
 		$sayac++;
 	}
 
@@ -192,15 +244,7 @@ else{//Listeleme Yetkisi Var
 							stripHtml: true//html temizler
 						}
 					},
-					{
-						extend: 'excelHtml5',
-						title: '<?=$tableName."-".date("d.m.Y H:i:s")?>',
-						text:'<?=$fonk->getPDil("Excel")?>',
-						exportOptions: {
-							columns: ':visible',
-							stripHtml: true//html temizler
-						}
-					},
+					
 					{
 						extend: 'pdfHtml5',
 						orientation: 'landscape',//yatay içi
@@ -289,7 +333,9 @@ else{//Listeleme Yetkisi Var
 							<h4 class="card-title"><?=$fonk->getPDil($baslik)?></h4>
 							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 							<div class="heading-elements">
-								<?php if($eklemeYetki){?>
+								<?php if($tamExcelYetki){?>
+									<a href="Pages/excel.php" class="btn mr-1 btn-outline-warning btn-sm"><i class="la la-print"></i> <?=$fonk->getPDil("Tam Excel")?></a>
+								<?php } if($eklemeYetki){?>
 									<button type="button" onclick="SayfaGetir('<?=$menuId?>','<?=$duzenlemeSayfasi?>');" class="btn mr-1 btn-primary btn-sm"><i class="la la-plus-circle"></i> <?=$fonk->getPDil("Yeni Ekle")?></button>
 								<?php } ?>
 							</div>
