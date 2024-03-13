@@ -58,6 +58,7 @@ include('layouts/header.php');
                     "urunVaryantId",
                     "urunBaseUrl",
                     "urunGorsel",
+                    "urunStok",
                     "urunVaryantKodu",
                     "urunVaryantDilBilgiAdi",
                     "urunVaryantDilBilgiSlug",
@@ -80,7 +81,7 @@ include('layouts/header.php');
                     "urunVaryantDilBilgiDurum" => 1,
                     "urunDurum" => 1,
                     "ORDER" => [
-                        "urunId" => "ASC"
+                        "urunId" => "DESC"
                     ]
                 ]);
                 //normal sorgumuz
@@ -146,9 +147,17 @@ include('layouts/header.php');
                                         </ins>
                                     </div>
                                 <?php endif; ?>
-                                <button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
-                                    <span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
-                                </button>
+
+                                <?php if($value["urunStok"] > 0){ ?>
+                                    <button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
+                                        <span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
+                                    </button>
+                                <?php } else { ?>
+                                    <button onClick="javascript:window.location.href = 'contact';" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
+                                        <span class="txt_add"><?= $fonk->getDil("Talep Et"); ?></span>
+                                    </button>
+                                <?php } ?>
+
                             </div>
                         </div>
                     </div>
@@ -177,6 +186,7 @@ include('layouts/header.php');
                     "urunVaryantId",
                     "urunBaseUrl",
                     "urunGorsel",
+                    "urunStok",
                     "urunVaryantKodu",
                     "urunVaryantDilBilgiAdi",
                     "urunVaryantDilBilgiSlug",
@@ -198,7 +208,7 @@ include('layouts/header.php');
                     "urunVaryantDilBilgiDurum" => 1,
                     "urunDurum" => 1,
                     "ORDER" => [
-                        "urunId" => "ASC"
+                        "urunId" => "DESC"
                     ]
                 ]);
                 //normal sorgumuz
@@ -273,9 +283,17 @@ include('layouts/header.php');
                                         </div>
                                     <?php endif; ?>
                                 <?php endif; ?>
-                                <button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
-                                    <span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
-                                </button>
+                              
+                                <?php if($value["urunStok"] > 0){ ?>
+                                    <button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
+                                        <span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
+                                    </button>
+                                <?php } else { ?>
+                                    <button onClick="javascript:window.location.href = 'contact';" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
+                                        <span class="txt_add"><?= $fonk->getDil("Talep Et"); ?></span>
+                                    </button>
+                                <?php } ?>
+
                             </div>
                         </div>
                     </div>

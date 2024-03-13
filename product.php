@@ -169,9 +169,15 @@ $favoriDurum = $db->get("UrunFavoriler",[
                                                         </div>
 
                                                         <div class="flex wrap">
-                                                            <button type="submit" onclick="SepeteEkle(<?= $urun['urunVaryantId']; ?>);" class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block animated mr-4">
-                                                                <span class="txt_add "> <?= $fonk->getDil("Sepete Ekle"); ?></span>
-                                                            </button>
+                                                            <?php if($urun["urunStok"] > 0){ ?>
+                                                                <button type="submit" onclick="SepeteEkle(<?= $urun['urunVaryantId']; ?>);" class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block animated mr-4">
+                                                                    <span class="txt_add "> <?= $fonk->getDil("Sepete Ekle"); ?></span>
+                                                                </button>
+                                                            <?php } else { ?>
+                                                                <button href="contact" onClick="javascript:window.location.href = 'contact';" class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block animated mr-4">
+                                                                    <span class="txt_add"><?= $fonk->getDil("Talep Et"); ?></span>
+                                                                </button>
+                                                            <?php } ?>
                                                             
                                                             <button onClick="javascript:window.open('<?= $urun['urunDataSheetBaseUrl'] ?><?= $urun['urunDataSheet'] ?>', '_blank');" class="single_add_to_cart_button button truncate w__100 mt__20 order-4 d-inline-block animated mr-4">
                                                                 <span class="txt_add "> <?= $fonk->getDil("DATASHEET"); ?></span>

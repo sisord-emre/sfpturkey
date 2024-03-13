@@ -10,6 +10,7 @@ $totalRecord = $db->query(
 	"urunVaryantId",
 	"urunBaseUrl",
 	"urunGorsel",
+	"urunStok",
 	"urunVaryantDilBilgiSlug",
 	"urunVaryantFiyat",
 	"urunVaryantDilBilgiDilId",
@@ -31,7 +32,7 @@ $totalRecord = $db->query(
 	LEFT JOIN "VaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantVaryantId" = "VaryantDilBilgiler"."varyantDilBilgiVaryatId" 
 	WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true 
 	AND ((UPPER("urunVaryantDilBilgiAdi") ILIKE \'%'.$ara.'%\') OR ("urunModel" ILIKE \'%'.$ara.'%\') OR ("urunVaryantDilBilgiEtiketler" ILIKE \'%'.$ara.'%\') OR UPPER("varyantDilBilgiBaslik") ILIKE \'%'.$ara.'%\')) 
-	ORDER BY "urunVaryantDilBilgiId"'
+	ORDER BY "urunVaryantDilBilgiId" DESC'
 )->fetchAll();
 $totalRecord = count($totalRecord);
 
@@ -48,6 +49,7 @@ $urunler = $db->query(
 	"urunVaryantId",
 	"urunBaseUrl",
 	"urunGorsel",
+	"urunStok",
 	"urunVaryantDilBilgiSlug",
 	"urunVaryantFiyat",
 	"urunVaryantDilBilgiDilId",
@@ -69,7 +71,7 @@ $urunler = $db->query(
 	LEFT JOIN "VaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantVaryantId" = "VaryantDilBilgiler"."varyantDilBilgiVaryatId" 
 	WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true 
 	AND ((UPPER("urunVaryantDilBilgiAdi") ILIKE \'%'.$ara.'%\') OR ("urunModel" ILIKE \'%'.$ara.'%\') OR ("urunVaryantDilBilgiEtiketler" ILIKE \'%'.$ara.'%\') OR UPPER("varyantDilBilgiBaslik") ILIKE \'%'.$ara.'%\')) 
-	ORDER BY "urunVaryantDilBilgiId" ASC LIMIT '.$pagination['limit'].' OFFSET '.$pagination['start']
+	ORDER BY "urunVaryantDilBilgiId" DESC LIMIT '.$pagination['limit'].' OFFSET '.$pagination['start']
 )->fetchAll();
 ///----- Saylafama Sorgu
 
@@ -150,9 +152,15 @@ foreach ($urunler as $value) {
 				</span>
 				<?php } ?> 
 
-				<button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 order-4 d-inline-block animated mt-3">
-					<span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
-				</button>
+				<?php if($value["urunStok"] > 0){ ?>
+					<button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
+						<span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
+					</button>
+				<?php } else { ?>
+					<button onClick="javascript:window.location.href = 'contact';" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
+						<span class="txt_add"><?= $fonk->getDil("Talep Et"); ?></span>
+					</button>
+				<?php } ?>
 
 			</div>
 		</div>
