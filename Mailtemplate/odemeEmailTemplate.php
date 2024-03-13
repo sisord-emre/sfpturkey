@@ -625,15 +625,6 @@
 
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("Kargo: ") . '</b>
-															</td>
-															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . number_format($siparisKargoUcreti,2,',','.') . '
-															</td>
-														</tr>
-
-														<tr style="text-align:right;">
-															<td valign="top" style="padding:10px; width:85%;">
 																<b>' . $fonk->getPDil("KDV: ") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
@@ -646,7 +637,7 @@
 																<b>' . $fonk->getPDil("Kdv Dahil Toplam: ") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' .  number_format($toplamTutar,2,',','.') . '
+																₺ ' .  number_format(($araTutar + $kdvTutar),2,',','.') . '
 															</td>
 														</tr>
 														';
@@ -664,15 +655,33 @@
 
 															<tr style="text-align:right;">
 																<td valign="top" style="padding:10px; width:85%;">
-																	<b>' . $fonk->getPDil("Kdv Dahil Proje Fiyatı: ") . '</b>
+																	<b>' . $fonk->getPDil("KDV Dahil Proje Fiyatı : ") . '</b>
 																</td>
 																<td valign="top" style="padding:10px; text-align:left;">
-																	₺ ' .  number_format(($siparis["siparisToplam"]),2,',','.') . '
+																	₺ ' .  number_format(($araTutar + $kdvTutar - $siparisOdenenIskontoUcreti),2,',','.') . '
 																</td>
 															</tr>
 														';
 														} 
 														$body = $body . '
+
+														<tr style="text-align:right;">
+															<td valign="top" style="padding:10px; width:85%;">
+																<b>' . $fonk->getPDil("Kargo: ") . '</b>
+															</td>
+															<td valign="top" style="padding:10px; text-align:left;">
+																₺ ' . number_format($siparisKargoUcreti,2,',','.') . '
+															</td>
+														</tr>
+
+														<tr style="text-align:right;">
+															<td valign="top" style="padding:10px; width:85%;">
+																<b>' . $fonk->getPDil("Kargo Dahil Toplam Fiyat : ") . '</b>
+															</td>
+															<td valign="top" style="padding:10px; text-align:left;">
+																₺ ' .  number_format(($siparis["siparisToplam"]),2,',','.') . '
+															</td>
+														</tr>
 														
 													</tbody>
 												</table>
