@@ -123,7 +123,7 @@ if (count($orSartlar) > 0) {
 
 $sartlar=array_merge($sartlar,[
 	"ORDER" => [
-		"urunId" => "DESC"
+		"urunId" => "ASC"
 	]
 ]);
 
@@ -242,7 +242,7 @@ if (count($urunOrSartlar) > 0) {
 
 $urunSartlar=array_merge($urunSartlar,[
 	"ORDER" => [
-		"urunId" => "DESC"
+		"urunId" => "ASC"
 	],
 	'LIMIT' => [$pagination['start'], $pagination['limit']]
 ]);

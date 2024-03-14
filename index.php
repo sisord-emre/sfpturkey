@@ -81,7 +81,7 @@ include('layouts/header.php');
                     "urunVaryantDilBilgiDurum" => 1,
                     "urunDurum" => 1,
                     "ORDER" => [
-                        "urunId" => "DESC"
+                        "urunId" => "ASC"
                     ]
                 ]);
                 //normal sorgumuz
@@ -208,7 +208,7 @@ include('layouts/header.php');
                     "urunVaryantDilBilgiDurum" => 1,
                     "urunDurum" => 1,
                     "ORDER" => [
-                        "urunId" => "DESC"
+                        "urunId" => "ASC"
                     ]
                 ]);
                 //normal sorgumuz

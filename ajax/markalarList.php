@@ -89,7 +89,7 @@ $sartlar=array_merge($sartlar,[
 	"urunVaryantDilBilgiDurum" => 1,
 	"urunDurum" => 1,
 	"ORDER" => [
-		"urunId" => "DESC"
+		"urunId" => "ASC"
 	]
 ]);
 
@@ -186,7 +186,7 @@ $urunsartlar=array_merge($urunsartlar,[
 	"urunVaryantDilBilgiDurum" => 1,
 	"urunDurum" => 1,
 	"ORDER" => [
-		"urunId" => "DESC"
+		"urunId" => "ASC"
 	],
 	'LIMIT' => [$pagination['start'], $pagination['limit']]
 ]);
