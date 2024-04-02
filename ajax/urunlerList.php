@@ -345,7 +345,7 @@ foreach ($urunler as $value) {
 						<?php endif; ?>
 					</span>
 				<?php } ?> 
-				
+
 				<?php if($value["urunStok"] > 0){ ?>
 					<button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
 						<span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>
@@ -355,6 +355,7 @@ foreach ($urunler as $value) {
 						<span class="txt_add"><?= $fonk->getDil("Talep Et"); ?></span>
 					</button>
 				<?php } ?>
+
 			</div>
 		</div>
 	</div>

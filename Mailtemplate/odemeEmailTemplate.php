@@ -372,9 +372,9 @@
                                         <tr>
                                             <td class="headerContent">
                                             
-                                            	<!-- // Begin Module: Standard Header Image \\ -->
-                                            	<img src="'.$sabitB["sabitBilgiSiteUrl"].'assets/img/sfplogo.png" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
-                                            	<!-- // End Module: Standard Header Image \\ -->
+												<!-- // Begin Module: Standard Header Image \\ -->
+												<img src="'.$sabitB["sabitBilgiSiteUrl"].'assets/images/logo.jpeg" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+												<!-- // End Module: Standard Header Image \\ -->
                                             
                                             </td>
                                         </tr>

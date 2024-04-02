@@ -252,7 +252,7 @@ function SepetAdet(sira, birimFiyat, paraIcon,uyeIndirimOrani) {
                 document.getElementById("araTutar").innerHTML =paraIcon + parseFloat(res.result.araTutar).formatMoney(2, ",", ".");
                 document.getElementById("kdvTutar").innerHTML =paraIcon + parseFloat(res.result.kdvTutar).formatMoney(2, ",", ".");
                 document.getElementById("siparisKargoUcreti").value = res.result.siparisKargoUcreti;
-                console.log(res.result.siparisKargoUcreti);
+                window.location.reload();
             } else {
                 alert(res);
             }
