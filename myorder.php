@@ -19,6 +19,7 @@ $siparislerim = $db->get("Siparisler", [
 $siparisIcerikleri = $db->select("SiparisIcerikleri", [
     "[<]Urunler" => ["SiparisIcerikleri.siparisIcerikUrunId" => "urunId"],
     "[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+    "[>]ParaBirimleri" => ["Urunler.urunParaBirimId" => "paraBirimId"],
 ], "*", [
     "urunDilBilgiDilId" => $siparislerim["siparisDilId"],
     "urunDurum" => 1,
@@ -27,6 +28,7 @@ $siparisIcerikleri = $db->select("SiparisIcerikleri", [
 ]);
 
 $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskonto ücreti atamasını yaptık
+$siparisIskontoUcreti = $siparislerim["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
 ?>
 
 <div id="nt_content">
@@ -70,28 +72,22 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                 $kdvTutar = 0;
                                 $siparisKargoUcreti = 0;
                                 foreach ($siparisIcerikleri as $val) {
-                                    $toplamTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikFiyat'];
-                                    $araTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikKdvsizFiyat'];
-                                    $kdvTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikKdv'];
-
-                                    if ($val['siparisIndirimKodu'] != "" && $val['siparisIndirimYuzdesi'] != 0) {
-                                        $indirimMiktar = $toplamTutar / 100 * $val['siparisIndirimYuzdesi'];
-                                        $toplamTutar -= $indirimMiktar;
-                                    }
+                                    $toplamTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] + ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"])) * $val['siparisIcerikAdet'];
+                                    $araTutar += ($val["siparisIcerikPanelFiyatKdvsiz"]) * $val['siparisIcerikAdet'];
+                                    $kdvTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"]) * $val['siparisIcerikAdet'];
                                 ?>
                                     <tr class="cart_item">
                                         <td class="product-name" style="width: 15%;"><?= $seo ?></td>
                                         <td class="product-name"><?= $val["siparisIcerikUrunVaryantDilBilgiAdi"] ?></td>
                                         <td class="product-total text-center" style="width: 10%;"><?= $val["siparisIcerikAdet"] ?></td>
-                                        <td class="product-total text-center" style="width: 20%;"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($val['siparisIcerikFiyat'],2,',','.') ?></span></td>
-                                        <td class="product-total text-center" style="width: 25%;"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format(($val['siparisIcerikAdet'] * $val['siparisIcerikFiyat']),2,',','.') ?></span></td>
+                                        <td class="product-total text-center" style="width: 20%;"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($fonk->paraCevir(($val["siparisIcerikPanelFiyatKdvsiz"] + ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"])),$val["paraBirimKodu"],"TRY"),2,',','.'); ?></span></td>
+                                        <td class="product-total text-center" style="width: 25%;"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($fonk->paraCevir(($val["siparisIcerikPanelFiyatKdvsiz"] + ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"])) * $val['siparisIcerikAdet'],$val["paraBirimKodu"],"TRY"),2,',','.'); ?></span></td>
                                     </tr>
                                 <?php } ?>
                                 <?php
-                                if ($siparislerim['siparisKargoUcreti'] != 0) {
+                                if ($siparis['siparisKargoUcreti'] != 0) {
                                     $siparisKargoUcreti = $siparislerim['siparisKargoUcreti'];
                                 }
-                               
                                 ?>
                             </tbody>
                             <tfoot>
@@ -99,21 +95,21 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                     <th></th>
                                     <th></th>
                                     <th colspan="2" style="text-align:right;"><?= $fonk->getDil("KDV Hariç Ara Toplam"); ?></th>
-                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($araTutar,2,',','.'); ?></span></td>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($fonk->paraCevir($araTutar,$val["paraBirimKodu"],"TRY"),2,',','.'); ?></span></td>
                                 </tr>
                                 <tr class="cart-subtotal cart_item">
                                     <th></th>
                                     <th></th>
                                     <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Toplam KDV"); ?></th>
-                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($kdvTutar,2,',','.'); ?></span></td>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($fonk->paraCevir($kdvTutar,$val["paraBirimKodu"],"TRY"),2,',','.'); ?></span></td>
                                 </tr>
                                 <tr class="cart-subtotal cart_item">
                                     <th></th>
                                     <th></th>
                                     <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Kdv Dahil Toplam"); ?></th>
-                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($araTutar + $kdvTutar ,2,',','.'); ?></span></td>
+                                    <td class="text-center"><span class="cart_price"><?= $siparislerim["paraBirimSembol"] . number_format($fonk->paraCevir($toplamTutar,$val["paraBirimKodu"],"TRY"),2,',','.'); ?></span></td>
                                 </tr>
-                                <?php if ($siparisOdenenIskontoUcreti > 0) { ?>
+                                <?php if ($siparisIskontoUcreti > 0) { ?>
                                     <tr class="cart_item">
                                         <th></th>
                                         <th></th>
@@ -124,7 +120,7 @@ $siparisOdenenIskontoUcreti=$siparislerim["siparisOdenenIskontoUcreti"]; //iskon
                                         <th></th>
                                         <th></th>
                                         <th colspan="2" style="text-align:right;"><?= $fonk->getDil("Kdv Dahil Proje Tutarı"); ?></th>
-                                        <td class="text-center"> <span class="cart_price"><?= $siparislerim["paraBirimSembol"] ?><?=number_format($toplamTutar - $siparisOdenenIskontoUcreti,2,',','.'); ?></span></td>
+                                        <td class="text-center"> <span class="cart_price"><?= $siparislerim["paraBirimSembol"] ?><?= number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$val["paraBirimKodu"],"TRY"),2,',','.'); ?></span></td>
                                     </tr>
                                 <?php } ?>
                                 <tr class="cart-subtotal cart_item">

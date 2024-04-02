@@ -564,40 +564,35 @@
 																$araTutar = 0;
 																$kdvTutar = 0;
 																$siparisKargoUcreti = 0;
+																$siparisIskontoUcreti = $siparis["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
 																$siparisOdenenIskontoUcreti=$siparis["siparisOdenenIskontoUcreti"]; //iskonto ücreti atamasını yaptık
-																$siparisKargoKdvUcreti = $siparis["siparisKargoKdvUcreti"]; //kargo kdv ücreti atamasını yaptık
 															  	foreach ($siparisIcerikleri as $val) {
-																	$toplamTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikFiyat'];
-																	$araTutar += $val['siparisIcerikAdet'] * $val["siparisIcerikKdvsizFiyat"];
-																	$kdvTutar += $val['siparisIcerikAdet'] * $val['siparisIcerikKdv'];
+																	$toplamTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] + ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"])) * $val['siparisIcerikAdet'];
+																	$araTutar += ($val["siparisIcerikPanelFiyatKdvsiz"]) * $val['siparisIcerikAdet'];
+																	$kdvTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"]) * $val['siparisIcerikAdet'];
 																	
-																	if ($val['siparisIndirimKodu'] != "" && $val['siparisIndirimYuzdesi'] != 0) {
-																		$indirimMiktar = $toplamTutar / 100 * $val['siparisIndirimYuzdesi'];
-																		$toplamTutar -= $indirimMiktar;
-																		$indirimMiktar = $indirimMiktar;
-																	}
-															  	$body = $body . 
-																'
-																<tr mc:repeatable>
-																	<td valign="top" class="dataTableContent" mc:edit="data_table_content00">
-																		<p>' . $val['siparisIcerikUrunVaryantDilBilgiAdi'] . '</p>
-																	</td>
-																	<td valign="top" class="dataTableContent" mc:edit="data_table_content00">
-																		<p>' . $val['urunModel'] . '</p>
-																	</td>
-																	<td valign="top" class="dataTableContent" mc:edit="data_table_content01">
-																		<p>' . $val['siparisIcerikAdet'] . '</p>
-																	</td>
-																	<td valign="top" class="dataTableContent" mc:edit="data_table_content01">
-																		<p>' .$val["paraBirimSembol"].' ' .number_format($val['siparisIcerikPanelFiyatKdvsiz'],2,',','.') . '</p>
-																	</td>
-																	<td valign="top" class="dataTableContent" mc:edit="data_table_content02">
-																		<p>' .$val["paraBirimSembol"].' ' .number_format(($val['siparisIcerikPanelFiyatKdvsiz'] * $val['siparisIcerikAdet']),2,',','.') . ' </p>
-																	</td>
-                                                              	</tr>';
+																	$body = $body . 
+																	'
+																	<tr mc:repeatable>
+																		<td valign="top" class="dataTableContent" mc:edit="data_table_content00">
+																			<p>' . $val['siparisIcerikUrunVaryantDilBilgiAdi'] . '</p>
+																		</td>
+																		<td valign="top" class="dataTableContent" mc:edit="data_table_content00">
+																			<p>' . $val['urunModel'] . '</p>
+																		</td>
+																		<td valign="top" class="dataTableContent" mc:edit="data_table_content01">
+																			<p>' . $val['siparisIcerikAdet'] . '</p>
+																		</td>
+																		<td valign="top" class="dataTableContent" mc:edit="data_table_content01">
+																			<p>' .$val["paraBirimSembol"].' ' .number_format($val['siparisIcerikPanelFiyatKdvsiz'],2,',','.') . '</p>
+																		</td>
+																		<td valign="top" class="dataTableContent" mc:edit="data_table_content02">
+																			<p>' .$val["paraBirimSembol"].' ' .number_format(($val['siparisIcerikPanelFiyatKdvsiz'] * $val['siparisIcerikAdet']),2,',','.') . ' </p>
+																		</td>
+																	</tr>';
 																}
+															
 																if ($siparis['siparisKargoUcreti'] != 0) {
-																	$toplamTutar += $siparis['siparisKargoUcreti'];
 																	$siparisKargoUcreti = $siparis['siparisKargoUcreti'];
 																}
 																$body = $body . '
@@ -616,37 +611,37 @@
 													<tbody>
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("Ara toplam: ") . '</b>
+																<b>' . $fonk->getDil("Ara toplam") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . number_format($araTutar,2,',','.') . '
+																₺ ' . number_format($fonk->paraCevir($araTutar,$val["paraBirimKodu"],"TRY"),2,',','.') . '
 															</td>
 														</tr>
 
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("KDV: ") . '</b>
+																<b>' . $fonk->getDil("Toplam KDV"). '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' .  number_format(($kdvTutar + $siparisKargoKdvUcreti),2,',','.') . '
+																₺ ' .  number_format($fonk->paraCevir($kdvTutar,$val["paraBirimKodu"],"TRY"),2,',','.') . '
 															</td>
 														</tr>
 
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("Kdv Dahil Toplam: ") . '</b>
+																<b>' . $fonk->getDil("Kdv Dahil Toplam") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' .  number_format(($araTutar + $kdvTutar),2,',','.') . '
+																₺ ' .  number_format($fonk->paraCevir($toplamTutar,$val["paraBirimKodu"],"TRY"),2,',','.') . '
 															</td>
 														</tr>
 														';
 
-														if($siparisOdenenIskontoUcreti > 0) {
+														if($siparisIskontoUcreti > 0) {
 															$body = $body . '
 															<tr style="text-align:right;">
 																<td valign="top" style="padding:10px; width:85%;">
-																	<b>' . $fonk->getPDil("KDV Dahil Proje İndirimi: ") . '</b>
+																	<b>' . $fonk->getDil("Proje İskonto") . '</b>
 																</td>
 																<td valign="top" style="padding:10px; text-align:left;">
 																	₺ ' .  number_format($siparisOdenenIskontoUcreti,2,',','.') . '
@@ -655,10 +650,10 @@
 
 															<tr style="text-align:right;">
 																<td valign="top" style="padding:10px; width:85%;">
-																	<b>' . $fonk->getPDil("KDV Dahil Proje Fiyatı : ") . '</b>
+																	<b>' . $fonk->getDil("Kdv Dahil Proje Tutarı") . '</b>
 																</td>
 																<td valign="top" style="padding:10px; text-align:left;">
-																	₺ ' .  number_format(($araTutar + $kdvTutar - $siparisOdenenIskontoUcreti),2,',','.') . '
+																	₺ ' .  number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$val["paraBirimKodu"],"TRY"),2,',','.') . '
 																</td>
 															</tr>
 														';
@@ -667,7 +662,7 @@
 
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("Kargo: ") . '</b>
+																<b>' . $fonk->getDil("Vergiler Dahil Kargo Ucreti") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
 																₺ ' . number_format($siparisKargoUcreti,2,',','.') . '
@@ -676,10 +671,10 @@
 
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:85%;">
-																<b>' . $fonk->getPDil("Kargo Dahil Toplam Fiyat : ") . '</b>
+																<b>' . $fonk->getDil("TOPLAM") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' .  number_format(($siparis["siparisToplam"]),2,',','.') . '
+																₺ ' .  number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$val["paraBirimKodu"],"TRY")+ $siparisKargoUcreti,2,',','.') . '
 															</td>
 														</tr>
 														
@@ -706,7 +701,7 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_footer">
-																<em>Copyright &copy; 2023 '.$sabitB["sabitBilgiSiteAdi"].', ' . $fonk->getPDil("Her hakkı saklıdır") . ' .</em>
+																<em>Copyright &copy; '.date("Y").' '.$sabitB["sabitBilgiSiteAdi"].', ' . $fonk->getPDil("Her hakkı saklıdır") . ' .</em>
 																
                                                             </div>
                                                         </td>
