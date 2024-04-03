@@ -13,10 +13,6 @@ $sepet=json_decode($_SESSION['Sepet'],true);
 $varmi=false;
 $json=array("status"=>"error","result"=>"");
 
-// echo "<pre>"; 
-// print_r($sepet);
-// echo"</pre>";
-
 $isStockControl = $db->get("Urunler", [
     "[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
     "[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
@@ -33,24 +29,24 @@ $kontrol = ($adet <= $isStockControl["urunStok"] ? '1' : '0');
 
 for ($i=0; $i <count($sepet) ; $i++)
 {
-    $urunIdBulma = $db->get("Urunler", [
-        "[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
-        "[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
-        "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
-    ],"*",[
-        "urunVaryantDilBilgiVaryantId" => $urunId,
-        "ORDER" => [
-            "urunId" => "ASC"
-        ]
-    ]);
+    // $urunIdBulma = $db->get("Urunler", [
+    //     "[>]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+    //     "[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
+    //     "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"],
+    // ],"*",[
+    //     "urunVaryantDilBilgiVaryantId" => $urunId,
+    //     "ORDER" => [
+    //         "urunId" => "ASC"
+    //     ]
+    // ]);
 
-    if($urunIdBulma["urunId"] == $isStockControl["urunId"])
+    if($sepet[$i]["urunId"] == $isStockControl["urunVaryantDilBilgiVaryantId"])
     {
         $adetSayisi=$sepet[$i]["adet"]+$adet;
     }
     else 
     {
-        $adetSayisi=$sepet[$i]["adet"]+$adet;
+        $adetSayisi=$adet;
     }
     $kontrol = ($adetSayisi <= $isStockControl["urunStok"] ? '1' : '0');
     if($kontrol == 1)
@@ -63,7 +59,6 @@ for ($i=0; $i <count($sepet) ; $i++)
         }
     }
 }
-
 
 if($isStockControl["urunStok"] > 0) 
 {

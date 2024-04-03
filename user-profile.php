@@ -194,7 +194,7 @@ if ($_SESSION['uyeSessionKey'] == "") {
             if(count($enSonSiparis) > 0){
                 $_SESSION['SiparisKodu'] = $value["siparisKodu"];
         ?>
-            SepetTekrarKayit(<?=$value["siparisIcerikUrunId"]?>, "0", <?=$value["siparisIcerikAdet"]?>);
+            SepetTekrarKayit(<?=$value["siparisIcerikUrunVaryantDilBilgiId"]?>, "0", <?=$value["siparisIcerikAdet"]?>);
         <?php } } ?>
     <?php } $_SESSION['isProduct'] = "1";?>
 </script>

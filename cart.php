@@ -121,7 +121,7 @@ if (count($sepet) <= 0) {
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-2 tc mini_cart_actions">
                                     <div class="quantity pr mr__10 qty__true">
-                                        <input type="number" class="input-text qty text tc qty_cart_js" onchange="SepetAdet(<?=$i?>,<?=$hesapla['birimFiyat']?>,'<?=$_SESSION['paraBirimSembol']?>',<?=$uye['uyeIndirimOrani']?>)" id="adet-<?=$i?>" name="adet-<?=$i?>" value="<?=$sepet[$i]["adet"]?>" min="1">                               
+                                        <input type="number" class="input-text qty text tc qty_cart_js" onchange="SepetAdet(<?=$i?>,<?=$hesapla['birimFiyat']?>,'<?=$_SESSION['paraBirimSembol']?>',<?=$uye['uyeIndirimOrani']?>)" id="adet-<?=$i?>" name="adet-<?=$i?>" value="<?=$sepet[$i]["adet"]?>" min="1" max="<?=$urun["urunStok"]?>">                               
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-4 col-lg-2 tc__ tc_lg">
