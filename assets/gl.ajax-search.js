@@ -88,7 +88,7 @@ var AT_Search = {
 
 						var markedString = title.replace(new RegExp('(' + keyword + ')', 'gi'), '<span class="marked">$1</span>');
 
-						var template = '<li class="search-item-wrapper"><div class="row"><div class="col-md-2"><a class="search-item-img" href="https://sfpturkey.com.tr/product/' + handle + '">' + '<img style="max-width: 100px; float: left; padding-right:10px;" src="' + image + '" />' + '</a></div><div class="col-md-10"><a class="search-item-title" href="https://sfpturkey.com.tr/product/' + handle + '">' + productcode + ' <br>' + markedString + '</a></div></div></li>';
+						var template = '<li class="search-item-wrapper"><div class="row"><div class="col-md-2"><a class="search-item-img" href="https://www.sfpturkey.com.tr/product/' + handle + '">' + '<img style="max-width: 100px; float: left; padding-right:10px;" src="' + image + '" />' + '</a></div><div class="col-md-10"><a class="search-item-title" href="https://www.sfpturkey.com.tr/product/' + handle + '">' + productcode + ' <br>' + markedString + '</a></div></div></li>';
 
 						// if(j <= 10 ){
 						//   result.append(template);
