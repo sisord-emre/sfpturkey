@@ -5,11 +5,13 @@ header('Content-Type: application/json; charset=utf-8');
 
 extract($_POST);
 
-$fonk->logKayit(2, "Siparisler" . ' ; ' . $Id . ' ; ' . json_encode(["siparisIskontoUcreti" => $durum])); //1=>ekleme,2=>güncelleme,3=>silme,4=>oturum açma,5=>diğer
+$iskontoFiyat = str_replace(',', '.', $iskontoFiyat);
+
+$fonk->logKayit(2, "Siparisler" . ' ; ' . $Id . ' ; ' . json_encode(["siparisIskontoUcreti" => $iskontoFiyat])); //1=>ekleme,2=>güncelleme,3=>silme,4=>oturum açma,5=>diğer
 
 $json = array("status" => "error", "result" => "");
 $query = $db->update("Siparisler", [
-    "siparisIskontoUcreti" => $durum
+    "siparisIskontoUcreti" => $iskontoFiyat
 ], [
     "siparisId" => $Id
 ]);

@@ -368,7 +368,7 @@ else{//Listeleme Yetkisi Var
 													<td><?=$icerik;?></td>
 													<td><?=$toplamUrunAdet;?></td>
 													<th>
-														<input type="text" onchange="FiyatDegistir('<?=$list[$tabloPrimarySutun];?>');" name="siparisIskontoUcreti" id="durum-<?=$list[$tabloPrimarySutun];?>" value="<?=$list['siparisIskontoUcreti']?>">
+														<input type="text" onchange="FiyatDegistir('<?=$list[$tabloPrimarySutun];?>');" name="siparisIskontoUcreti" id="iskonto-<?=$list[$tabloPrimarySutun];?>" value="<?= str_replace('.', ',', $list['siparisIskontoUcreti']) ?>">
 													</th>
 													<th id="tutar-<?=$list[$tabloPrimarySutun];?>">
 														<?=$list["paraBirimSembol"].number_format($toplamTutar,2,',','.');?>
@@ -448,12 +448,12 @@ else{//Listeleme Yetkisi Var
 	}
 
 	function FiyatDegistir(Id){
-		var e = document.getElementById("durum-"+Id);
-		var durum = e.value;
+		var e = document.getElementById("iskonto-"+Id);
+		var iskontoFiyat = e.value;
 		$.ajax({
 			type: "POST",
 			url: "Pages/Siparisler/fiyatDegistir.php",
-			data:{'Id':Id,'durum':durum},
+			data:{'Id':Id,'iskontoFiyat':iskontoFiyat},
 			success: function(res){
 				if(res.status == "success"){
 					toastr.success('<?=$fonk->getPDil("Güncelleme Sağlandı.")?>');
