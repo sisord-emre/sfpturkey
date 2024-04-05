@@ -71,6 +71,9 @@ else{//Listeleme Yetkisi Var
 		]);
 
 		if($sil){//uyarı metinleri
+			$silIcerik = $db->delete("SiparisIcerikleri", [
+				"siparisIcerikSiparisId" => $_POST['sil']
+			]);
 			echo 1;
 			exit;
 		}
