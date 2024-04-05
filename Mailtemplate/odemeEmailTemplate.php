@@ -544,7 +544,7 @@
                                                     	<td valign="top" style="padding-top:0; padding-bottom:0;">
                                                           <table border="0" cellpadding="10" cellspacing="0" width="100%" class="templateDataTable">
 																<tr>
-																	<th scope="col" valign="top" width="60%" class="dataTableHeading" mc:edit="data_table_heading00">
+																	<th scope="col" valign="top" width="50%" class="dataTableHeading" mc:edit="data_table_heading00">
 																		<b>' . $fonk->getPDil("Ürün") . '</b>
 																	</th>
 																	<th scope="col" valign="top" width="10%" class="dataTableHeading" mc:edit="data_table_heading00">
@@ -553,10 +553,10 @@
 																	<th scope="col" valign="top" width="10%" class="dataTableHeading" mc:edit="data_table_heading01">
 																		<b>' . $fonk->getPDil("Adet") . '</b>
 																	</th>
-																	<th scope="col" valign="top" width="10%" class="dataTableHeading" mc:edit="data_table_heading02">
+																	<th scope="col" valign="top" width="15%" class="dataTableHeading" mc:edit="data_table_heading02">
 																		<b>' . $fonk->getPDil("Birim Fiyatı") . '</b>
 																	</th>
-																	<th scope="col" valign="top" width="10%" class="dataTableHeading" mc:edit="data_table_heading02">
+																	<th scope="col" valign="top" width="15%" class="dataTableHeading" mc:edit="data_table_heading02">
 																		<b>' . $fonk->getPDil("KDV Hariç Tutar") . '</b>
 																	</th>
 																</tr>';
@@ -610,7 +610,7 @@
 												<table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateBody">
 													<tbody>
 														<tr style="text-align:right;">
-															<td valign="top" style="padding:10px; width:85%;">
+															<td valign="top" style="padding:10px; width:70%;">
 																<b>' . $fonk->getDil("Ara toplam") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
@@ -619,7 +619,7 @@
 														</tr>
 
 														<tr style="text-align:right;">
-															<td valign="top" style="padding:10px; width:85%;">
+															<td valign="top" style="padding:10px; width:70%;">
 																<b>' . $fonk->getDil("Toplam KDV"). '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
@@ -628,7 +628,7 @@
 														</tr>
 
 														<tr style="text-align:right;">
-															<td valign="top" style="padding:10px; width:85%;">
+															<td valign="top" style="padding:10px; width:70%;">
 																<b>' . $fonk->getDil("Kdv Dahil Toplam") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
@@ -640,7 +640,7 @@
 														if($siparisIskontoUcreti > 0) {
 															$body = $body . '
 															<tr style="text-align:right;">
-																<td valign="top" style="padding:10px; width:85%;">
+																<td valign="top" style="padding:10px; width:70%;">
 																	<b>' . $fonk->getDil("Proje İskonto") . '</b>
 																</td>
 																<td valign="top" style="padding:10px; text-align:left;">
@@ -649,7 +649,7 @@
 															</tr>
 
 															<tr style="text-align:right;">
-																<td valign="top" style="padding:10px; width:85%;">
+																<td valign="top" style="padding:10px; width:70%;">
 																	<b>' . $fonk->getDil("Kdv Dahil Proje Tutarı") . '</b>
 																</td>
 																<td valign="top" style="padding:10px; text-align:left;">
@@ -661,7 +661,7 @@
 														$body = $body . '
 
 														<tr style="text-align:right;">
-															<td valign="top" style="padding:10px; width:85%;">
+															<td valign="top" style="padding:10px; width:70%;">
 																<b>' . $fonk->getDil("Vergiler Dahil Kargo Ucreti") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
@@ -670,7 +670,7 @@
 														</tr>
 
 														<tr style="text-align:right;">
-															<td valign="top" style="padding:10px; width:85%;">
+															<td valign="top" style="padding:10px; width:70%;">
 																<b>' . $fonk->getDil("TOPLAM") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
