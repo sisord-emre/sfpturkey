@@ -19,6 +19,29 @@ for ($i=0; $i <count($sepet) ; $i++) {
     }
 }
 
+if ($_SESSION['uyeSessionKey'] != "") 
+{
+    $uye = $db->get("Uyeler", "*", [
+        "uyeSessionKey" => $_SESSION['uyeSessionKey']
+    ]);
+
+	$enSonSiparis = $db->select("Siparisler","*",[
+		"siparisOdemeTipiId" => 0,//yani herhangi bir ödeme tipi olmayan
+        "siparisUyeId" =>$uye["uyeId"]
+	]);
+    foreach ($enSonSiparis as $key => $value) 
+    { 
+        $sil = $db->delete("Siparisler", [
+            "siparisId" => $value["siparisId"]
+        ]);
+    
+        $silIcerik = $db->delete("SiparisIcerikleri", [
+            "siparisIcerikSiparisId" => $value["siparisId"]
+        ]);
+    }
+    $_SESSION['SiparisKodu'] = "";
+}
+
 $_SESSION['Sepet']=json_encode($geciciSepet);
 $json["result"]=array("sepet_adet"=>count($geciciSepet));
 print_r(json_encode($json));
