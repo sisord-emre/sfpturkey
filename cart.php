@@ -20,13 +20,16 @@ else {
 }
 if ($_SESSION['Sepet'] == "" || $_SESSION['Sepet'] == "null" || $_SESSION['Sepet'] == null || !isset($_SESSION['Sepet'])) {
     $_SESSION['Sepet'] = "[]";
+    $_SESSION['SiparisKodu'] == "";
 }
 $sepet = json_decode($_SESSION['Sepet'], true);
 if (count($sepet) <= 0) {
+    //panelden sipariş silinirse sepeti ve sipariş session boşalt
+    unset($_SESSION['SiparisKodu']);
+    $_SESSION['SiparisKodu'] == "";
     echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . '"; </script>';
     exit;
 }
-
 ?>
 
 <div id="nt_content">
@@ -293,12 +296,25 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 	$siparisKontrol = $db->get("Siparisler", "*", [
 		"siparisKodu" => $siparisKodu
 	]);
+
+    if(!$siparisKontrol) //panelden sipariş silinirse sepeti ve sipariş session boşalt
+    {
+        $_SESSION['Sepet'] = "[]";
+        unset($_SESSION['SiparisKodu']);
+        $_SESSION['SiparisKodu'] == "";
+    }
 } 
 else //eğer sipariş kaydı var ise
 {
 	$siparisKontrol = $db->get("Siparisler", "*", [
 		"siparisKodu" => $_SESSION['SiparisKodu']
 	]);
+    if(!$siparisKontrol) //panelden sipariş silinirse sepeti ve sipariş session boşalt
+    {
+        $_SESSION['Sepet'] = "[]";
+        unset($_SESSION['SiparisKodu']);
+        $_SESSION['SiparisKodu'] == "";
+    }
     $siparisIskontoUcreti = $siparisKontrol["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
     $siparisOdenenIskontoUcreti = $fonk->paraCevir($siparisIskontoUcreti,"USD","TRY");
 	if ($siparisKontrol) {
