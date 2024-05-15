@@ -37,8 +37,7 @@ if($_POST){
 	// 	}
 	// }
 
-	//if($hata==""){//bir problem yok ise giriş yap
-	if(true){
+	if($hata==""){//bir problem yok ise giriş yap
 		$kullaniciGiris = $db->get("Kullanicilar", "*", [
 			"kullaniciEmail" => $fonk->injKontrol($_POST['mail'],""),
 			"kullaniciSifre" => hash("sha256", md5($_POST['sifre'])),

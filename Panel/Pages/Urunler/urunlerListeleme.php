@@ -147,6 +147,7 @@ else{//Listeleme Yetkisi Var
 		"[>]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
         "[>]UrunVaryantDilBilgiler" => ["UrunVaryantlari.urunVaryantId" => "urunVaryantDilBilgiVaryantId"]
 	],"*",$sartlar);
+
 	//****** tam excel alma bas
 	$sayac=1;
 	
@@ -211,6 +212,7 @@ else{//Listeleme Yetkisi Var
 	$_SESSION["excelTablo"]=$tableName;
 	//****** tam excel alma bitis
 	?>
+	<div style="display: none;"><?=$listeleme;?></div>
 	<!-- Datatable sıralaması için -->
 	<script>
 	$(document).ready(function () {

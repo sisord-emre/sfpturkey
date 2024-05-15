@@ -18,7 +18,6 @@ if ($_POST["gelen"] == 1)
         $baslik = "Iletisim Formu";
         include("../Mailtemplate/contactMailTemplate.php");
         $sonuc = $fonk->mailGonder($gondericiMail[1], $baslik, $body, $sabitB);
-        $sonuc = $fonk->mailGonder("yunus.karaca@sisord.com", $baslik, $body, $sabitB);
         echo '1';
     } else {
         echo '2';

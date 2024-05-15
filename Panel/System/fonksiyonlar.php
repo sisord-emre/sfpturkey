@@ -346,8 +346,8 @@ class Fonksiyonlar
 	{
 		$sms_msg = array(
 			"username" => "902122434555",
-			"password" => "blf159357",
-			"source_addr" => "Balife",
+			"password" => "xxxxx",
+			"source_addr" => "xxxxxx",
 			//"valid_for" => "48:00",
 			//"send_at" => "2015-02-20 16:06:00",
 			//"datacoding" => "0",
@@ -378,8 +378,8 @@ class Fonksiyonlar
 	//verimor sms kalam miktar
 	function smsBakiye()
 	{
-		$username = "902122434555"; // https://oim.verimor.com.tr/sms_settings/edit adresinden öğrenebilirsiniz.
-		$password = urlencode("blf159357"); // https://oim.verimor.com.tr/sms_settings/edit adresinden belirlemeniz gerekir.
+		$username = "902122430000"; // https://oim.verimor.com.tr/sms_settings/edit adresinden öğrenebilirsiniz.
+		$password = urlencode("xxxxxx"); // https://oim.verimor.com.tr/sms_settings/edit adresinden belirlemeniz gerekir.
 		$url = "http://sms.verimor.com.tr/v2/balance?username=$username&password=$password";
 		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);

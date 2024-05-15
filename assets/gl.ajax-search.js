@@ -93,6 +93,7 @@ var AT_Search = {
 						// if(j <= 10 ){
 						//   result.append(template);
 						// }
+						console.log(markedString);
 						result.append(template);
 
 					}

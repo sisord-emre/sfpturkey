@@ -85,7 +85,7 @@ $siparisIskontoUcreti = $siparislerim["siparisIskontoUcreti"]; //iskonto ücreti
                                     </tr>
                                 <?php } ?>
                                 <?php
-                                if ($siparis['siparisKargoUcreti'] != 0) {
+                                if ($siparislerim['siparisKargoUcreti'] != 0) {
                                     $siparisKargoUcreti = $siparislerim['siparisKargoUcreti'];
                                 }
                                 ?>
