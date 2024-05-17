@@ -1,7 +1,7 @@
 <?php
 include('Panel/System/Config.php');
 
-$assetVersion = "1.2.3";
+$assetVersion = "1.2.5";
 $siteTitle = $sabitB["sabitBilgiTitle"];
 $siteDescription = $sabitB["sabitBilgiDescription"];
 $siteTel = explode(';', $sabitB['sabitBilgiTel']);

@@ -44,7 +44,7 @@ function ButtonDisabled(submitButton) {
     }, 50);
     setTimeout(function () {
         document.getElementById("submitButton").disabled = false;
-    }, 3000);
+    }, 5000);
 }
 
 Number.prototype.formatMoney = function (c, d, t) {

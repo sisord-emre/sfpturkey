@@ -1,5 +1,7 @@
 <?php
 include 'layouts/header.php';
+unset($_SESSION["SiparisKodu"]);
+unset($_SESSION["Sepet"]);
 ?>
 <div id="nt_content">
     <!--hero banner-->

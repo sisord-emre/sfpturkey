@@ -30,6 +30,23 @@ if (count($sepet) <= 0) {
     echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . '"; </script>';
     exit;
 }
+
+// eğer herhangi bir ödenmiş sipariş kodu sessiondan gelirse anasayfaya gönder
+$isSiparisDurumKontrol = $db->get("Siparisler", [
+    "[>]Uyeler" => ["Siparisler.siparisUyeId" => "uyeId"],
+    "[<]SiparisSiparisDurumlari" => ["Siparisler.siparisId" => "siparisSiparisDurumSiparisId"]
+], "*", [
+    "siparisKodu" => $_SESSION['SiparisKodu'],
+    "siparisUyeId" => $uye['uyeId']
+]);
+
+if($isSiparisDurumKontrol)
+{
+    unset($_SESSION['SiparisKodu']);
+    $_SESSION['SiparisKodu'] == "";
+    echo '<script> window.location.href="' . $sabitB['sabitBilgiSiteUrl'] . '"; </script>';
+    exit;
+}
 ?>
 
 <div id="nt_content">

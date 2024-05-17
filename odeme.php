@@ -275,7 +275,7 @@ if ($siparisOdemeTipiId == 2) //havale eft ödeme
 		$baslik2 = "SFPTURKEY-Siparis No: ".$siparisKodu."";
 		include("Mailtemplate/odemeEmailTemplate.php");
 		$fonk->mailGonder($siparis["uyeMail"], $baslik2, $body);
-		$fonk->mailGonder($gondericiMail[3], $baslik, $body); 
+		//$fonk->mailGonder($gondericiMail[3], $baslik, $body); 
 		header("HTTP/1.1 303 See Other");
 		header("Location: " . $sabitB["sabitBilgiSiteUrl"] . "havale?s=" . $_SESSION["SiparisKodu"]);
 	}
