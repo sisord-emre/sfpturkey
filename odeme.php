@@ -276,6 +276,8 @@ if ($siparisOdemeTipiId == 2) //havale eft ödeme
 		include("Mailtemplate/odemeEmailTemplate.php");
 		$fonk->mailGonder($siparis["uyeMail"], $baslik2, $body);
 		//$fonk->mailGonder($gondericiMail[3], $baslik, $body); 
+		unset($_SESSION["SiparisKodu"]);
+		unset($_SESSION["Sepet"]);
 		header("HTTP/1.1 303 See Other");
 		header("Location: " . $sabitB["sabitBilgiSiteUrl"] . "havale?s=" . $_SESSION["SiparisKodu"]);
 	}
