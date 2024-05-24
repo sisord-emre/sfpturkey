@@ -191,7 +191,7 @@ else //eğer sipariş kaydı var ise
 		exit;
 	}
 }
-$siparisKargoUcreti = $fonk->KargoUcreti(number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$urun["paraBirimKodu"],"TRY"),2,',','.')); 
+$siparisKargoUcreti = $fonk->KargoUcreti($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$urun["paraBirimKodu"],"TRY")); 
 //$siparisKargoUcreti=$siparisKontrol["siparisKargoUcreti"];
 ?>
 
