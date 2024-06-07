@@ -174,6 +174,26 @@ if ($mailGonderim==1)
         //Sipariş Teslim Edildi
         $mesaj.="<br /> Siparişiniz teslim edilmiştir. <br /> Alışverişiniz için teşekkür eder, iyi günler dileriz.";
     }
+    if($siparisSiparisDurumSiparisDurumId==2)
+    {
+        //Ödeme Yapıldı
+        $mesaj.="<br /> Ödemeniz alınmıştır.";
+    }
+    if($siparisSiparisDurumSiparisDurumId==3)
+    {
+        //Sipariş Onaylandı
+        $mesaj.="<br /> Siparişiniz onaylanmıştır.";
+    }
+    if($siparisSiparisDurumSiparisDurumId==7)
+    {
+        //Sipariş İade Edildi
+        $mesaj.="<br /> Ödemeniz iade edilmiştir.";
+    }
+    if($siparisSiparisDurumSiparisDurumId==8)
+    {
+        //Sipariş İptal Edildi
+        $mesaj.="<br /> Siparişiniz iptal edilmiştir.";
+    }
     include ("../bildirimMailTemplate.php");
     $fonk->mailGonder($siparis["uyeMail"],$baslik,$body);
 }
