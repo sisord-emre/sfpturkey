@@ -53,6 +53,7 @@ if ($_SESSION['uyeSessionKey'] == "") {
                                     <th class="product-name"><b><?= $fonk->getDil("Sİparİş Kodu"); ?></b></th>
                                     <th class="product-total"><b><?= $fonk->getDil("Toplam Tutar"); ?></b></th>
                                     <th class="product-name"><b><?= $fonk->getDil("Sİparİş Tarİhİ"); ?></b></th>
+                                    <th class="product-total"><b><?= $fonk->getDil("Kargo Takip Numarası"); ?></b></th>
                                     <th class="product-total"><b><?= $fonk->getDil("Durum"); ?></b></th>
                                     <th class="product-name" style="width:100px;"><b><?= $fonk->getDil("Detay"); ?></b></th>
                                 </tr>
@@ -98,10 +99,11 @@ if ($_SESSION['uyeSessionKey'] == "") {
                                         <td class="product-name"><?= $list['siparisKodu'] ?></td>
                                         <td class="product-total"><span class="cart_price"><?= $list["paraBirimSembol"] . number_format($list["siparisToplam"],2,',','.'); ?></span></td>
                                         <td class="product-name"><?= $fonk->sqlToDateTime($list['siparisKayitTarihi']); ?></td>
+                                        <td class="product-total"><?=($siparisDurum['siparisSiparisDurumKargoTakipKodu']) ? $siparisDurum['siparisSiparisDurumKargoTakipKodu'] : "-"; ?></td>
                                         <td class="product-total"><?= $siparisDurum['siparisDurumDilBilgiBaslik']; ?></td>
                                         <td class="product-total" style="display:flex;">
                                             <?php if($siparisDurum['siparisSiparisDurumKargoTakipKodu']){ ?>
-                                            <a type="button" href="https://www.hepsijet.com/gonderi-takibi/<?= $siparisDurum['siparisSiparisDurumKargoTakipKodu'] ?>" target="_blank" class="button button_info btn-sm w-100 mr-2 d-flex align-items-center">
+                                            <a type="button" href="<?= $siparisDurum['kargoFirmaWebSiteTakipUrl'] ?>" target="_blank" class="button button_info btn-sm w-100 mr-2 d-flex align-items-center">
                                                 <?= $fonk->getDil("Kargo Takibi"); ?>
                                             </a>
                                             <?php } ?>
