@@ -250,6 +250,7 @@ else{//Listeleme Yetkisi Var
 												<th><?=$fonk->getPDil("ID")?></th>
 												<th><?=$fonk->getPDil("Kodu")?></th>
 												<th><?=$fonk->getPDil("Tc/Vergi No")?></th>
+												<th><?=$fonk->getPDil("Uye Firma Adi")?></th>
 												<th><?=$fonk->getPDil("Adı")?></th>
 												<th><?=$fonk->getPDil("Soyadı")?></th>
 												<th><?=$fonk->getPDil("Mail")?></th>
@@ -269,6 +270,7 @@ else{//Listeleme Yetkisi Var
 													<!-- Güncellenecek Kısımlar -->
 													<td><?=$list['uyeKodu'];?></td>
 													<td><?=$list['uyeTcVergiNo'];?></td>
+													<td><?=$list['uyeFirmaAdi'];?></td>
 													<td><?=$list['uyeAdi'];?></td>
 													<td><?=$list['uyeSoyadi'];?></td>
 													<td><?=$list['uyeMail'];?></td>

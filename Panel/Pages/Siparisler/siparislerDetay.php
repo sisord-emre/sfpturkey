@@ -219,6 +219,10 @@ $icerikTable.='
 								<td><?=$detay['uyeTcVergiNo']?></td>
 							</tr>
 							<tr>
+								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Uye Firma Adi")?></b></td>
+								<td><?=$detay['uyeFirmaAdi']?></td>
+							</tr>
+							<tr>
 								<td style="vertical-align: middle;"><b><?=$fonk->getPDil("Üye")?></b></td>
 								<td><?=$detay['uyeAdi']." ".$detay['uyeSoyadi']?></td>
 							</tr>

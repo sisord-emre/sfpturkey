@@ -133,14 +133,6 @@ $favoriDurum = $db->get("UrunFavoriler",[
                                                           
                                                             <div class="flex wrap fl_between al_center price-review">
                                                                 <?php if($uye['uyeIndirimOrani'] > 0 ): ?>
-                                                                    <?php if($urun['urunVaryantKampanyasizFiyat'] != 0 ): ?>
-                                                                    <span class="button-liste mr-3">
-                                                                        <ins style="color:white;"> 
-                                                                        <?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"");?>
-                                                                            <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
-                                                                        </ins>
-                                                                    </span>
-                                                                    <?php else: ?>
                                                                     <span class="button-liste mr-3">
                                                                         <?= $fonk->getDil("Ürün Satış Fiyat"); ?>:
                                                                         <del style="color:white;"> 
@@ -155,7 +147,6 @@ $favoriDurum = $db->get("UrunFavoriler",[
                                                                             <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
                                                                         </ins>
                                                                     </span>
-                                                                    <?php endif; ?>
                                                                 <?php else: ?>
                                                                     <span class="button-liste mr-3">
                                                                         <ins style="color:white;"> 
