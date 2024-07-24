@@ -69,7 +69,7 @@ $urunler = $db->query(
 	LEFT JOIN "UrunVaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantId" = "UrunVaryantDilBilgiler"."urunVaryantDilBilgiVaryantId" 
 	LEFT JOIN "ParaBirimleri" ON "Urunler"."urunParaBirimId" = "ParaBirimleri"."paraBirimId" 
 	LEFT JOIN "VaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantVaryantId" = "VaryantDilBilgiler"."varyantDilBilgiVaryatId" 
-	WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true 
+	WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true AND "urunDurum" = true
 	AND ((UPPER("urunVaryantDilBilgiAdi") ILIKE \'%'.$ara.'%\') OR ("urunModel" ILIKE \'%'.$ara.'%\') OR ("urunVaryantDilBilgiEtiketler" ILIKE \'%'.$ara.'%\') OR UPPER("varyantDilBilgiBaslik") ILIKE \'%'.$ara.'%\')) 
 	ORDER BY "urunVaryantDilBilgiId" DESC LIMIT '.$pagination['limit'].' OFFSET '.$pagination['start']
 )->fetchAll();

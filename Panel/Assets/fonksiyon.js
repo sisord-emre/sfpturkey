@@ -322,7 +322,7 @@ function CropImageInfo() {
 
 
 ////akinSoftStokDusurme fonksiyonu
-function akinSoftStokDusurme(siparisid) {
+/* function akinSoftStokDusurme(siparisid) {
 	if (siparisid == "") { return false; }
 	$.ajax({
 		type: "POST",
@@ -337,5 +337,5 @@ function akinSoftStokDusurme(siparisid) {
 			}
 		}
 	});
-}
+} */
 ////!akinSoftStokDusurme fonksiyonu

@@ -69,7 +69,7 @@ $seo=$_GET['ara'];
 		LEFT JOIN "UrunVaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantId" = "UrunVaryantDilBilgiler"."urunVaryantDilBilgiVaryantId" 
 		LEFT JOIN "ParaBirimleri" ON "Urunler"."urunParaBirimId" = "ParaBirimleri"."paraBirimId" 
 		LEFT JOIN "VaryantDilBilgiler" ON "UrunVaryantlari"."urunVaryantVaryantId" = "VaryantDilBilgiler"."varyantDilBilgiVaryatId" 
-		WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true AND "urunVaryantDefaultSecim" = true 
+		WHERE ("urunVaryantDilBilgiDilId" = 1 AND "urunVaryantDilBilgiDurum" = true AND "urunDurum" = true AND "urunVaryantDefaultSecim" = true 
 		AND (("urunVaryantDilBilgiAdi" ILIKE \'%'.$seo.'%\') OR ("urunModel" ILIKE \'%'.$seo.'%\') OR ("urunVaryantDilBilgiEtiketler" ILIKE \'%'.$seo.'%\') OR "varyantDilBilgiBaslik" = \''.$seo.'\')) 
 		ORDER BY "urunVaryantDilBilgiId"'
 	)->fetchAll();

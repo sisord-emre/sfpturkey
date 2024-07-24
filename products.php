@@ -212,9 +212,11 @@ $fonk->findCategoryById($kategoriList, $kategoriBul["kategoriUstMenuId"], $resul
                                                 ]);
                                             ?>
                                                 <?php if (count($altkategoriler) <= 0) { ?>
-                                                    <a href="products/<?= $value["kategoriKodu"]; ?>-<?= $value["kategoriDilBilgiSlug"]; ?>">
-                                                        <?= $value["kategoriDilBilgiBaslik"]; ?>
-                                                    </a>
+                                                    <button class="dropdown-btn-82">
+                                                        <span onclick="javascript:location.href='<?=$sabitB['sabitBilgiSiteUrl']?>products/<?= $value['kategoriKodu']; ?>-<?= $value['kategoriDilBilgiSlug']; ?>'">
+                                                            <?= $value["kategoriDilBilgiBaslik"]; ?>
+                                                        </span>
+                                                    </button>
                                                 <?php } else { ?>
                                                     <button class="dropdown-btn-82">
                                                         <span onclick="javascript:location.href='<?=$sabitB['sabitBilgiSiteUrl']?>products/<?= $value['kategoriKodu']; ?>-<?= $value['kategoriDilBilgiSlug']; ?>'">
@@ -236,9 +238,11 @@ $fonk->findCategoryById($kategoriList, $kategoriBul["kategoriUstMenuId"], $resul
                                                     ?>
                                                         <div class="dropdown-container-82" name="show-<?= $value["kategoriKodu"]; ?>" id="s-<?= uniqid() ?>" style="display:none; background:#F2815D;">
                                                             <?php if (count($altkategoriler2) <= 0) { ?>
-                                                                <a href="products/<?= $valueAlt["kategoriKodu"]; ?>-<?= $value["kategoriDilBilgiSlug"]; ?>-<?= $valueAlt["kategoriDilBilgiSlug"]; ?>">
-                                                                    <?= $valueAlt["kategoriDilBilgiBaslik"]; ?>
-                                                                </a>
+                                                                <button class="dropdown-btn-82">
+                                                                    <span onclick="javascript:location.href='<?=$sabitB['sabitBilgiSiteUrl']?>products/<?= $valueAlt['kategoriKodu']; ?>-<?= $value['kategoriDilBilgiSlug']; ?>-<?= $valueAlt['kategoriDilBilgiSlug']; ?>'">
+                                                                        <?= $valueAlt["kategoriDilBilgiBaslik"]; ?>
+                                                                    </span>
+                                                                </button>
                                                             <?php } else { ?>
                                                                 <button class="dropdown-btn-82">
                                                                     <span onclick="javascript:location.href='<?=$sabitB['sabitBilgiSiteUrl']?>products/<?= $valueAlt['kategoriKodu']; ?>-<?= $value['kategoriDilBilgiSlug']; ?>-<?= $valueAlt['kategoriDilBilgiSlug']; ?>'">

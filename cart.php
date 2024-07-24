@@ -241,7 +241,6 @@ if($isSiparisDurumKontrol)
 <?php 
 
 $siparisIskontoUcreti = 0;
-$siparisKargoUcreti =$siparisKargoUcreti;
 $siparisIndirimYuzdesi = 0;
 $toplamTutar = 0;
 if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
@@ -257,7 +256,6 @@ if ($_SESSION['SiparisKodu'] == "") //eğer sipariş kaydı yok ise
 		'siparisOdemeTipiId' => 0,
 		'siparisIndirimKodu' => "",
 		//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
-		//'siparisKargoUcreti' => $siparisKargoUcreti,
 		'siparisDilId' => $_SESSION["dilId"],
 		'siparisParaBirimId' => $_SESSION["paraBirimId"],
 		'siparisOdemeBilgileri' => "",
@@ -343,7 +341,6 @@ else //eğer sipariş kaydı var ise
 			'siparisOdemeTipiId' => 0,
 			'siparisIndirimKodu' => "",
 			//'siparisIndirimYuzdesi' => $siparisIndirimYuzdesi,
-			//'siparisKargoUcreti' => $siparisKargoUcreti,
 			'siparisDilId' => $_SESSION["dilId"],
             'siparisOdenenIskontoUcreti' => $siparisOdenenIskontoUcreti,
 			//'siparisTeslimatTarihi' => "",
@@ -406,7 +403,6 @@ else //eğer sipariş kaydı var ise
 		exit;
 	}
 }
-$siparisKargoUcreti=$siparisKontrol["siparisKargoUcreti"];
 ?>
 
 <?php include('layouts/footer.php') ?>
