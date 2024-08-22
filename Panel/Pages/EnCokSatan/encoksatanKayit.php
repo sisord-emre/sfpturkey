@@ -122,7 +122,7 @@ if ($_POST['formdan'] == "1")
     $andSartlar = [];
     
     if ($Ara!="") {
-        $andSartlar=array_merge($andSartlar,["urunModel" => $Ara]);
+        $andSartlar=array_merge($andSartlar,["urunModel[~]" => $Ara]);
     }
     if (count($orSartlar) > 0) {
         $sartlar = [
