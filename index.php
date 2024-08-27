@@ -131,7 +131,7 @@ include('layouts/header.php');
                                         <?= $value["urunVaryantDilBilgiAdi"]; ?>
                                     </a>
                                 </h3>
-                                <?php if ($uyeVar == 1) : ?>
+                                <?php if ($uyeVar == 1) { ?>
                                     <div class="button-liste w-100">
                                         <?= $fonk->getDil("Liste Özel Fiyat"); ?>:
                                         <del style="color:white;">
@@ -146,7 +146,7 @@ include('layouts/header.php');
                                             <?= $value["paraBirimSembol"] ?><?= number_format($hesapla["birimFiyat"], 2, ',', '.'); ?>
                                         </ins>
                                     </div>
-                                <?php endif; ?>
+                                <?php } ?>
                                 <?php if($value["urunStok"] > 0){ ?>
                                     <button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
                                         <span class="txt_add"><?= $fonk->getDil("Sepete Ekle"); ?></span>

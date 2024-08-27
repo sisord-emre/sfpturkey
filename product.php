@@ -132,29 +132,46 @@ $favoriDurum = $db->get("UrunFavoriler",[
                                                             </div>
                                                           
                                                             <div class="flex wrap fl_between al_center price-review">
-                                                                <?php if($uye['uyeIndirimOrani'] > 0 ): ?>
-                                                                    <span class="button-liste mr-3">
-                                                                        <?= $fonk->getDil("Ürün Satış Fiyat"); ?>:
-                                                                        <del style="color:white;"> 
-                                                                            <?= $urun["paraBirimSembol"] ?><?=number_format($urun["urunVaryantFiyat"],2,',','.');?>
+                                                                <?php if($urun["urunKampanya"] == 1){ ?>
+                                                                    <div class="button-liste mr-3">
+                                                                        <?= $fonk->getDil("Liste Özel Fiyat"); ?>:
+                                                                        <del style="color:white;">
+                                                                            <?= $urun["paraBirimSembol"] ?><?= number_format($urun["urunVaryantKampanyasizFiyat"], 2, ',', '.'); ?>
                                                                         </del>
-                                                                    </span>
+                                                                    </div>
                                                                     <br>
-                                                                    <span class="button-bayi">
-                                                                        <?= $fonk->getDil("Bayi Fiyatı"); ?>:
-                                                                        <ins style="color:white;"> 
-                                                                            <?php $hesapla2=$fonk->Hesapla($urun["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
-                                                                            <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
+                                                                    <div class="button-bayi">
+                                                                        <?= $fonk->getDil("Kampanyalı Fiyat"); ?>:
+                                                                        <ins style="color:white;">
+                                                                            <?php $hesapla = $fonk->Hesapla($urun["urunVaryantId"], ""); ?>
+                                                                            <?= $urun["paraBirimSembol"] ?><?= number_format($hesapla["birimFiyat"], 2, ',', '.'); ?>
                                                                         </ins>
-                                                                    </span>
-                                                                <?php else: ?>
-                                                                    <span class="button-liste mr-3">
-                                                                        <ins style="color:white;"> 
-                                                                        <?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"");?>
-                                                                            <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
-                                                                        </ins>
-                                                                    </span>
-                                                                <?php endif; ?>
+                                                                    </div>
+                                                                <?php } else { ?>
+                                                                    <?php if($uye['uyeIndirimOrani'] > 0 ){ ?>
+                                                                        <span class="button-liste mr-3">
+                                                                            <?= $fonk->getDil("Ürün Satış Fiyat"); ?>:
+                                                                            <del style="color:white;"> 
+                                                                                <?= $urun["paraBirimSembol"] ?><?=number_format($urun["urunVaryantFiyat"],2,',','.');?>
+                                                                            </del>
+                                                                        </span>
+                                                                        <br>
+                                                                        <span class="button-bayi">
+                                                                            <?= $fonk->getDil("Bayi Fiyatı"); ?>:
+                                                                            <ins style="color:white;"> 
+                                                                                <?php $hesapla2=$fonk->Hesapla($urun["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
+                                                                                <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
+                                                                            </ins>
+                                                                        </span>
+                                                                    <?php } else { ?>
+                                                                        <span class="button-liste mr-3">
+                                                                            <ins style="color:white;"> 
+                                                                            <?php $hesapla=$fonk->Hesapla($urun["urunVaryantId"],"");?>
+                                                                                <?= $urun["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
+                                                                            </ins>
+                                                                        </span>
+                                                                    <?php } ?>
+                                                                <?php } ?>
                                                             </div>
                                                             <?php } ?>
                                                         </div>
