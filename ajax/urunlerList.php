@@ -43,6 +43,8 @@ $sutunlar = [
 	"urunDurum",
 	"paraBirimKodu",
 	"paraBirimSembol",
+	"urunKampanya",
+	"urunVaryantKampanyasizFiyat", 
 	//"urunVaryantKodu" => $db->raw('(SELECT "urunVaryantKodu" FROM "UrunVaryantlari" WHERE "UrunVaryantlari"."urunVaryantUrunId" = "Urunler"."urunId" LIMIT 1)'),
 	//"urunVaryantDilBilgiAdi" => $db->raw('(SELECT "urunVaryantDilBilgiAdi" FROM "UrunVaryantDilBilgiler" WHERE "UrunVaryantDilBilgiler"."urunVaryantDilBilgiUrunId" = "Urunler"."urunId" LIMIT 1)'),
 ];
@@ -160,6 +162,8 @@ $urunSutunlar = [
 	"urunDurum",
 	"paraBirimKodu",
 	"paraBirimSembol",
+	"urunKampanya",
+	"urunVaryantKampanyasizFiyat",
 	//"urunVaryantKodu" => $db->raw('(SELECT "urunVaryantKodu" FROM "UrunVaryantlari" WHERE "UrunVaryantlari"."urunVaryantUrunId" = "Urunler"."urunId" LIMIT 1)'),
 	//"urunVaryantDilBilgiAdi" => $db->raw('(SELECT "urunVaryantDilBilgiAdi" FROM "UrunVaryantDilBilgiler" WHERE "UrunVaryantDilBilgiler"."urunVaryantDilBilgiUrunId" = "Urunler"."urunId" LIMIT 1)'),
 
@@ -320,31 +324,47 @@ foreach ($urunler as $value) {
 				</h3>
 				
 				<?php if($uyeVar == 1){ ?>
-					<span class="price dib mb__5 w-100">
-						<?php if($uye['uyeIndirimOrani'] > 0 ): ?>
-							<div class="button-liste w-100">
+					<?php if($value["urunKampanya"] == 1){ ?>
+						<div class="button-liste w-100">
+							<?= $fonk->getDil("Liste Özel Fiyat"); ?>:
+							<del style="color:white;">
+								<?= $value["paraBirimSembol"] ?><?= number_format($value["urunVaryantKampanyasizFiyat"], 2, ',', '.'); ?>
+							</del>
+						</div>
+						<br>
+						<div class="button-bayi mt-3 w-100">
+							<?= $fonk->getDil("Kampanyalı Fiyat"); ?>:
+							<ins style="color:white;">
+								<?php $hesapla = $fonk->Hesapla($value["urunVaryantId"], ""); ?>
+								<?= $value["paraBirimSembol"] ?><?= number_format($hesapla["birimFiyat"], 2, ',', '.'); ?>
+							</ins>
+						</div>
+					<?php } else { ?>
+						<?php if($uye['uyeIndirimOrani'] > 0 ){ ?>
+							<span class="button-liste w-100">
 								<?= $fonk->getDil("Ürün Satış Fiyat"); ?>:
 								<del style="color:white;"> 
-									<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
+									<?= $value["paraBirimSembol"] ?><?=number_format($value["urunVaryantFiyat"],2,',','.');?>
 								</del>
-							</div>
+							</span>
 							<br>
-							<div class="button-bayi mt-3 w-100">
-								<?= $fonk->getDil("Bayi Özel Fiyat"); ?>: 
+							<span class="button-bayi mt-3 w-100">
+								<?= $fonk->getDil("Bayi Fiyatı"); ?>:
 								<ins style="color:white;"> 
 									<?php $hesapla2=$fonk->Hesapla($value["urunVaryantId"],"",$uye['uyeIndirimOrani']);?>
 									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla2["birimFiyat"],2,',','.');?>
 								</ins>
-							</div>
-						<?php else: ?>
-							<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
-							<div class="button-liste w-100">
-								<ins style="color:white;"> <?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?></ins>
-							</div>
-						<?php endif; ?>
-					</span>
-				<?php } ?> 
+							</span>
+						<?php } else { ?>
+							<span class="button-liste w-100">
+								<ins style="color:white;"> 
+								<?php $hesapla=$fonk->Hesapla($value["urunVaryantId"],"");?>
+									<?= $value["paraBirimSembol"] ?><?=number_format($hesapla["birimFiyat"],2,',','.');?>
+								</ins>
+							</span>
+						<?php } ?>
+					<?php } ?>
+				<?php } ?>
 
 				<?php if($value["urunStok"] > 0){ ?>
 					<button type="submit" onclick="SepeteEkle(<?= $value['urunVaryantId']; ?>);" id="sepetButton_<?= $value["urunVaryantId"]; ?>" data-time="6000" data-ani="shake" class="single_add_to_cart_button button truncate w__100 mt__10 mt-3 order-4 d-inline-block animated">
