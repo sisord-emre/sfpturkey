@@ -1,13 +1,13 @@
-<?php $body='
+<?php $body = '
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         
         <!-- Facebook sharing information tags -->
-        <meta property="og:title" content="'.$sabitB["sabitBilgiTitle"].'" />
+        <meta property="og:title" content="' . $sabitB["sabitBilgiTitle"] . '" />
         
-        <title>'.$sabitB["sabitBilgiTitle"].'</title>
+        <title>' . $sabitB["sabitBilgiTitle"] . '</title>
 		<style type="text/css">
 			/* Client-specific Styles */
 			#outlook a{padding:0;} /* Force Outlook to provide a "view in browser" button. */
@@ -373,7 +373,7 @@
                                             <td class="headerContent">
                                             
 												<!-- // Begin Module: Standard Header Image \\ -->
-												<img src="'.$sabitB["sabitBilgiSiteUrl"].'assets/images/logo.jpeg" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
+												<img src="' . $sabitB["sabitBilgiSiteUrl"] . 'assets/images/logo.jpeg" style="max-width:600px;" id="headerImage campaign-icon" mc:label="header_image" mc:edit="header_image" mc:allowdesigner mc:allowtext />
 												<!-- // End Module: Standard Header Image \\ -->
                                             
                                             </td>
@@ -394,7 +394,7 @@
                                                     <tr>
                                                         <td valign="top" class="bodyContent">
                                                             <div mc:edit="std_content00">                                                              
-																<p>' . $fonk->getPDil("SFP Türkiye ürünlerimize göstermiş olduğunuz ilgiden dolayı teşekkür ederiz. Ödemeniz onaylandıktan sonra siparişiniz işleme konulacaktır. Herhangi bir soru ve talebenizde ") . '<a href="mailto:satis@sfpturkey.com.tr">satis@sfpturkey.com.tr</a> ' . $fonk->getPDil(" mail adresimize dönüş sağlayabilirsiniz.") . '</p>
+																<p>' . $fonk->getPDil("SFP Türkiye ürünlerimize göstermiş olduğunuz ilgiden dolayı teşekkür ederiz. Ödemeniz onaylandıktan sonra siparişiniz işleme konulacaktır. Herhangi bir soru ve talebinizde ") . '<a href="mailto:satis@sfpturkey.com.tr">satis@sfpturkey.com.tr</a> ' . $fonk->getPDil(" mail adresimize dönüş sağlayabilirsiniz.") . '</p>
                                                             </div>
 														</td>
                                                     </tr>
@@ -409,34 +409,34 @@
 																</tr>
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		<b>' . $fonk->getPDil("Satır Sırası: ") . '</b> '.$siparis["siparisId"].'
+																		<b>' . $fonk->getPDil("Satır Sırası: ") . '</b> ' . $siparis["siparisId"] . '
 																	</td>
 																</tr>
 																
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		<b>' . $fonk->getPDil("Sipariş No: ") . '</b> '.$siparis["siparisKodu"].'
+																		<b>' . $fonk->getPDil("Sipariş No: ") . '</b> ' . $siparis["siparisKodu"] . '
 																	</td>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		<b>' . $fonk->getPDil("E-posta: ") . '</b> '.$siparis["uyeMail"].'
+																		<b>' . $fonk->getPDil("E-posta: ") . '</b> ' . $siparis["uyeMail"] . '
 																	</td>
 																</tr>
 			
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		<b>' . $fonk->getPDil("Sipariş Detayları: ") . '</b> '.$siparis["siparisKayitTarihi"].'
+																		<b>' . $fonk->getPDil("Sipariş Detayları: ") . '</b> ' . $siparis["siparisKayitTarihi"] . '
 																	</td>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		<b>' . $fonk->getPDil("Telefon: ") . '</b> '.$siparis["uyeTel"].'
+																		<b>' . $fonk->getPDil("Telefon: ") . '</b> ' . $siparis["uyeTel"] . '
 																	</td>
 																</tr>
 																
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		<b>' . $fonk->getPDil("Ödeme Metodu: ") . '</b> '.$odemeYontemi.'
+																		<b>' . $fonk->getPDil("Ödeme Metodu: ") . '</b> ' . $odemeYontemi . '
 																	</td>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		<b>' . $fonk->getPDil("IP Adresiniz: ") . '</b> '.$siparis["siparisIp"].'
+																		<b>' . $fonk->getPDil("IP Adresiniz: ") . '</b> ' . $siparis["siparisIp"] . '
 																	</td>
 																</tr>
                                                           </table>
@@ -457,12 +457,12 @@
 																</tr>
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:0;">
-																		' . $fonk->getPDil("ŞİRKET ADI: ") . ' '.$sabitB["sabitBilgiSiteAdi"].'
+																		' . $fonk->getPDil("ŞİRKET ADI: ") . ' ' . $sabitB["sabitBilgiSiteAdi"] . '
 																	</td>
 																</tr>
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:5px;">
-																		' . $fonk->getPDil("ADRES: ") . ' '.$sabitB["sabitBilgiAdres"].'
+																		' . $fonk->getPDil("ADRES: ") . ' ' . $sabitB["sabitBilgiAdres"] . '
 																	</td>
 																</tr>
 																<tr>
@@ -470,27 +470,26 @@
 																		' . $fonk->getPDil("VERGİ DAİRESİ/NO: ") . ' ÜSKÜDAR / 5890457461 
 																	</td>
 																</tr>';
-																$bankalar2 = $db->select("BankaBilgileri", "*", [
-																	"bankaBilgiDurum" => 1,
-																	"ORDER" => "bankaBilgiSirasi",
-																]);
-																foreach ($bankalar2 as $key => $value)
-																{
-																	$body = $body . 
-																	'
+$bankalar2 = $db->select("BankaBilgileri", "*", [
+	"bankaBilgiDurum" => 1,
+	"ORDER" => "bankaBilgiSirasi",
+]);
+foreach ($bankalar2 as $key => $value) {
+	$body = $body .
+		'
 																	<tr>
 																		<td valign="top" style="padding-top:0; padding-bottom:0;">
-																			'.$value["bankaBilgiBankaAdi"].'
+																			' . $value["bankaBilgiBankaAdi"] . '
 																		</td>
 																	</tr>
 																	<tr>
 																		<td valign="top" style="padding-top:0; padding-bottom:5px;">
-																			' . $fonk->getPDil("IBAN: ") . ' '.$value["bankaBilgiIban"].'
+																			' . $fonk->getPDil("IBAN: ") . ' ' . $value["bankaBilgiIban"] . '
 																		</td>
 																	</tr>
 																	';
-																}
-																$body = $body . '
+}
+$body = $body . '
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:5px;">
 																		' . $fonk->getPDil("Siparişinizi verdikten sonraki 5 iş günü içinde havale/eft yapmadığınız takdirde siparişiniz iptal olur. ") . '
@@ -512,28 +511,28 @@
 																</tr>
 																<tr>
 																	<td valign="top" style="padding-top:0; padding-bottom:5px;">';
-																		$faturaAdresi = $db->get("UyeAdresler",[
-																			"[>]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
-																			"[>]Iller" => ["UyeAdresler.uyeAdresIlId" => "ilId"],
-																			"[>]Ilceler" => ["UyeAdresler.uyeAdresIlceId" => "ilceId"]
-																		], "*", [
-																			"uyeAdresId" => $siparis['siparisFaturaUyeAdresId']
-																		]);
-																		$body = $body . 
-																		'
-																		'.$faturaAdresi["uyeAdresBilgi"]." ".$faturaAdresi["ilceAdi"]."/".$faturaAdresi['ilAdi']."/".$faturaAdresi['ulkeAdi'].'
+$faturaAdresi = $db->get("UyeAdresler", [
+	"[>]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
+	"[>]Iller" => ["UyeAdresler.uyeAdresIlId" => "ilId"],
+	"[>]Ilceler" => ["UyeAdresler.uyeAdresIlceId" => "ilceId"]
+], "*", [
+	"uyeAdresId" => $siparis['siparisFaturaUyeAdresId']
+]);
+$body = $body .
+	'
+																		' . $faturaAdresi["uyeAdresBilgi"] . " " . $faturaAdresi["ilceAdi"] . "/" . $faturaAdresi['ilAdi'] . "/" . $faturaAdresi['ulkeAdi'] . '
 																	</td>
 																	<td valign="top" style="padding-top:0; padding-bottom:5px;">';
-																	$teslimatAdresi = $db->get("UyeAdresler",[
-																		"[>]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
-																		"[>]Iller" => ["UyeAdresler.uyeAdresIlId" => "ilId"],
-																		"[>]Ilceler" => ["UyeAdresler.uyeAdresIlceId" => "ilceId"]
-																	], "*", [
-																		"uyeAdresId" => $siparis['siparisTeslimatUyeAdresId']
-																	]);
-																	$body = $body . 
-																	'
-																	'.$teslimatAdresi["uyeAdresBilgi"]." ".$teslimatAdresi["ilceAdi"]."/".$teslimatAdresi['ilAdi']."/".$teslimatAdresi['ulkeAdi'].'
+$teslimatAdresi = $db->get("UyeAdresler", [
+	"[>]Ulkeler" => ["UyeAdresler.uyeAdresUlkeId" => "ulkeId"],
+	"[>]Iller" => ["UyeAdresler.uyeAdresIlId" => "ilId"],
+	"[>]Ilceler" => ["UyeAdresler.uyeAdresIlceId" => "ilceId"]
+], "*", [
+	"uyeAdresId" => $siparis['siparisTeslimatUyeAdresId']
+]);
+$body = $body .
+	'
+																	' . $teslimatAdresi["uyeAdresBilgi"] . " " . $teslimatAdresi["ilceAdi"] . "/" . $teslimatAdresi['ilAdi'] . "/" . $teslimatAdresi['ulkeAdi'] . '
 																	</td>
 																</tr>
                                                           </table>
@@ -560,19 +559,19 @@
 																		<b>' . $fonk->getPDil("KDV Hariç Tutar") . '</b>
 																	</th>
 																</tr>';
-															  	$toplamTutar = 0;
-																$araTutar = 0;
-																$kdvTutar = 0;
-																$siparisKargoUcreti = 0;
-																$siparisIskontoUcreti = $siparis["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
-																$siparisOdenenIskontoUcreti=$siparis["siparisOdenenIskontoUcreti"]; //iskonto ücreti atamasını yaptık
-															  	foreach ($siparisIcerikleri as $val) {
-																	$toplamTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] + ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"])) * $val['siparisIcerikAdet'];
-																	$araTutar += ($val["siparisIcerikPanelFiyatKdvsiz"]) * $val['siparisIcerikAdet'];
-																	$kdvTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"]) * $val['siparisIcerikAdet'];
-																	
-																	$body = $body . 
-																	'
+$toplamTutar = 0;
+$araTutar = 0;
+$kdvTutar = 0;
+$siparisKargoUcreti = 0;
+$siparisIskontoUcreti = $siparis["siparisIskontoUcreti"]; //iskonto ücreti atamasını yaptık
+$siparisOdenenIskontoUcreti = $siparis["siparisOdenenIskontoUcreti"]; //iskonto ücreti atamasını yaptık
+foreach ($siparisIcerikleri as $val) {
+	$toplamTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] + ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"])) * $val['siparisIcerikAdet'];
+	$araTutar += ($val["siparisIcerikPanelFiyatKdvsiz"]) * $val['siparisIcerikAdet'];
+	$kdvTutar += ($val["siparisIcerikPanelFiyatKdvsiz"] / 100 * $val["urunKdv"]) * $val['siparisIcerikAdet'];
+
+	$body = $body .
+		'
 																	<tr mc:repeatable>
 																		<td valign="top" class="dataTableContent" mc:edit="data_table_content00">
 																			<p>' . $val['siparisIcerikUrunVaryantDilBilgiAdi'] . '</p>
@@ -584,18 +583,18 @@
 																			<p>' . $val['siparisIcerikAdet'] . '</p>
 																		</td>
 																		<td valign="top" class="dataTableContent" mc:edit="data_table_content01">
-																			<p>' .$val["paraBirimSembol"].' ' .number_format($val['siparisIcerikPanelFiyatKdvsiz'],2,',','.') . '</p>
+																			<p>' . $val["paraBirimSembol"] . ' ' . number_format($val['siparisIcerikPanelFiyatKdvsiz'], 2, ',', '.') . '</p>
 																		</td>
 																		<td valign="top" class="dataTableContent" mc:edit="data_table_content02">
-																			<p>' .$val["paraBirimSembol"].' ' .number_format(($val['siparisIcerikPanelFiyatKdvsiz'] * $val['siparisIcerikAdet']),2,',','.') . ' </p>
+																			<p>' . $val["paraBirimSembol"] . ' ' . number_format(($val['siparisIcerikPanelFiyatKdvsiz'] * $val['siparisIcerikAdet']), 2, ',', '.') . ' </p>
 																		</td>
 																	</tr>';
-																}
-															
-																if ($siparis['siparisKargoUcreti'] != 0) {
-																	$siparisKargoUcreti = $siparis['siparisKargoUcreti'];
-																}
-																$body = $body . '
+}
+
+if ($siparis['siparisKargoUcreti'] != 0) {
+	$siparisKargoUcreti = $siparis['siparisKargoUcreti'];
+}
+$body = $body . '
 																<tr mc:repeatable>
 																	<td valign="top" class="dataTableContent" colspan="5" mc:edit="data_table_content00">
 																		<p>Not: ' . $siparis["siparisNot"] . '</p>
@@ -614,16 +613,16 @@
 																<b>' . $fonk->getDil("Ara toplam") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . number_format($fonk->paraCevir($araTutar,$val["paraBirimKodu"],"TRY"),2,',','.') . '
+																₺ ' . number_format($fonk->paraCevir($araTutar, $val["paraBirimKodu"], "TRY"), 2, ',', '.') . '
 															</td>
 														</tr>
 
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:70%;">
-																<b>' . $fonk->getDil("Toplam KDV"). '</b>
+																<b>' . $fonk->getDil("Toplam KDV") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' .  number_format($fonk->paraCevir($kdvTutar,$val["paraBirimKodu"],"TRY"),2,',','.') . '
+																₺ ' .  number_format($fonk->paraCevir($kdvTutar, $val["paraBirimKodu"], "TRY"), 2, ',', '.') . '
 															</td>
 														</tr>
 
@@ -632,19 +631,19 @@
 																<b>' . $fonk->getDil("Kdv Dahil Toplam") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' .  number_format($fonk->paraCevir($toplamTutar,$val["paraBirimKodu"],"TRY"),2,',','.') . '
+																₺ ' .  number_format($fonk->paraCevir($toplamTutar, $val["paraBirimKodu"], "TRY"), 2, ',', '.') . '
 															</td>
 														</tr>
 														';
 
-														if($siparisIskontoUcreti > 0) {
-															$body = $body . '
+if ($siparisIskontoUcreti > 0) {
+	$body = $body . '
 															<tr style="text-align:right;">
 																<td valign="top" style="padding:10px; width:70%;">
 																	<b>' . $fonk->getDil("Proje İskonto") . '</b>
 																</td>
 																<td valign="top" style="padding:10px; text-align:left;">
-																	₺ ' .  number_format($siparisOdenenIskontoUcreti,2,',','.') . '
+																	₺ ' .  number_format($siparisOdenenIskontoUcreti, 2, ',', '.') . '
 																</td>
 															</tr>
 
@@ -653,19 +652,19 @@
 																	<b>' . $fonk->getDil("Kdv Dahil Proje Tutarı") . '</b>
 																</td>
 																<td valign="top" style="padding:10px; text-align:left;">
-																	₺ ' .  number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$val["paraBirimKodu"],"TRY"),2,',','.') . '
+																	₺ ' .  number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti, $val["paraBirimKodu"], "TRY"), 2, ',', '.') . '
 																</td>
 															</tr>
 														';
-														} 
-														$body = $body . '
+}
+$body = $body . '
 
 														<tr style="text-align:right;">
 															<td valign="top" style="padding:10px; width:70%;">
 																<b>' . $fonk->getDil("Vergiler Dahil Kargo Ucreti") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' . number_format($siparisKargoUcreti,2,',','.') . '
+																₺ ' . number_format($siparisKargoUcreti, 2, ',', '.') . '
 															</td>
 														</tr>
 
@@ -674,7 +673,7 @@
 																<b>' . $fonk->getDil("TOPLAM") . '</b>
 															</td>
 															<td valign="top" style="padding:10px; text-align:left;">
-																₺ ' .  number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti,$val["paraBirimKodu"],"TRY")+ $siparisKargoUcreti,2,',','.') . '
+																₺ ' .  number_format($fonk->paraCevir($toplamTutar - $siparisIskontoUcreti, $val["paraBirimKodu"], "TRY") + $siparisKargoUcreti, 2, ',', '.') . '
 															</td>
 														</tr>
 														
@@ -701,7 +700,7 @@
                                                     <tr>
                                                         <td valign="top">
                                                             <div mc:edit="std_footer">
-																<em>Copyright &copy; '.date("Y").' '.$sabitB["sabitBilgiSiteAdi"].', ' . $fonk->getPDil("Her hakkı saklıdır") . ' .</em>
+																<em>Copyright &copy; ' . date("Y") . ' ' . $sabitB["sabitBilgiSiteAdi"] . ', ' . $fonk->getPDil("Her hakkı saklıdır") . ' .</em>
 																
                                                             </div>
                                                         </td>
@@ -725,5 +724,3 @@
     </body>
 </html>
 ';
-
-?>
