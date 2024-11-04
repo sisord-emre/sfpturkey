@@ -6,13 +6,22 @@ header('Content-Type: application/json; charset=utf-8');
 extract($_POST);
 
 $iskontoFiyat = str_replace(',', '.', $iskontoFiyat);
+
 $fonk->logKayit(2, "Siparisler" . ' ; ' . $Id . ' ; ' . json_encode(["siparisIskontoUcreti" => $iskontoFiyat])); //1=>ekleme,2=>güncelleme,3=>silme,4=>oturum açma,5=>diğer
 
 $json = array("status" => "error", "result" => "");
-
-$siparisIskontoUcreti = $fonk->paraCevir($iskontoFiyat, "USD", "TRY");
-$siparisKontrol = $db->get("Siparisler", "*", [
+$query = $db->update("Siparisler", [
+    "siparisIskontoUcreti" => $iskontoFiyat
+], [
     "siparisId" => $Id
+]);
+
+if($query){
+    $json["status"]="success";
+}
+
+$siparisKontrol = $db->get("Siparisler", "*", [
+    "siparisId" =>  $Id
 ]);
 
 $siparisIcerikleri = $db->select("SiparisIcerikleri", [
@@ -25,40 +34,23 @@ $siparisIcerikleri = $db->select("SiparisIcerikleri", [
     "siparisIcerikSiparisId" => $Id
 ]);
 
-$toplamTutar = array_reduce($siparisIcerikleri, function($carry, $item) {
-    return $carry + ($item['siparisIcerikAdet'] * $item['siparisIcerikFiyat']);
-}, 0);
-
-if($toplamTutar > $siparisIskontoUcreti) 
-{
-    $query = $db->update("Siparisler", [
-        "siparisIskontoUcreti" => $iskontoFiyat
-    ], [
-        "siparisId" => $Id
-    ]);
-    
-    if ($query) {
-        $json["status"] = "success";
-        //eğer güncelleme başarılı ise toplam tutardan iskonto tutarını çıkarabiliriz
-        $toplamTutar -= $siparisIskontoUcreti;
-    }
-
-    if ($siparisKontrol['siparisIndirimKodu'] != "" && $siparisKontrol['siparisIndirimYuzdesi'] != 0) {
-        $toplamTutar -= ($toplamTutar / 100 * $siparisKontrol['siparisIndirimYuzdesi']);
-    }
-    if ($siparisKontrol['siparisKargoUcreti'] != 0) {
-        $toplamTutar += $siparisKontrol['siparisKargoUcreti'];
-    }
-    
-    $json["result"] = array(
-        "tutar" => $toplamTutar
-    );
+$toplamTutar = 0;
+$siparisIskontoUcreti = 0;
+foreach ($siparisIcerikleri as $siparisIcerik) {
+    $toplamTutar += $siparisIcerik['siparisIcerikAdet'] * $siparisIcerik['siparisIcerikFiyat'];
 }
-else 
-{
-    $json["status"] = "error";
-    $json["result"] = "Uyarı: İskonto ücreti toplam tutardan büyük olamaz!";
+if ($siparisKontrol['siparisIndirimKodu'] != "" && $siparisKontrol['siparisIndirimYuzdesi'] != 0) {
+    $toplamTutar -= ($toplamTutar / 100 * $siparisKontrol['siparisIndirimYuzdesi']);
+}
+if ($siparisKontrol['siparisKargoUcreti'] != 0) {
+    $toplamTutar += $siparisKontrol['siparisKargoUcreti'];
+}
+if ($siparisKontrol["siparisIskontoUcreti"] > 0) {
+    $siparisIskontoUcreti = $fonk->paraCevir($siparisKontrol["siparisIskontoUcreti"], "USD", "TRY");
+    $toplamTutar -= $siparisIskontoUcreti;
 }
 
-echo json_encode($json);
-?>
+$json["result"] = array(
+    "tutar" => $toplamTutar
+);
+print_r(json_encode($json));

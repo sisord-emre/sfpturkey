@@ -182,7 +182,7 @@ else{//Listeleme Yetkisi Var
 											<div class="form-group">
 												<label for="sliderGorsel"><?=$fonk->getPDil("Görsel")?> <?=$fonk->getPDil("(Önerilen:".$x."x".$y."px)")?></label>
 												<div class="custom-file">
-													<input type="file" class="custom-file-input" name="sliderGorsel" id="sliderGorsel" accept=".png">
+													<input type="file" class="custom-file-input" name="sliderGorsel" id="sliderGorsel" accept=".png, .jpg, .jpeg">
 													<label class="custom-file-label" name="sliderGorsel" id="sliderGorsel" for="sliderGorsel" aria-describedby="sliderGorsel"><?=$fonk->getPDil("Dosya Seçiniz")?></label>
 												</div>
 											</div>

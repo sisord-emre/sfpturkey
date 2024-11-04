@@ -462,7 +462,7 @@ else{//Listeleme Yetkisi Var
 					toastr.success('<?=$fonk->getPDil("Güncelleme Sağlandı.")?>');
 					document.getElementById("tutar-"+Id).innerHTML = "₺"+ parseFloat(res.result.tutar).formatMoney(2, ",", ".");
 				}else{
-					alert(res.result);
+					alert(res);
 				}
 			}
 		});

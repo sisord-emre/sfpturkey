@@ -63,90 +63,90 @@ if($siparisSiparisDurumId==""){
 
 if($siparisSiparisDurumSiparisDurumId==5)//kargolandı
 {
-    // $UrunListBotlariListeleme = $db->get("UrunListBotlari", "*",[
-    //     "urunListBotTip" => 2,
-    //     "ORDER" => [
-    //         "urunListBotId" => "DESC",
-    //     ]
-    // ]);
+  /*   $UrunListBotlariListeleme = $db->get("UrunListBotlari", "*",[
+        "urunListBotTip" => 2,
+        "ORDER" => [
+            "urunListBotId" => "DESC",
+        ]
+    ]);
 
-    // if($UrunListBotlariListeleme["urunListBotDataJson"])
-    // {
-    //     // Sample array
-    //     $xmlData = [
-    //         'AYAR' => [
-    //             'TRSVER' => '<![CDATA[ASWSH1.02.03]]>',
-    //             'SERVERNAME' => '<![CDATA[195.174.216.24]]>',
-    //             'DBFILENAME' => '<![CDATA[C:\AKINSOFT\Wolvox8\Database_FB\01\2022\WOLVOX.FDB]]>',
-    //             'LCTYPE' => '<![CDATA[WIN1254]]>',
-    //             'COLLATE' => '<![CDATA[PXW_TURK_CI_AI]]>',
-    //             'PERSUSER' => '<![CDATA[MUHASEBE]]>',
-    //             'SUBE_KODU' => '<![CDATA[ARGESUBE1]]>'
-    //         ],
-    //         'STOKHAREKET' => []
-    //     ];
+    if($UrunListBotlariListeleme["urunListBotDataJson"])
+    {
+        // Sample array
+        $xmlData = [
+            'AYAR' => [
+                'TRSVER' => '<![CDATA[ASWSH1.02.03]]>',
+                'SERVERNAME' => '<![CDATA[195.174.216.24]]>',
+                'DBFILENAME' => '<![CDATA[C:\AKINSOFT\Wolvox8\Database_FB\01\2022\WOLVOX.FDB]]>',
+                'LCTYPE' => '<![CDATA[WIN1254]]>',
+                'COLLATE' => '<![CDATA[PXW_TURK_CI_AI]]>',
+                'PERSUSER' => '<![CDATA[MUHASEBE]]>',
+                'SUBE_KODU' => '<![CDATA[ARGESUBE1]]>'
+            ],
+            'STOKHAREKET' => []
+        ];
 
-    //     $data = json_decode($UrunListBotlariListeleme["urunListBotDataJson"], true);
+        $data = json_decode($UrunListBotlariListeleme["urunListBotDataJson"], true);
 
-    //     $m=0;
-    //     $array_count = count($data["report"]["table"]["row"]);
-    //     for($i=0; $i<$array_count; $i++)
-    //     {
-    //         $urunModelleri = $db->get("SiparisIcerikleri",[
-    //             "[<]Urunler" => ["SiparisIcerikleri.siparisIcerikUrunId" => "urunId"],
-    //             "[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
-    //             "[<]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
-    //         ],"*",[
-    //             "urunDilBilgiDilId" => $siparis["siparisDilId"],
-    //             "urunModel" => $data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"],
-    //             "urunDurum" => 1,
-    //             "urunDilBilgiDurum" => 1,
-    //             "siparisIcerikSiparisId" => $siparisSiparisDurumSiparisId
-    //         ]);
+        $m=0;
+        $array_count = count($data["report"]["table"]["row"]);
+        for($i=0; $i<$array_count; $i++)
+        {
+            $urunModelleri = $db->get("SiparisIcerikleri",[
+                "[<]Urunler" => ["SiparisIcerikleri.siparisIcerikUrunId" => "urunId"],
+                "[<]UrunDilBilgiler" => ["Urunler.urunId" => "urunDilBilgiUrunId"],
+                "[<]UrunVaryantlari" => ["Urunler.urunId" => "urunVaryantUrunId"],
+            ],"*",[
+                "urunDilBilgiDilId" => $siparis["siparisDilId"],
+                "urunModel" => $data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"],
+                "urunDurum" => 1,
+                "urunDilBilgiDurum" => 1,
+                "siparisIcerikSiparisId" => $siparisSiparisDurumSiparisId
+            ]);
             
-    //         if($urunModelleri)
-    //         {
-    //             $m++;
-    //             $data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"];
-    //             array_push(
-    //                 $xmlData['STOKHAREKET'], 
-    //                 [
-    //                     'HAREKET' => 
-    //                     [
-    //                         'BLSTKODU' => '<![CDATA['.$data["report"]["table"]["row"][$i]["BLKODU"]["__cdata"].']]>',
-    //                         'DEPO_ADI' => '<![CDATA[MERKEZ]]>',
-    //                         'KPB_FIYATI' => '<![CDATA['.$urunModelleri["urunVaryantFiyat"].']]>',
-    //                         'MIKTAR_2' => '<![CDATA['.$urunModelleri["siparisIcerikAdet"].']]>',
-    //                         'TUTAR_TURU' => '<![CDATA[0]]>'
-    //                     ]
-    //                 ]
-    //             );
-    //         }
-    //     }
-    //     $xmlString = $fonk->arrayToXml($xmlData);
-    //     $xmlString=$fonk->parseToXML($xmlString);
-    // }
+            if($urunModelleri)
+            {
+                $m++;
+                $data["report"]["table"]["row"][$i]["STOKKODU"]["__cdata"];
+                array_push(
+                    $xmlData['STOKHAREKET'], 
+                    [
+                        'HAREKET' => 
+                        [
+                            'BLSTKODU' => '<![CDATA['.$data["report"]["table"]["row"][$i]["BLKODU"]["__cdata"].']]>',
+                            'DEPO_ADI' => '<![CDATA[MERKEZ]]>',
+                            'KPB_FIYATI' => '<![CDATA['.$urunModelleri["urunVaryantFiyat"].']]>',
+                            'MIKTAR_2' => '<![CDATA['.$urunModelleri["siparisIcerikAdet"].']]>',
+                            'TUTAR_TURU' => '<![CDATA[0]]>'
+                        ]
+                    ]
+                );
+            }
+        }
+        $xmlString = $fonk->arrayToXml($xmlData);
+        $xmlString=$fonk->parseToXML($xmlString);
+    }
 
-    // $parametreSiparisStok=array(
-    //     'siparisStokPostSiparisId' => $siparisSiparisDurumSiparisId,
-    //     'siparisStokPostDataXml' => str_replace("\n","",$xmlString),
-    //     'siparisStokPostDurum' => 1,
-    //     'siparisStokPostIslemYapan' => $kulBilgi['kullaniciAdSoyad'],
-    //     'siparisStokPostKayitTarihi' => date("Y-m-d H:i:s")
-    // );
+    $parametreSiparisStok=array(
+        'siparisStokPostSiparisId' => $siparisSiparisDurumSiparisId,
+        'siparisStokPostDataXml' => str_replace("\n","",$xmlString),
+        'siparisStokPostDurum' => 1,
+        'siparisStokPostIslemYapan' => $kulBilgi['kullaniciAdSoyad'],
+        'siparisStokPostKayitTarihi' => date("Y-m-d H:i:s")
+    );
 
-    // $siparisStokPostList = $db->get("SiparisStokPost","*",[
-    //     "siparisStokPostSiparisId" => $siparisSiparisDurumSiparisId
-    // ]);
+    $siparisStokPostList = $db->get("SiparisStokPost","*",[
+        "siparisStokPostSiparisId" => $siparisSiparisDurumSiparisId
+    ]);
 
-    // if(!$siparisStokPostList)
-    // {
-    //     $siparisStokPostInsert = $db->insert("SiparisStokPost", $parametreSiparisStok);
-    // }
-    // else {
-    //     echo '2';
-    //     exit;
-    // }
+    if(!$siparisStokPostList)
+    {
+        $siparisStokPostInsert = $db->insert("SiparisStokPost", $parametreSiparisStok);
+    }
+    else {
+        echo '2';
+        exit;
+    } */
 }
 
 if ($query)

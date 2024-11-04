@@ -251,8 +251,8 @@ $('#formpost').submit(function (e) {
 				if (res==1){
 					$("#fadeIn").modal("hide");
 					toastr.success(getDil("Başarılı"));
-					// var siparisid = document.getElementById("siparisSiparisDurumSiparisId").value;
-					// akinSoftStokDusurme(siparisid);
+					//var siparisid = document.getElementById("siparisSiparisDurumSiparisId").value;
+					//akinSoftStokDusurme(siparisid);
 				}
 				else if(res==2){
 					alert("Bu siparişin durumu daha önce kargoya verildi olarak güncellenmiştir.");
