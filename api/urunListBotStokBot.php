@@ -1,7 +1,7 @@
 <?php 
 include('../Panel/System/Config.php');
 if ($_GET["ApiKey"] == "8bYuhtCv5997aGgCxzsLpXgJuCRMFqEp") {
-    $userLink = $fonk->akinSoftConnection('wlogin','MUHASEBE','6512bd43d9caa6e02c990b0a82652dca','202217518','535AD','60');
+    $userLink = $fonk->akinSoftConnection('wlogin','MUHASEBE','55BBBD8BEC4074FD4D22033CA12F9C30','202217518','537FC','60');
     $userLink=base64_encode($userLink);
     $url="http://195.174.216.24:3056/getdata.html?".$userLink;
     $data = file_get_contents($url);

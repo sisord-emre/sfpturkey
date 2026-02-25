@@ -82,6 +82,10 @@ $odemeLoglari = $db->insert('OdemeLoglari', [
             </div>
         </div>
     </div>
+    <?php
+		unset($_SESSION["SiparisKodu"]);
+		unset($_SESSION["Sepet"]);
+    ?>
     <!--end page content-->
 </div>
 <?php include 'layouts/footer.php'; ?>

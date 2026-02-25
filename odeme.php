@@ -275,9 +275,7 @@ if ($siparisOdemeTipiId == 2) //havale eft ödeme
 		$baslik2 = "SFPTURKEY-Siparis No: ".$siparisKodu."";
 		include("Mailtemplate/odemeEmailTemplate.php");
 		$fonk->mailGonder($siparis["uyeMail"], $baslik2, $body);
-		//$fonk->mailGonder($gondericiMail[3], $baslik, $body); 
-		unset($_SESSION["SiparisKodu"]);
-		unset($_SESSION["Sepet"]);
+		$fonk->mailGonder($gondericiMail[3], $baslik, $body); 
 		header("HTTP/1.1 303 See Other");
 		header("Location: " . $sabitB["sabitBilgiSiteUrl"] . "havale?s=" . $_SESSION["SiparisKodu"]);
 	}
@@ -310,7 +308,7 @@ $siparis = $db->get("Siparisler", "*", [
 					<div class="billing-info mb-20">
 						<?php if ($sabitB["sabitBilgiEposFirma"] == 2) { //iysico 
 						?>
-							<form action="" id="formpost" method="POST" class="card-form">
+							<form action="iyzipay/samples/initialize_threeds.php" id="formpost" method="POST" class="card-form">
 								<fieldset class="mb-1">
 									<h5><?=$fonk->getDil('Kart Numarasi') ?></h5>
 									<div class="form-group">
@@ -382,6 +380,7 @@ $siparis = $db->get("Siparisler", "*", [
 	</div>
 </div>
 <?php } ?>
+
 <?php include 'layouts/footer.php'; ?>
 
 <div class="modal fade text-left" id="pos3d" role="dialog" aria-hidden="true"><!-- id leri unutma -->
@@ -405,29 +404,6 @@ $siparis = $db->get("Siparisler", "*", [
 </div>
 
 <script>
-	<?php if ($siparisOdemeTipiId == 1) { //iysico ?>
-	$('#formpost').submit(function(e) {
-		e.preventDefault(); //submit postu kesyoruz
-		$("#pos3d").modal("show");
-		var data = new FormData(this);
-		$.ajax({
-			type: "POST",
-			url: "iyzipay/samples/initialize_threeds.php",
-			data: data,
-			contentType: false,
-			processData: false,
-			success: function(gelenSayfa) {
-				//swal(gelenSayfa);
-				$('#response').html(gelenSayfa);
-				if (gelenSayfa.search("<noscript>")) {
-					gelenSayfa = gelenSayfa.replace("<noscript>", "");
-					gelenSayfa = gelenSayfa.replace("</noscript>", "");
-					$('#response').append(gelenSayfa);
-				}
-			}
-		});
-	});
-	<?php } ?>
 
 	function formatKontrol() {
 		var cardExpiry = document.getElementById("card-expiry").value;

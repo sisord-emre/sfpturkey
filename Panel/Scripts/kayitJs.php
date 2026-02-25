@@ -82,4 +82,4 @@
 <!-- BEGIN: Page Vendor JS-->
 <script src="Assets/app-assets/vendors/js/extensions/cropper.min.js"></script>
 <!-- END: Page Vendor JS-->
-<script src="Assets/fonksiyon.js"></script><!-- kendi ekledi scritplerimiz fonksiyonlar-->
+<script src="Assets/fonksiyon.js?v=1.0.3"></script><!-- kendi ekledi scritplerimiz fonksiyonlar-->
