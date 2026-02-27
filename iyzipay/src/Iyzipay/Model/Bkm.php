@@ -13,7 +13,8 @@ class Bkm extends PaymentResource
 
     public static function retrieve(RetrieveBkmRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/bkm/auth/detail", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/bkm/auth/detail";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return BkmMapper::create($rawResult)->jsonDecode()->mapBkm(new Bkm());
     }
 

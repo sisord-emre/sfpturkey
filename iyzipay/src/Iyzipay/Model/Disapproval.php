@@ -13,7 +13,8 @@ class Disapproval extends IyzipayResource
 
     public static function create(CreateApprovalRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/iyzipos/item/disapprove", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/iyzipos/item/disapprove";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return DisapprovalMapper::create($rawResult)->jsonDecode()->mapDisapproval(new Disapproval());
     }
 

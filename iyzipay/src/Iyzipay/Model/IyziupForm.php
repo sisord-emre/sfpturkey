@@ -20,7 +20,8 @@ class IyziupForm extends IyzipayResource
 
     public static function retrieve(RetrieveIyziupFormRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/v1/iyziup/form/order/retrieve", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/v1/iyziup/form/order/retrieve";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return IyziupFormMapper::create($rawResult)->jsonDecode()->mapIyziupForm(new IyziupForm());
     }
 

@@ -10,7 +10,8 @@ class Refund extends RefundResource
 {
     public static function create(CreateRefundRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/refund", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/refund";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return RefundMapper::create($rawResult)->jsonDecode()->mapRefund(new Refund());
     }
 }

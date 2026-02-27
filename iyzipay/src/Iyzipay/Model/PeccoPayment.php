@@ -12,7 +12,8 @@ class PeccoPayment extends PaymentResource
 
     public static function create(CreatePeccoPaymentRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/pecco/auth", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/pecco/auth";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return PeccoPaymentMapper::create($rawResult)->jsonDecode()->mapPeccoPayment(new PeccoPayment());
     }
 

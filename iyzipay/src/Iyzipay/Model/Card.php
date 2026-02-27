@@ -24,13 +24,15 @@ class Card extends IyzipayResource
 
     public static function create(CreateCardRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/cardstorage/card", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/cardstorage/card";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return CardMapper::create($rawResult)->jsonDecode()->mapCard(new Card());
     }
 
     public static function delete(DeleteCardRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->delete($options->getBaseUrl() . "/cardstorage/card", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/cardstorage/card";
+        $rawResult = parent::httpClient()->delete($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return CardMapper::create($rawResult)->jsonDecode()->mapCard(new Card());
     }
 

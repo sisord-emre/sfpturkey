@@ -14,7 +14,8 @@ class BasicBkmInitialize extends IyzipayResource
 
     public static function create(CreateBasicBkmInitializeRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/bkm/initialize/basic", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/bkm/initialize/basic";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return BasicBkmInitializeMapper::create($rawResult)->jsonDecode()->mapBasicBkmInitialize(new BasicBkmInitialize());
     }
 

@@ -10,7 +10,8 @@ class BasicPayment extends BasicPaymentResource
 {
     public static function create(CreateBasicPaymentRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/auth/basic", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/auth/basic";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return BasicPaymentMapper::create($rawResult)->jsonDecode()->mapBasicPayment(new BasicPayment());
     }
 }

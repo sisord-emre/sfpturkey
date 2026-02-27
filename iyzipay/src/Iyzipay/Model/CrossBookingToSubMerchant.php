@@ -11,7 +11,8 @@ class CrossBookingToSubMerchant extends IyzipayResource
 {
     public static function create(CreateCrossBookingRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/crossbooking/send", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/crossbooking/send";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return CrossBookingToSubMerchantMapper::create($rawResult)->jsonDecode()->mapCrossBookingToSubMerchant(new CrossBookingToSubMerchant());
     }
 }

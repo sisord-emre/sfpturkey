@@ -10,7 +10,8 @@ class RefundChargedFromMerchant extends RefundResource
 {
     public static function create(CreateRefundRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/iyzipos/refund/merchant/charge", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/iyzipos/refund/merchant/charge";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return RefundChargedFromMerchantMapper::create($rawResult)->jsonDecode()->mapRefundChargedFromMerchant(new RefundChargedFromMerchant());
     }
 }

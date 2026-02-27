@@ -12,46 +12,24 @@ class IyzipayResource extends ApiResource
     private $systemTime;
     private $conversationId;
 
-    protected static function getHttpHeaders(Request $request, Options $options)
-    {
+
+    protected static function getHttpHeadersV2($uri, Request $request = null, Options $options) {
         $header = array(
             "Accept: application/json",
             "Content-type: application/json",
         );
 
         $rnd = uniqid();
-        array_push($header, "Authorization: " . self::prepareAuthorizationString($request, $options, $rnd));
-        array_push($header, "x-iyzi-rnd: " . $rnd);
-        array_push($header, "x-iyzi-client-version: " . "iyzipay-php-2.0.45");
+        $header[] = "Authorization: " . self::prepareAuthorizationStringV2($uri, $request, $options, $rnd);
+        $header[] = "x-iyzi-client-version: " . "iyzipay-php-2.0.60";
 
         return $header;
     }
 
-    protected static function getHttpHeadersV2($uri, Request $request = null, Options $options)
-    {
-        $header = array(
-            "Accept: application/json",
-            "Content-type: application/json",
-        );
-
-        $rnd = uniqid();
-        array_push($header, "Authorization: " . self::prepareAuthorizationStringV2($uri, $request, $options, $rnd));
-        array_push($header, "x-iyzi-client-version: " . "iyzipay-php-2.0.43");
-
-        return $header;
-    }
-
-    protected static function prepareAuthorizationString(Request $request, Options $options, $rnd)
-    {
-        $authContent = HashGenerator::generateHash($options->getApiKey(), $options->getSecretKey(), $rnd, $request);
-        return vsprintf("IYZWS %s:%s", array($options->getApiKey(), $authContent));
-    }
-
-    protected static function prepareAuthorizationStringV2($uri, Request $request = null, Options $options, $rnd)
-    {
+    protected static function prepareAuthorizationStringV2($uri, Request $request = null, Options $options, $rnd) {
         $hash = IyziAuthV2Generator::generateAuthContent($uri, $options->getApiKey(), $options->getSecretKey(), $rnd, $request);
 
-        return 'IYZWSv2'.' '.$hash;
+        return 'IYZWSv2' . ' ' . $hash;
     }
 
     public function getStatus()

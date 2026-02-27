@@ -16,7 +16,8 @@ class PeccoInitialize extends IyzipayResource
 
     public static function create(CreatePeccoInitializeRequest $request, Options $options)
     {
-        $rawResult = parent::httpClient()->post($options->getBaseUrl() . "/payment/pecco/initialize", parent::getHttpHeaders($request, $options), $request->toJsonString());
+        $uri = "/payment/pecco/initialize";
+        $rawResult = parent::httpClient()->post($options->getBaseUrl() . $uri, parent::getHttpHeadersV2($uri, $request, $options), $request->toJsonString());
         return PeccoInitializeMapper::create($rawResult)->jsonDecode()->mapPeccoInitialize(new PeccoInitialize());
     }
 
