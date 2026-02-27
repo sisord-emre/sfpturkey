@@ -11,10 +11,9 @@ RewriteCond %{REQUEST_URI} !^/web
 RewriteRule ^(.*)$ web/$1 [QSA,L]
 
 
-#RewriteCond %{HTTP_HOST} !^www\.
-#RewriteRule .* https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-#RewriteCond %{HTTPS} off
-#RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# non-www to www redirect
+RewriteCond %{HTTP_HOST} ^sfpturkey\.com\.tr$ [NC]
+RewriteRule ^(.*)$ https://www.sfpturkey.com.tr/$1 [R=301,L]
 
 #Parametresiz url ler#
 
